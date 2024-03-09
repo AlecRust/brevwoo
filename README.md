@@ -1,6 +1,6 @@
 # BrevWoo [![Lint](https://github.com/AlecRust/brevwoo/actions/workflows/lint.yml/badge.svg)](https://github.com/AlecRust/brevwoo/actions/workflows/lint.yml)
 
-WordPress plugin that adds a panel to the WooCommerce edit product page where you can select from your Brevo lists.
+WordPress plugin that adds a panel to the WooCommerce edit product page where you can select a Brevo list.
 
 When a customer completes purchase of that product, they will be added to the selected Brevo list.
 
@@ -14,7 +14,7 @@ When a customer completes purchase of that product, they will be added to the se
 ## Installation
 
 Install from the [WordPress Plugin Directory](https://wordpress.org/plugins/brevwoo/) or grab a ZIP from
-[Releases](https://github.com/AlecRust/brevwoo/releases). This plugin supports [Git Updater](https://github.com/afragen/git-updater).
+[Releases](https://github.com/AlecRust/brevwoo/releases).
 
 Once installed, add your [Brevo API key](https://developers.brevo.com/docs/getting-started#quick-start) at **Settings > BrevWoo** then edit a product to select a Brevo list.
 

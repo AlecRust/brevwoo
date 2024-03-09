@@ -1,8 +1,6 @@
 <?php
 // phpcs:disable
 /**
- *
- * @wordpress-plugin
  * Plugin Name:       BrevWoo
  * Plugin URI:        http://github.com/AlecRust/brevwoo
  * GitHub Plugin URI: AlecRust/brevwoo
