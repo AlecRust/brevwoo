@@ -1,25 +1,24 @@
 {
-  "plugins": {
-    "@release-it/bumper": {
-      "out": ["brevwoo.php"]
+    "plugins": {
+        "@release-it/bumper": {
+            "out": ["brevwoo.php"]
+        }
+    },
+    "hooks": {
+        "after:bump": [
+            "auto-changelog -p --commit-limit false --hide-credit --ignore-commit-pattern \"Release ?\\d+\\.\\d+\\.\\d+\"",
+            "auto-changelog -p --output readme.txt --template readme.hbs --commit-limit false --ignore-commit-pattern \"Release ?\\d+\\.\\d+\\.\\d+\""
+        ]
+    },
+    "git": {
+        "commitArgs": ["-S"],
+        "tagArgs": ["-s"]
+    },
+    "npm": {
+        "publish": false
+    },
+    "github": {
+        "release": true,
+        "releaseName": "${version}"
     }
-  },
-  "hooks": {
-    "before:init": "npm run lint",
-    "after:bump": [
-      "auto-changelog -p --commit-limit false --hide-credit --ignore-commit-pattern \"Release ?\\d+\\.\\d+\\.\\d+\"",
-      "auto-changelog -p --output readme.txt --template readme.hbs --commit-limit false --ignore-commit-pattern \"Release ?\\d+\\.\\d+\\.\\d+\""
-    ]
-  },
-  "git": {
-    "commitArgs": ["-S"],
-    "tagArgs": ["-s"]
-  },
-  "npm": {
-    "publish": false
-  },
-  "github": {
-    "release": true,
-    "releaseName": "${version}"
-  }
 }

@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable
 /**
  *
  * @wordpress-plugin
@@ -6,7 +7,7 @@
  * Plugin URI:        http://github.com/AlecRust/brevwoo
  * GitHub Plugin URI: AlecRust/brevwoo
  * Description:       Allows adding customers who purchase a specific WooCommerce product to a specific Brevo list.
- * Version:           1.0.0
+ * Version:           0.0.1
  * Author:            Alec Rust
  * Author URI:        https://www.alecrust.com/
  * License:           GPL-2.0-or-later
@@ -22,13 +23,13 @@ require plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 
 // Abort if this file is called directly.
 if (!defined('WPINC')) {
-  die();
+    die();
 }
 
 /**
  * Plugin version.
  */
-define('BREVWOO_VERSION', '1.0.0');
+define('BREVWOO_VERSION', '0.0.1');
 
 /**
  * Load core plugin class defining all hooks.
@@ -37,10 +38,12 @@ require plugin_dir_path(__FILE__) . 'includes/core.php';
 
 /**
  * Begin plugin execution.
+ * @SuppressWarnings(PHPMD.MissingImport)
  */
 function run_brevwoo()
 {
-  $plugin = new BrevWoo();
-  $plugin->init();
+    $plugin = new BrevWoo();
+    $plugin->init();
 }
 run_brevwoo();
+// phpcs:enable

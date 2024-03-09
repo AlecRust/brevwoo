@@ -1,28 +1,39 @@
 name: Lint
 
-on: [pull_request]
+on:
+    pull_request:
+    push:
+        branches:
+            - main
 
 jobs:
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "lts/*"
-          cache: "npm"
-      - name: Install Node packages
-        run: npm ci
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "7.4"
-          extensions: mbstring, xml
-          coverage: none
-      - name: Install Composer packages
-        run: composer install --prefer-dist --no-progress --no-suggest
-      - name: Run lint
-        run: npm run lint
+    prettier:
+        name: Prettier
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "lts/*"
+                  cache: "npm"
+            - name: Install Node packages
+              run: npm ci
+            - name: Run Prettier check
+              run: npx prettier --check .
+
+    grumphp:
+        name: GrumPHP
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: "8.3"
+            - name: Install Composer packages
+              run: composer install --prefer-dist --no-progress --no-suggest
+            - name: Run GrumPHP
+              run: ./vendor/bin/grumphp run

@@ -1,22 +1,19 @@
 parameters:
-  git_dir: .
-  bin_dir: vendor/bin
-  tasks:
-    phpparser:
-      visitors:
-        forbidden_function_calls:
-          blacklist:
-            - "var_dump"
-            - "print_r"
-    phpversion:
-      project: "7.0"
-    phpcs:
-      standard: PSR2
-    phpmd:
-      whitelist_patterns: []
-      exclude: []
-      report_format: text
-      ruleset: ["cleancode", "codesize", "naming"]
-      triggered_by: ["php"]
-    phpmnd:
-      directory: .
+    git_dir: .
+    bin_dir: vendor/bin
+    tasks:
+        phpparser:
+            visitors:
+                forbidden_function_calls:
+                    blacklist:
+                        - "var_dump"
+                        - "print_r"
+        phpversion:
+            project: "7.0"
+        phpcs:
+            standard: PSR2
+        phpmd:
+            ruleset: ["cleancode", "naming"]
+            triggered_by: ["php"]
+        phpmnd:
+            directory: .
