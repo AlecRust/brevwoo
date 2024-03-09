@@ -1,0 +1,25 @@
+{
+  "name": "brevwoo",
+  "version": "1.0.0",
+  "description": "WordPress plugin that allows adding customers who purchase a specific WooCommerce product to a specific Brevo list.",
+  "author": "Alec Rust (https://www.alecrust.com/)",
+  "license": "GPL-2.0-or-later",
+  "repository": "https://github.com/AlecRust/brevwoo",
+  "scripts": {
+    "env": "wp-env",
+    "lint": "prettier --check . && ./vendor/bin/grumphp run",
+    "format": "prettier --write .",
+    "release": "release-it --ci",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.22.2",
+    "@release-it/bumper": "^6.0.1",
+    "@wordpress/env": "^9.4.0",
+    "auto-changelog": "^2.4.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "release-it": "^17.1.1"
+  }
+}
