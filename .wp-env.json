@@ -2,6 +2,7 @@
     "core": "WordPress/WordPress",
     "plugins": [
         ".",
-        "https://downloads.wordpress.org/plugin/woocommerce.latest-stable.zip"
+        "https://downloads.wordpress.org/plugin/woocommerce.latest-stable.zip",
+        "https://downloads.wordpress.org/plugin/plugin-check.latest-stable.zip"
     ]
 }
