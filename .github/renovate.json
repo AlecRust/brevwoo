@@ -1,12 +1,16 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": ["config:recommended"],
+    "enabledManagers": ["composer", "github-actions"],
+    "extends": [
+        "config:recommended",
+        "schedule:monthly",
+        ":disableDependencyDashboard"
+    ],
     "labels": ["dependencies"],
     "packageRules": [
         {
-            "matchDepTypes": ["devDependencies", "require-dev"],
+            "matchDepTypes": ["require-dev"],
             "enabled": false
         }
-    ],
-    "rangeStrategy": "bump"
+    ]
 }
