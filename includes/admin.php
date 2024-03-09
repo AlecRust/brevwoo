@@ -205,6 +205,7 @@ class BrevWooAdmin
 
         printf(
             '<p class="description">%s</p>',
+            // translators: %s is a link to the Brevo API key documentation
             sprintf(
                 __(
                     'Enter your Brevo API key. %s for more information.',
@@ -242,12 +243,11 @@ class BrevWooAdmin
         $brevo_api_key = get_option('brevwoo_brevo_api_key', '');
 
         if (empty($brevo_api_key)) {
-            echo '<p>' .
+            printf(
+                '<p>%s</p>',
+                // translators: %s is a link to the BrevWoo settings page
                 sprintf(
-                    __(
-                        'Please %senter your Brevo API key%s on the BrevWoo settings page.',
-                        'brevwoo'
-                    ),
+                    __('Please %s on the BrevWoo settings page.', 'brevwoo'),
                     '<a href="' .
                         esc_url(
                             add_query_arg(
@@ -256,10 +256,11 @@ class BrevWooAdmin
                                 get_admin_url() . 'options-general.php'
                             )
                         ) .
-                        '">',
-                    '</a>'
-                ) .
-                '</p>';
+                        '">' .
+                        __('enter your Brevo API key', 'brevwoo') .
+                        '</a>'
+                )
+            );
             return;
         }
 
@@ -299,6 +300,7 @@ class BrevWooAdmin
             echo '</div>';
         } catch (Exception $e) {
             echo '<p>' .
+                // translators: %s is the error message
                 sprintf(
                     __('Error fetching Brevo lists: %s', 'brevwoo'),
                     esc_html($e->getMessage())
