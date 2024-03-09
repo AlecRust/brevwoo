@@ -96,7 +96,7 @@ class BrevWoo
         // Set the selected Brevo list when a product is saved
         add_action('save_post_product', [$plugin_admin, 'saveProductMeta']);
 
-        // Add product purchaser to Brevo list when order is completed
+        // Add customer to Brevo list when order is completed
         add_action('woocommerce_order_status_completed', [
             $plugin_admin,
             'processWcProductPurchase',

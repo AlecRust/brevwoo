@@ -161,13 +161,13 @@ class BrevWooAdmin
             $result = $apiInstance->getAccount();
             echo '<div class="notice notice-success notice-alt">';
             echo '<p><strong>' .
-                __('Connected to Brevo API', 'brevwoo') .
+                __('Successfully connected to Brevo', 'brevwoo') .
                 '</strong></p>';
             echo '</div>';
         } catch (Exception $e) {
             echo '<div class="notice notice-error notice-alt">';
             echo '<p><strong>' .
-                __('Could not connect to Brevo API', 'brevwoo') .
+                __('Could not connect to Brevo', 'brevwoo') .
                 '</strong></p>';
             echo '<p>' . esc_html($e->getMessage()) . '</p>';
             echo '</div>';
@@ -181,7 +181,7 @@ class BrevWooAdmin
     {
         echo '<p>' .
             __(
-                'Connect BrevWoo to your Brevo account using your Brevo API key.',
+                'Provide a Brevo API key below to connect BrevWoo to a Brevo account.',
                 'brevwoo'
             ) .
             '</p>';
@@ -197,22 +197,20 @@ class BrevWooAdmin
         $value = get_option($name, '');
 
         printf(
-            '<input type="password" id="%s" name="%s" value="%s" class="regular-text">',
+            '<input type="password" id="%s" name="%s" value="%s" placeholder="%s" class="regular-text">',
             esc_attr($field_id),
             esc_attr($name),
-            esc_attr($value)
+            esc_attr($value),
+            __('e.g. xkeysib-XXXXXXXXXX', 'brevwoo')
         );
 
         printf(
             '<p class="description">%s</p>',
             sprintf(
                 // translators: %s is a link to the Brevo API key documentation
-                __(
-                    'Enter your Brevo API key. %s for more information.',
-                    'brevwoo'
-                ),
+                __('See %s for more information.', 'brevwoo'),
                 '<a href="https://developers.brevo.com/docs/getting-started#quick-start" target="_blank">' .
-                    __('See docs', 'brevwoo') .
+                    __('Brevo documentation', 'brevwoo') .
                     '</a>'
             )
         );
@@ -275,17 +273,21 @@ class BrevWooAdmin
 
         try {
             $result = $apiInstance->getLists(50, 0);
-            $lists = ['' => 'Select a Brevo list'];
+            $lists = ['' => 'Select Brevo list'];
             foreach ($result['lists'] as $list) {
                 $lists[$list['id']] = '#' . $list['id'] . ' ' . $list['name'];
             }
 
-            echo '<div class="options_group">';
-            echo '<p class="form-field brevo_list_id_field">';
-            echo '<label for="brevo_list_id">' .
-                __('Add purchaser to Brevo list', 'brevwoo') .
+            echo '<p class="howto">' .
+                __(
+                    'Select a Brevo list to add customers to when they purchase this product.',
+                    'brevwoo'
+                ) .
+                '</p>';
+            echo '<label for="brevo_list_id" class="hidden">' .
+                __('Brevo List', 'brevwoo') .
                 '</label>';
-            echo '<select id="brevo_list_id" name="brevo_list_id" class="select short">';
+            echo '<select id="brevo_list_id" name="brevo_list_id" class="select">';
             foreach ($lists as $id => $name) {
                 echo '<option value="' .
                     esc_attr($id) .
@@ -296,8 +298,6 @@ class BrevWooAdmin
                     '</option>';
             }
             echo '</select>';
-            echo '</p>';
-            echo '</div>';
         } catch (Exception $e) {
             echo '<p>' .
                 sprintf(
@@ -324,7 +324,7 @@ class BrevWooAdmin
     }
 
     /**
-     * Catch the product purchase event and add the purchaser to the Brevo list.
+     * Catch the product purchase event and add the customer to the Brevo list.
      */
     public function processWcProductPurchase($order_id)
     {
