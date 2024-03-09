@@ -205,8 +205,8 @@ class BrevWooAdmin
 
         printf(
             '<p class="description">%s</p>',
-            // translators: %s is a link to the Brevo API key documentation
             sprintf(
+                // translators: %s is a link to the Brevo API key documentation
                 __(
                     'Enter your Brevo API key. %s for more information.',
                     'brevwoo'
@@ -245,8 +245,8 @@ class BrevWooAdmin
         if (empty($brevo_api_key)) {
             printf(
                 '<p>%s</p>',
-                // translators: %s is a link to the BrevWoo settings page
                 sprintf(
+                    // translators: %s is a link to the BrevWoo settings page
                     __('Please %s on the BrevWoo settings page.', 'brevwoo'),
                     '<a href="' .
                         esc_url(
@@ -300,8 +300,8 @@ class BrevWooAdmin
             echo '</div>';
         } catch (Exception $e) {
             echo '<p>' .
-                // translators: %s is the error message
                 sprintf(
+                    // translators: %s is the error message
                     __('Error fetching Brevo lists: %s', 'brevwoo'),
                     esc_html($e->getMessage())
                 ) .
