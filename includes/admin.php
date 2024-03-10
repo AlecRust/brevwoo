@@ -246,7 +246,11 @@ class BrevWooAdmin
      */
     public function renderEditProductPanelContent($post)
     {
-        $brevo_list_ids = get_post_meta($post->ID, 'brevo_list_ids', false);
+        $brevo_list_ids = get_post_meta(
+            $post->ID,
+            'brevwoo_brevo_list_ids',
+            false
+        );
 
         if (!$this->apiClient) {
             printf(
@@ -286,11 +290,11 @@ class BrevWooAdmin
                     'brevwoo'
                 ) .
                 '</p>';
-            echo '<label for="brevo_list_ids" class="hidden">' .
+            echo '<label for="brevwoo_brevo_list_ids" class="hidden">' .
                 esc_html__('Brevo Lists', 'brevwoo') .
                 '</label>';
-            echo '<select id="brevo_list_ids"
-                        name="brevo_list_ids[]"
+            echo '<select id="brevwoo_brevo_list_ids"
+                        name="brevwoo_brevo_list_ids[]"
                         style="min-height: 100px; width: 100%;"
                         multiple>';
             foreach ($lists as $id => $name) {
@@ -328,10 +332,10 @@ class BrevWooAdmin
             return;
         }
 
-        if (isset($_POST['brevo_list_ids'])) {
+        if (isset($_POST['brevwoo_brevo_list_ids'])) {
             $brevo_list_ids = array_map(
                 'sanitize_text_field',
-                $_POST['brevo_list_ids']
+                $_POST['brevwoo_brevo_list_ids']
             );
 
             // Filter out empty values to prevent "None (disabled)" being saved
@@ -340,11 +344,11 @@ class BrevWooAdmin
             });
 
             // Delete existing meta to avoid duplicates
-            delete_post_meta($post_id, 'brevo_list_ids');
+            delete_post_meta($post_id, 'brevwoo_brevo_list_ids');
 
             // Add each new value separately to store them as an array
             foreach ($brevo_list_ids as $list_id) {
-                add_post_meta($post_id, 'brevo_list_ids', $list_id);
+                add_post_meta($post_id, 'brevwoo_brevo_list_ids', $list_id);
             }
         }
     }
@@ -360,7 +364,7 @@ class BrevWooAdmin
             $product_id = $item->get_product_id();
             $brevo_list_ids = get_post_meta(
                 $product_id,
-                'brevo_list_ids',
+                'brevwoo_brevo_list_ids',
                 false
             );
 
