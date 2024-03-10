@@ -201,7 +201,8 @@ class BrevWooAdmin
                 value="%s"
                 placeholder="%s"
                 class="regular-text"
-                autocomplete="off">',
+                autocomplete="off"
+                required>',
             esc_attr($field_id),
             esc_attr($name),
             esc_attr($value),
