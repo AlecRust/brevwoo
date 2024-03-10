@@ -2,9 +2,9 @@
 
 # BrevWoo [![Lint](https://github.com/AlecRust/brevwoo/actions/workflows/lint.yml/badge.svg)](https://github.com/AlecRust/brevwoo/actions/workflows/lint.yml)
 
-> WordPress plugin to integrate WooCommerce with Brevo.
+> WordPress plugin to integrate WooCommerce with Brevo
 
-Each product can be connected to any of your Brevo lists.
+Each product can be connected to any number of Brevo lists.
 
 When a customer completes an order, they are added to the selected lists.
 
