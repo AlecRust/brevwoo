@@ -319,12 +319,8 @@ class BrevWooAdmin
      */
     public function saveSelectedLists($post_id)
     {
-        $nonceIsSetAndValid =
-            isset($_POST['_wpnonce']) &&
-            wp_verify_nonce($_POST['_wpnonce'], 'update-post_' . $post_id);
-        if (!$nonceIsSetAndValid) {
-            return;
-        }
+        // Verify the nonce before proceeding
+        check_admin_referer('update-post_' . $post_id);
 
         if (isset($_POST['brevwoo_brevo_list_ids'])) {
             $brevo_list_ids = array_map(
