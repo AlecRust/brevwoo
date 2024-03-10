@@ -1,9 +1,7 @@
 <?php
 // phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 /**
- * The API client for Brevo.
- *
- * This class is used to interact with the Brevo API.
+ * API client used to interact with Brevo.
  *
  * @link       https://www.alecrust.com/
  * @package    BrevWoo

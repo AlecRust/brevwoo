@@ -1,9 +1,7 @@
 <?php
 // phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 /**
- * The admin-specific functionality of the plugin.
- *
- * Defines the plugin name, version, and hooks.
+ * Admin-specific functionality of the plugin.
  *
  * @link       https://www.alecrust.com/
  * @package    BrevWoo
