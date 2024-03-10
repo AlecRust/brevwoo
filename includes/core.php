@@ -99,7 +99,7 @@ class BrevWoo
         // Add customer to Brevo list when order is completed
         add_action('woocommerce_order_status_completed', [
             $plugin_admin,
-            'processWcProductPurchase',
+            'processWcOrderCompleted',
         ]);
     }
 

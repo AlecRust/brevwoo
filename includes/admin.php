@@ -75,7 +75,7 @@ class BrevWooAdmin
             )
         );
         $settings_link =
-            "<a href=\"$url\">" . __('Settings', 'brevwoo') . '</a>';
+            "<a href=\"$url\">" . esc_html__('Settings', 'brevwoo') . '</a>';
         array_unshift($links, $settings_link);
         return $links;
     }
@@ -87,7 +87,7 @@ class BrevWooAdmin
     {
         ?>
         <div class="wrap">
-            <h2><?php echo __('BrevWoo', 'brevwoo'); ?></h2>
+            <h2><?php esc_html_e('BrevWoo', 'brevwoo'); ?></h2>
             <?php $this->renderBrevoConnectionStatus(); ?>
             <form method="post" action="options.php">
                 <?php
@@ -161,13 +161,13 @@ class BrevWooAdmin
             $result = $apiInstance->getAccount();
             echo '<div class="notice notice-success notice-alt">';
             echo '<p><strong>' .
-                __('Successfully connected to Brevo', 'brevwoo') .
+                esc_html__('Successfully connected to Brevo', 'brevwoo') .
                 '</strong></p>';
             echo '</div>';
         } catch (Exception $e) {
             echo '<div class="notice notice-error notice-alt">';
             echo '<p><strong>' .
-                __('Could not connect to Brevo', 'brevwoo') .
+                esc_html__('Could not connect to Brevo', 'brevwoo') .
                 '</strong></p>';
             echo '<p>' . esc_html($e->getMessage()) . '</p>';
             echo '</div>';
@@ -180,7 +180,7 @@ class BrevWooAdmin
     public function renderSettingsDescription()
     {
         echo '<p>' .
-            __(
+            esc_html__(
                 'Provide a Brevo API key below to connect BrevWoo to a Brevo account.',
                 'brevwoo'
             ) .
@@ -201,16 +201,16 @@ class BrevWooAdmin
             esc_attr($field_id),
             esc_attr($name),
             esc_attr($value),
-            __('e.g. xkeysib-XXXXXXXXXX', 'brevwoo')
+            esc_html__('e.g. xkeysib-XXXXXXXXXX', 'brevwoo')
         );
 
         printf(
             '<p class="description">%s</p>',
             sprintf(
                 // translators: %s is a link to the Brevo API key documentation
-                __('See %s for more information.', 'brevwoo'),
+                esc_html__('See %s for more information.', 'brevwoo'),
                 '<a href="https://developers.brevo.com/docs/getting-started#quick-start" target="_blank">' .
-                    __('Brevo documentation', 'brevwoo') .
+                    esc_html__('Brevo documentation', 'brevwoo') .
                     '</a>'
             )
         );
@@ -232,7 +232,7 @@ class BrevWooAdmin
     }
 
     /**
-     * Contents of edit product page BrevWoo panel.
+     * Render edit product page BrevWoo panel.
      * @SuppressWarnings(PHPMD.MissingImport)
      */
     public function renderEditProductPanelContent($post)
@@ -245,7 +245,10 @@ class BrevWooAdmin
                 '<p>%s</p>',
                 sprintf(
                     // translators: %s is a link to the BrevWoo settings page
-                    __('Please %s on the BrevWoo settings page.', 'brevwoo'),
+                    esc_html__(
+                        'Please %s on the BrevWoo settings page.',
+                        'brevwoo'
+                    ),
                     '<a href="' .
                         esc_url(
                             add_query_arg(
@@ -255,7 +258,7 @@ class BrevWooAdmin
                             )
                         ) .
                         '">' .
-                        __('enter your Brevo API key', 'brevwoo') .
+                        esc_html__('enter your Brevo API key', 'brevwoo') .
                         '</a>'
                 )
             );
@@ -279,13 +282,13 @@ class BrevWooAdmin
             }
 
             echo '<p class="howto">' .
-                __(
+                esc_html__(
                     'Select a Brevo list to add customers to when they purchase this product.',
                     'brevwoo'
                 ) .
                 '</p>';
             echo '<label for="brevo_list_id" class="hidden">' .
-                __('Brevo List', 'brevwoo') .
+                esc_html__('Brevo List', 'brevwoo') .
                 '</label>';
             echo '<select id="brevo_list_id" name="brevo_list_id" class="select">';
             foreach ($lists as $id => $name) {
@@ -302,7 +305,7 @@ class BrevWooAdmin
             echo '<p>' .
                 sprintf(
                     // translators: %s is the error message
-                    __('Error fetching Brevo lists: %s', 'brevwoo'),
+                    esc_html__('Error fetching Brevo lists: %s', 'brevwoo'),
                     esc_html($e->getMessage())
                 ) .
                 '</p>';
@@ -326,7 +329,7 @@ class BrevWooAdmin
     /**
      * Catch the product purchase event and add the customer to the Brevo list.
      */
-    public function processWcProductPurchase($order_id)
+    public function processWcOrderCompleted($order_id)
     {
         $order = wc_get_order($order_id);
 
