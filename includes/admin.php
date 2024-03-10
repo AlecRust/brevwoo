@@ -2,10 +2,6 @@
 
 // phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 
-use Brevo\Api\Configuration;
-use Brevo\Api\Api\ContactsApi;
-use GuzzleHttp\Client;
-
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -36,7 +32,15 @@ class BrevWooAdmin
     private $version;
 
     /**
+     * API client for Brevo.
+     *
+     * @var BrevWooApiClient
+     */
+    protected $apiClient;
+
+    /**
      * Initialize the class and set its properties.
+     * @SuppressWarnings(PHPMD.MissingImport)
      *
      * @param      string    $plugin_name       The name of this plugin.
      * @param      string    $version    The version of this plugin.
@@ -45,6 +49,13 @@ class BrevWooAdmin
     {
         $this->plugin_name = $plugin_name;
         $this->version = $version;
+
+        // Initialize the API client
+        $brevo_api_key = get_option('brevwoo_brevo_api_key', '');
+        if (!empty($brevo_api_key)) {
+            require_once plugin_dir_path(__FILE__) . 'api.php';
+            $this->apiClient = new BrevWooApiClient($brevo_api_key);
+        }
     }
 
     /**
@@ -137,27 +148,15 @@ class BrevWooAdmin
 
     /**
      * Render Brevo API connection status notice.
-     * https://developers.brevo.com/reference/getaccount
-     * @SuppressWarnings(PHPMD.MissingImport)
      */
     private function renderBrevoConnectionStatus()
     {
-        $brevo_api_key = get_option('brevwoo_brevo_api_key', '');
-        if (empty($brevo_api_key)) {
+        if (!$this->apiClient) {
             return;
         }
 
-        $config = Brevo\Client\Configuration::getDefaultConfiguration()->setApiKey(
-            'api-key',
-            $brevo_api_key
-        );
-        $apiInstance = new Brevo\Client\Api\AccountApi(
-            new GuzzleHttp\Client(),
-            $config
-        );
-
         try {
-            $apiInstance->getAccount();
+            $this->apiClient->getAccount();
             echo '<div class="notice notice-success notice-alt">
                 <p><strong>' .
                 esc_html__('Successfully connected to Brevo', 'brevwoo') .
@@ -240,15 +239,12 @@ class BrevWooAdmin
 
     /**
      * Render edit product page BrevWoo panel.
-     * https://developers.brevo.com/reference/getlists-1
-     * @SuppressWarnings(PHPMD.MissingImport)
      */
     public function renderEditProductPanelContent($post)
     {
         $brevo_list_ids = get_post_meta($post->ID, 'brevo_list_ids', false);
-        $brevo_api_key = get_option('brevwoo_brevo_api_key', '');
 
-        if (empty($brevo_api_key)) {
+        if (!$this->apiClient) {
             printf(
                 '<p>%s</p>',
                 sprintf(
@@ -273,19 +269,8 @@ class BrevWooAdmin
             return;
         }
 
-        $config = Brevo\Client\Configuration::getDefaultConfiguration()->setApiKey(
-            'api-key',
-            $brevo_api_key
-        );
-        $apiInstance = new Brevo\Client\Api\ContactsApi(
-            new \GuzzleHttp\Client(),
-            $config
-        );
-
         try {
-            $limit = 50;
-            $offset = 0;
-            $result = $apiInstance->getLists($limit, $offset);
+            $result = $this->apiClient->getLists();
             $lists = ['' => esc_html__('None (disabled)', 'brevwoo')];
             foreach ($result['lists'] as $list) {
                 $lists[$list['id']] = '#' . $list['id'] . ' ' . $list['name'];
@@ -375,27 +360,16 @@ class BrevWooAdmin
 
     /**
      * Create or update a Brevo contact.
-     * https://developers.brevo.com/reference/createcontact
      * @SuppressWarnings(PHPMD.MissingImport)
      */
     public function addOrUpdateBrevoContact($order, $listIds)
     {
-        $brevo_api_key = get_option('brevwoo_brevo_api_key', '');
-        if (empty($brevo_api_key)) {
+        if (!$this->apiClient) {
             error_log(
                 'BrevWoo: Brevo API key not set, cannot add contact to Brevo'
             );
             return;
         }
-
-        $config = Brevo\Client\Configuration::getDefaultConfiguration()->setApiKey(
-            'api-key',
-            $brevo_api_key
-        );
-        $apiInstance = new Brevo\Client\Api\ContactsApi(
-            new \GuzzleHttp\Client(),
-            $config
-        );
 
         // Collect order details
         $email = $order->get_billing_email();
@@ -420,7 +394,7 @@ class BrevWooAdmin
         ]);
 
         try {
-            $apiInstance->createContact($createContact);
+            $this->apiClient->createOrUpdateContact($createContact);
         } catch (Exception $e) {
             error_log(
                 'BrevWoo: Error creating or updating Brevo contact: ' .
