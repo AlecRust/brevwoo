@@ -8,20 +8,22 @@ Requires PHP:      7.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Add customers who purchase a specific WooCommerce product to your Brevo lists.
+Connect WooCommerce products to Brevo lists.
 
 == Description ==
 
-Adds a panel to the WooCommerce edit product page where you can select from your Brevo lists. When a customer completes purchase of that product, they will be added to the selected Brevo lists.
+Improve your marketing automation by connecting WooCommerce products to [Brevo](https://www.brevo.com/) lists.
 
-This is useful for example to simplify Brevo automations. With the purchase of a given product tied to a specific Brevo list, a Brevo automation can use the [Contact added to list](https://help.brevo.com/hc/en-us/articles/15476926804370-New-automation-editor-BETA-Set-up-a-welcome-email-automation#h_01HGJTQFMDH72F17QCMG7DC8GY) trigger to start a sequence based on the product purchased.
+Each product can be connected to any of your Brevo lists. When a customer completes an order, they are added to the selected lists.
+
+For example, use this plugin to create a Brevo automation based on customers who purchase a specific product.
 
 Features include:
 
-* Simpler and more reliable at adding customer to lists than the JavaScript Brevo Tracker
-* Creates (or updates) a Brevo contact using the customer's email address and first/last name
-* Adds [transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes) to the Brevo contact including the order ID and price
-* Uses the [official PHP client](https://github.com/getbrevo/brevo-php) to interact with the Brevo API
+* Adds customer to selected Brevo lists for a given product when order is completed
+* Includes customer email, first name, and last name in the Brevo contact
+* Includes order ID, price and date as [transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes)
+* Simpler and more reliable than the [Brevo Tracker](https://developers.brevo.com/docs/getting-started-with-brevo-tracker) at what it does
 
 This plugin is open source and contributions are welcome [on GitHub](https://github.com/AlecRust/brevwoo).
 

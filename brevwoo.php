@@ -4,7 +4,7 @@
  * Plugin Name:       BrevWoo
  * Plugin URI:        http://github.com/AlecRust/brevwoo
  * GitHub Plugin URI: AlecRust/brevwoo
- * Description:       Add customers who purchase a specific WooCommerce product to your Brevo lists.
+ * Description:       Connect WooCommerce products to Brevo lists.
  * Version:           0.0.2
  * Author:            Alec Rust
  * Author URI:        https://www.alecrust.com/
