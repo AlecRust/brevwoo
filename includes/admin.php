@@ -209,6 +209,7 @@ class BrevWooAdmin
         printf(
             '<p class="description">%s</p>',
             sprintf(
+                // translators: 1: Link to the user's Brevo account, 2: Link to the Brevo documentation
                 esc_html__(
                     'Create an API key for BrevWoo in your %1$s (%2$s).',
                     'brevwoo'
