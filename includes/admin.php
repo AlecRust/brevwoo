@@ -334,6 +334,11 @@ class BrevWooAdmin
                 $_POST['brevo_list_ids']
             );
 
+            // Filter out empty values to prevent "None (disabled)" being saved
+            $brevo_list_ids = array_filter($brevo_list_ids, function ($value) {
+                return $value !== '';
+            });
+
             // Delete existing meta to avoid duplicates
             delete_post_meta($post_id, 'brevo_list_ids');
 
