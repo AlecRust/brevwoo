@@ -317,12 +317,13 @@ class BrevWooAdmin
      */
     public function saveProductMeta($post_id)
     {
+        if (!wp_verify_nonce($_POST['_wpnonce'], 'update-post_' . $post_id)) {
+            return;
+        }
+
         if (isset($_POST['brevo_list_id'])) {
-            update_post_meta(
-                $post_id,
-                'brevo_list_id',
-                sanitize_text_field($_POST['brevo_list_id'])
-            );
+            $brevo_list_id = sanitize_text_field($_POST['brevo_list_id']);
+            update_post_meta($post_id, 'brevo_list_id', $brevo_list_id);
         }
     }
 
