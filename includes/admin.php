@@ -321,7 +321,10 @@ class BrevWooAdmin
      */
     public function saveSelectedLists($post_id)
     {
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'update-post_' . $post_id)) {
+        if (
+            !isset($_POST['_wpnonce']) ||
+            !wp_verify_nonce($_POST['_wpnonce'], 'update-post_' . $post_id)
+        ) {
             return;
         }
 
