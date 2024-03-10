@@ -1,3 +1,5 @@
+![Banner](.wordpress-org/banner-1544x500.png)
+
 # BrevWoo [![Lint](https://github.com/AlecRust/brevwoo/actions/workflows/lint.yml/badge.svg)](https://github.com/AlecRust/brevwoo/actions/workflows/lint.yml)
 
 Adds a panel to the WooCommerce edit product page where you can select from your Brevo lists.
