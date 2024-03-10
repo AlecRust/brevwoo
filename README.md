@@ -20,7 +20,7 @@ When a customer completes an order, they are added to the selected lists.
 Install from the [WordPress Plugin Directory](https://wordpress.org/plugins/brevwoo/) or grab a ZIP from
 [Releases](https://github.com/AlecRust/brevwoo/releases).
 
-Once activated, add your [Brevo API key](https://developers.brevo.com/docs/getting-started#quick-start) at **Settings > BrevWoo** then edit a product to select your Brevo lists.
+Once activated, add your [Brevo API key](https://developers.brevo.com/docs/getting-started#quick-start) at **Settings > BrevWoo** then edit a product to select some Brevo lists.
 
 ## Development
 

@@ -31,8 +31,8 @@ This plugin is open source and contributions are welcome [on GitHub](https://git
 
 1. Install and activate the plugin
 2. Set your Brevo API key at **Settings > BrevWoo**
-3. Edit a product and select from your Brevo lists in the "BrevWoo" sidebar panel
-4. When a customer purchases the product, they will be added to the selected Brevo lists
+3. Edit a product and select some Brevo lists in the "BrevWoo" sidebar panel
+4. Customers who purchase this product will be added to the selected Brevo lists
 
 == Frequently Asked Questions ==
 
