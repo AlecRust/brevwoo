@@ -225,7 +225,7 @@ class BrevWooAdmin
     public function addEditProductPanel()
     {
         add_meta_box(
-            'brevwoo_options',
+            'brevwoo',
             __('BrevWoo', 'brevwoo'),
             [$this, 'renderEditProductPanelContent'],
             'product',
