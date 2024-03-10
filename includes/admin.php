@@ -159,18 +159,20 @@ class BrevWooAdmin
 
         try {
             $result = $apiInstance->getAccount();
-            echo '<div class="notice notice-success notice-alt">';
-            echo '<p><strong>' .
+            echo '<div class="notice notice-success notice-alt">
+                <p><strong>' .
                 esc_html__('Successfully connected to Brevo', 'brevwoo') .
-                '</strong></p>';
-            echo '</div>';
+                '</strong></p>
+              </div>';
         } catch (Exception $e) {
-            echo '<div class="notice notice-error notice-alt">';
-            echo '<p><strong>' .
+            echo '<div class="notice notice-error notice-alt">
+                <p><strong>' .
                 esc_html__('Could not connect to Brevo', 'brevwoo') .
-                '</strong></p>';
-            echo '<p>' . esc_html($e->getMessage()) . '</p>';
-            echo '</div>';
+                '</strong></p>
+                <p>' .
+                esc_html($e->getMessage()) .
+                '</p>
+              </div>';
         }
     }
 
@@ -302,13 +304,14 @@ class BrevWooAdmin
             }
             echo '</select>';
         } catch (Exception $e) {
-            echo '<p>' .
-                sprintf(
-                    // translators: %s is the error message
-                    esc_html__('Error fetching Brevo lists: %s', 'brevwoo'),
-                    esc_html($e->getMessage())
-                ) .
-                '</p>';
+            echo '<div class="notice notice-error notice-alt inline">
+                <p><strong>' .
+                esc_html__('Error fetching Brevo lists', 'brevwoo') .
+                '</strong></p>
+                <p>' .
+                esc_html($e->getMessage()) .
+                '</p>
+              </div>';
         }
     }
 
