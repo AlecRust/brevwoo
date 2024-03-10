@@ -215,7 +215,8 @@ class BrevWooAdmin
             esc_html__('Brevo account', 'brevwoo')
         );
         printf(
-            '<p class="description"><a href="https://developers.brevo.com/docs/getting-started#quick-start" target="_blank">%s</a></p>',
+            '<p class="description"><a href="https://developers.brevo.com/docs/getting-started#quick-start"
+            target="_blank">%s</a></p>',
             esc_html__('Read the Brevo API key guide', 'brevwoo')
         );
     }
