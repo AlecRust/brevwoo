@@ -23,7 +23,7 @@ Features include:
 * Adds customer to selected Brevo lists for a given product when order is completed
 * Includes customer email, first name, and last name in the Brevo contact
 * Includes order ID, price and date as [transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes)
-* Simpler and more reliable than the [Brevo Tracker](https://developers.brevo.com/docs/getting-started-with-brevo-tracker) at what it does
+* Simpler and more reliable than the JS [Brevo Tracker](https://developers.brevo.com/docs/getting-started-with-brevo-tracker) at what it does
 
 This plugin is open source and contributions are welcome [on GitHub](https://github.com/AlecRust/brevwoo).
 

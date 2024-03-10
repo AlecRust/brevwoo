@@ -4,7 +4,7 @@
 
 > WordPress plugin to integrate WooCommerce with Brevo
 
-Each product can be connected to any number of Brevo lists.
+Allows connecting each WooCommerce product to any number of Brevo lists.
 
 When a customer completes an order, they are added to the selected lists.
 
@@ -13,7 +13,7 @@ When a customer completes an order, they are added to the selected lists.
 -   Adds customer to selected Brevo lists for a given product when order is completed
 -   Includes customer email, first name, and last name in the Brevo contact
 -   Includes order ID, price and date as [transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes)
--   Simpler and more reliable than the [Brevo Tracker](https://developers.brevo.com/docs/getting-started-with-brevo-tracker) at what it does
+-   Simpler and more reliable than the JS [Brevo Tracker](https://developers.brevo.com/docs/getting-started-with-brevo-tracker) at what it does
 
 ## Installation
 

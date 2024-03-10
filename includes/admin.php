@@ -171,13 +171,13 @@ class BrevWooAdmin
     }
 
     /**
-     * Explanation copy on settings page (between heading and fields).
+     * Render main description on plugin settings page.
      */
     public function renderSettingsDescription()
     {
         echo '<p>' .
             esc_html__(
-                'Provide a Brevo API key below to connect BrevWoo to a Brevo account.',
+                'Provide a Brevo API key below to connect BrevWoo to your Brevo account.',
                 'brevwoo'
             ) .
             '</p>';
