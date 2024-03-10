@@ -1,7 +1,5 @@
 <?php
-
 // phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
-
 /**
  * Core plugin class.
  *

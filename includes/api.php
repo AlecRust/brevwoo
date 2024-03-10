@@ -1,5 +1,5 @@
 <?php
-
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 /**
  * The API client for Brevo.
  *
@@ -29,6 +29,7 @@ class BrevWooApiClient
 
     /**
      * Initialize the API client with the provided API key.
+     * @SuppressWarnings(PHPMD.MissingImport)
      *
      * @param string $apiKey Brevo API key.
      */

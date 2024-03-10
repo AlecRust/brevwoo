@@ -1,7 +1,5 @@
 <?php
-
 // phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
-
 /**
  * The admin-specific functionality of the plugin.
  *
