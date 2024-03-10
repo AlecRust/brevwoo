@@ -209,20 +209,13 @@ class BrevWooAdmin
         );
 
         printf(
-            '<p class="description">%s</p>',
-            sprintf(
-                // translators: 1: Link to the user's Brevo account, 2: Link to the Brevo documentation
-                esc_html__(
-                    'Create an API key for BrevWoo in your %1$s (%2$s).',
-                    'brevwoo'
-                ),
-                '<a href="https://app.brevo.com/settings/keys/api" target="_blank">' .
-                    esc_html__('Brevo account', 'brevwoo') .
-                    '</a>',
-                '<a href="https://developers.brevo.com/docs/getting-started#quick-start" target="_blank">' .
-                    esc_html__('learn more', 'brevwoo') .
-                    '</a>'
-            )
+            '<p class="description">%s <a href="https://app.brevo.com/settings/keys/api" target="_blank">%s</a>.</p>',
+            esc_html__('Create an API key for BrevWoo in your', 'brevwoo'),
+            esc_html__('Brevo account', 'brevwoo')
+        );
+        printf(
+            '<p class="description"><a href="https://developers.brevo.com/docs/getting-started#quick-start" target="_blank">%s</a></p>',
+            esc_html__('Read the Brevo API key guide', 'brevwoo')
         );
     }
 
