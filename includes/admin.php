@@ -195,7 +195,13 @@ class BrevWooAdmin
         $value = get_option($name, '');
 
         printf(
-            '<input type="password" id="%s" name="%s" value="%s" placeholder="%s" class="regular-text">',
+            '<input type="password"
+                id="%s"
+                name="%s"
+                value="%s"
+                placeholder="%s"
+                class="regular-text"
+                autocomplete="off">',
             esc_attr($field_id),
             esc_attr($name),
             esc_attr($value),
