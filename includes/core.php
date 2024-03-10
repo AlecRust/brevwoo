@@ -93,10 +93,10 @@ class BrevWoo
         // Add "BrevWoo" panel to edit product page
         add_action('add_meta_boxes', [$plugin_admin, 'addEditProductPanel']);
 
-        // Set the selected Brevo list when a product is saved
-        add_action('save_post_product', [$plugin_admin, 'saveProductMeta']);
+        // Save selected Brevo lists to a product when it's saved
+        add_action('save_post_product', [$plugin_admin, 'saveSelectedLists']);
 
-        // Add customer to Brevo list when order is completed
+        // Add customer to Brevo lists when order is completed
         add_action('woocommerce_order_status_completed', [
             $plugin_admin,
             'processWcOrderCompleted',

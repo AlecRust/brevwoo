@@ -1,7 +1,7 @@
 {
   "name": "brevwoo",
   "version": "0.0.1",
-  "description": "WordPress plugin that allows adding customers who purchase a specific WooCommerce product to a specific Brevo list.",
+  "description": "WordPress plugin that allows adding customers who purchase a specific WooCommerce product to your Brevo lists.",
   "author": "Alec Rust (https://www.alecrust.com/)",
   "license": "GPL-2.0-or-later",
   "repository": "https://github.com/AlecRust/brevwoo",

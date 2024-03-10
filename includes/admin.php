@@ -9,8 +9,7 @@ use GuzzleHttp\Client;
 /**
  * The admin-specific functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
+ * Defines the plugin name, version, and hooks.
  *
  * @link       https://www.alecrust.com/
  * @package    BrevWoo
@@ -81,7 +80,7 @@ class BrevWooAdmin
     }
 
     /**
-     * Return settings page.
+     * Render settings page.
      */
     public function renderSettingsPage()
     {
@@ -138,7 +137,7 @@ class BrevWooAdmin
 
     /**
      * Render Brevo API connection status notice.
-     * Fetched account details could be rendered with e.g. esc_html($result->getEmail())
+     * https://developers.brevo.com/reference/getaccount
      * @SuppressWarnings(PHPMD.MissingImport)
      */
     private function renderBrevoConnectionStatus()
@@ -158,7 +157,7 @@ class BrevWooAdmin
         );
 
         try {
-            $result = $apiInstance->getAccount();
+            $apiInstance->getAccount();
             echo '<div class="notice notice-success notice-alt">
                 <p><strong>' .
                 esc_html__('Successfully connected to Brevo', 'brevwoo') .
@@ -225,7 +224,7 @@ class BrevWooAdmin
     }
 
     /**
-     * Add BrevWoo panel to edit product page.
+     * Add BrevWoo panel to edit product page sidebar.
      */
     public function addEditProductPanel()
     {
@@ -234,18 +233,19 @@ class BrevWooAdmin
             __('BrevWoo', 'brevwoo'),
             [$this, 'renderEditProductPanelContent'],
             'product',
-            'side', // Where the box should show ('normal', 'side', 'advanced')
+            'side',
             'default'
         );
     }
 
     /**
      * Render edit product page BrevWoo panel.
+     * https://developers.brevo.com/reference/getlists-1
      * @SuppressWarnings(PHPMD.MissingImport)
      */
     public function renderEditProductPanelContent($post)
     {
-        $brevo_list_id = get_post_meta($post->ID, 'brevo_list_id', true);
+        $brevo_list_ids = get_post_meta($post->ID, 'brevo_list_ids', false);
         $brevo_api_key = get_option('brevwoo_brevo_api_key', '');
 
         if (empty($brevo_api_key)) {
@@ -283,27 +283,33 @@ class BrevWooAdmin
         );
 
         try {
-            $result = $apiInstance->getLists(50, 0);
-            $lists = ['' => 'Select Brevo list'];
+            $limit = 50;
+            $offset = 0;
+            $result = $apiInstance->getLists($limit, $offset);
+            $lists = ['' => esc_html__('None (disabled)', 'brevwoo')];
             foreach ($result['lists'] as $list) {
                 $lists[$list['id']] = '#' . $list['id'] . ' ' . $list['name'];
             }
 
             echo '<p class="howto">' .
                 esc_html__(
-                    'Select a Brevo list to add customers to when they purchase this product.',
+                    'Select the Brevo list(s) to add customers to when they purchase this product.',
                     'brevwoo'
                 ) .
                 '</p>';
-            echo '<label for="brevo_list_id" class="hidden">' .
-                esc_html__('Brevo List', 'brevwoo') .
+            echo '<label for="brevo_list_ids" class="hidden">' .
+                esc_html__('Brevo Lists', 'brevwoo') .
                 '</label>';
-            echo '<select id="brevo_list_id" name="brevo_list_id" class="select">';
+            echo '<select id="brevo_list_ids"
+                        name="brevo_list_ids[]"
+                        style="min-height: 100px; width: 100%;"
+                        multiple>';
             foreach ($lists as $id => $name) {
+                $selected = in_array($id, $brevo_list_ids) ? ' selected' : '';
                 echo '<option value="' .
                     esc_attr($id) .
                     '"' .
-                    selected($brevo_list_id, $id, false) .
+                    esc_attr($selected) .
                     '>' .
                     esc_html($name) .
                     '</option>';
@@ -322,22 +328,32 @@ class BrevWooAdmin
     }
 
     /**
-     * Save selected Brevo list to product meta.
+     * Save selected Brevo lists to product meta.
      */
-    public function saveProductMeta($post_id)
+    public function saveSelectedLists($post_id)
     {
         if (!wp_verify_nonce($_POST['_wpnonce'], 'update-post_' . $post_id)) {
             return;
         }
 
-        if (isset($_POST['brevo_list_id'])) {
-            $brevo_list_id = sanitize_text_field($_POST['brevo_list_id']);
-            update_post_meta($post_id, 'brevo_list_id', $brevo_list_id);
+        if (isset($_POST['brevo_list_ids'])) {
+            $brevo_list_ids = array_map(
+                'sanitize_text_field',
+                $_POST['brevo_list_ids']
+            );
+
+            // Delete existing meta to avoid duplicates
+            delete_post_meta($post_id, 'brevo_list_ids');
+
+            // Add each new value separately to store them as an array
+            foreach ($brevo_list_ids as $list_id) {
+                add_post_meta($post_id, 'brevo_list_ids', $list_id);
+            }
         }
     }
 
     /**
-     * Catch the product purchase event and add the customer to the Brevo list.
+     * Add the WooCommerce customer to the product's Brevo lists.
      */
     public function processWcOrderCompleted($order_id)
     {
@@ -345,65 +361,71 @@ class BrevWooAdmin
 
         foreach ($order->get_items() as $item) {
             $product_id = $item->get_product_id();
-            $brevo_list_id = get_post_meta($product_id, 'brevo_list_id', true);
+            $brevo_list_ids = get_post_meta(
+                $product_id,
+                'brevo_list_ids',
+                false
+            );
 
-            if (!empty($brevo_list_id)) {
-                $this->addOrUpdateBrevoContact($order, [$brevo_list_id]);
+            if (!empty($brevo_list_ids)) {
+                $this->addOrUpdateBrevoContact($order, $brevo_list_ids);
             }
         }
     }
 
     /**
-     * Add or update a Brevo contact.
+     * Create or update a Brevo contact.
      * https://developers.brevo.com/reference/createcontact
      * @SuppressWarnings(PHPMD.MissingImport)
      */
     public function addOrUpdateBrevoContact($order, $listIds)
     {
         $brevo_api_key = get_option('brevwoo_brevo_api_key', '');
-
-        if ($brevo_api_key) {
-            $config = Brevo\Client\Configuration::getDefaultConfiguration()->setApiKey(
-                'api-key',
-                $brevo_api_key
+        if (empty($brevo_api_key)) {
+            error_log(
+                'BrevWoo: Brevo API key not set, cannot add contact to Brevo'
             );
-            $apiInstance = new Brevo\Client\Api\ContactsApi(
-                new \GuzzleHttp\Client(),
-                $config
+            return;
+        }
+
+        $config = Brevo\Client\Configuration::getDefaultConfiguration()->setApiKey(
+            'api-key',
+            $brevo_api_key
+        );
+        $apiInstance = new Brevo\Client\Api\ContactsApi(
+            new \GuzzleHttp\Client(),
+            $config
+        );
+
+        // Collect order details
+        $email = $order->get_billing_email();
+        $first_name = $order->get_billing_first_name();
+        $last_name = $order->get_billing_last_name();
+        $order_id = $order->get_id();
+        $order_total = $order->get_total();
+        $order_date = $order->get_date_created()->date('d-m-Y');
+
+        // Create the contact object
+        $createContact = new Brevo\Client\Model\CreateContact([
+            'email' => $email,
+            'updateEnabled' => true,
+            'attributes' => [
+                'FIRSTNAME' => $first_name,
+                'LASTNAME' => $last_name,
+                'ORDER_ID' => strval($order_id),
+                'ORDER_PRICE' => $order_total,
+                'ORDER_DATE' => $order_date,
+            ],
+            'listIds' => array_map('intval', $listIds), // Ensure listIds are integers
+        ]);
+
+        try {
+            $apiInstance->createContact($createContact);
+        } catch (Exception $e) {
+            error_log(
+                'BrevWoo: Error creating or updating Brevo contact: ' .
+                    $e->getMessage()
             );
-
-            // Collect order details
-            $email = $order->get_billing_email();
-            $first_name = $order->get_billing_first_name();
-            $last_name = $order->get_billing_last_name();
-            $order_id = $order->get_id();
-            $order_total = $order->get_total();
-            $order_date = $order->get_date_created()->date('d-m-Y');
-
-            // Create the contact object
-            $createContact = new Brevo\Client\Model\CreateContact([
-                'email' => $email,
-                'updateEnabled' => true,
-                'attributes' => [
-                    'FIRSTNAME' => $first_name,
-                    'LASTNAME' => $last_name,
-                    'ORDER_ID' => strval($order_id),
-                    'ORDER_PRICE' => $order_total,
-                    'ORDER_DATE' => $order_date,
-                ],
-                'listIds' => array_map('intval', $listIds), // Ensure listIds are integers
-            ]);
-
-            try {
-                $result = $apiInstance->createContact($createContact);
-                // Log the result for debugging purposes
-                // error_log(print_r($result, true));
-            } catch (Exception $e) {
-                error_log(
-                    'Error creating or updating Brevo contact: ' .
-                        $e->getMessage()
-                );
-            }
         }
     }
 }
