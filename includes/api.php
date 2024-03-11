@@ -14,14 +14,14 @@ class BrevWooApiClient
     /**
      * The instance of the ContactsApi.
      *
-     * @var ContactsApi
+     * @var Brevo\Client\Api\ContactsApi
      */
     private $contactsApiInstance;
 
     /**
      * The instance of the AccountApi.
      *
-     * @var AccountApi
+     * @var Brevo\Client\Api\AccountApi
      */
     private $accountApiInstance;
 
