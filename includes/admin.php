@@ -279,7 +279,7 @@ class BrevWooAdmin
 
             echo '<p class="howto">' .
                 esc_html__(
-                    'Select the Brevo list(s) to add customers to when they purchase this product.',
+                    'Select the Brevo lists to add customers to when they purchase this product.',
                     'brevwoo'
                 ) .
                 '</p>';
