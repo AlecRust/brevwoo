@@ -278,13 +278,12 @@ class BrevWooAdmin
             esc_attr($name) .
             '">';
         foreach ($options as $key => $label) {
-            $selected = $value === $key ? ' selected' : '';
             echo '<option value="' .
                 esc_attr($key) .
                 '"' .
-                $selected .
+                ($value === $key ? ' selected' : '') .
                 '>' .
-                $label .
+                esc_html($label) .
                 '</option>';
         }
         echo '</select>';
