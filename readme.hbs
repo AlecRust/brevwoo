@@ -14,7 +14,7 @@ Connect WooCommerce products to Brevo lists.
 
 Improve and simplify your marketing automation by connecting WooCommerce products directly to [Brevo](https://www.brevo.com/) lists.
 
-Each product can be connected to any number of Brevo lists. When a customer purchases the product, they are added to the selected lists.
+Each product can be connected to any number of Brevo lists. When a customer buys the product, they are added to the selected lists.
 
 This plugin provides a simple and reliable way of adding customers to Brevo lists based on the product they purchase, which is useful for Brevo automations.
 

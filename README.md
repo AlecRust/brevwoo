@@ -1,7 +1,7 @@
 ![Banner](.wordpress-org/banner-1544x500.png)
 
 > [!IMPORTANT]
-> This plugin is pending approval on the WordPress Plugin Directory. It must be built from source until then.
+> This plugin is pending approval to the WordPress Plugin Directory. It must be built from source until then.
 
 # BrevWoo [![Lint](https://github.com/AlecRust/brevwoo/actions/workflows/lint.yml/badge.svg)](https://github.com/AlecRust/brevwoo/actions/workflows/lint.yml)
 
@@ -9,7 +9,7 @@
 
 Allows connecting each WooCommerce product to any number of Brevo lists.
 
-When a customer purchases the product, they are added to the selected lists.
+When a customer buys the product, they are added to the selected lists.
 
 ## Features
 
@@ -28,13 +28,13 @@ Once activated, add your [Brevo API key](https://developers.brevo.com/docs/getti
 
 ## Development
 
-### Requirements
+Ensure you have the following installed:
 
 -   [Node.js](https://nodejs.org/)
 -   [Composer](https://getcomposer.org/)
 -   [Docker](https://www.docker.com/)
 
-Start a WordPress instance for developing this plugin by running:
+Start a WordPress instance for developing this plugin:
 
 1. `npm install`
 2. `composer install`
