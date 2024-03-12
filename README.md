@@ -1,5 +1,8 @@
 ![Banner](.wordpress-org/banner-1544x500.png)
 
+> [!IMPORTANT]
+> This plugin is pending approval on the WordPress Plugin Directory. It must be built from source until then.
+
 # BrevWoo [![Lint](https://github.com/AlecRust/brevwoo/actions/workflows/lint.yml/badge.svg)](https://github.com/AlecRust/brevwoo/actions/workflows/lint.yml)
 
 > WordPress plugin to integrate WooCommerce with Brevo
