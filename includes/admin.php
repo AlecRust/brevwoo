@@ -413,4 +413,23 @@ class BrevWooAdmin
             );
         }
     }
+
+    /**
+     * Display admin notice if WooCommerce is not active.
+     */
+    public function checkRequiredPlugins()
+    {
+        if (!is_plugin_active('woocommerce/woocommerce.php')) {
+            echo '<div class="error"><p><strong>' .
+                esc_html__(
+                    'BrevWoo requires WooCommerce to be installed and active. You can download ',
+                    'brevwoo'
+                ) .
+                '<a href="https://woocommerce.com/" target="_blank">' .
+                esc_html__('WooCommerce', 'brevwoo') .
+                '</a>' .
+                esc_html__(' here.', 'brevwoo') .
+                '</strong></p></div>';
+        }
+    }
 }

@@ -97,6 +97,9 @@ class BrevWoo
             $plugin_admin,
             'processWcOrderCompleted',
         ]);
+
+        // Display admin notice if WooCommerce is not active
+        add_action('admin_notices', [$plugin_admin, 'checkRequiredPlugins']);
     }
 
     /**
