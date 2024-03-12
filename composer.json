@@ -4,7 +4,7 @@
     "license": "GPL-2.0-or-later",
     "type": "wordpress-plugin",
     "require": {
-        "getbrevo/brevo-php": "1.0.3"
+        "getbrevo/brevo-php": "^2.0"
     },
     "require-dev": {
         "phpro/grumphp": "^2.5.0",
