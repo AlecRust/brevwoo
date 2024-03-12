@@ -12,18 +12,18 @@ Connect WooCommerce products to Brevo lists.
 
 == Description ==
 
-Improve your marketing automation by connecting WooCommerce products to [Brevo](https://www.brevo.com/) lists.
+Improve and simplify your marketing automation by connecting WooCommerce products directly to [Brevo](https://www.brevo.com/) lists.
 
-Each product can be connected to any number of Brevo lists. When a customer completes an order, they are added to the selected lists.
+Each product can be connected to any number of Brevo lists. When a customer purchases the product, they are added to the selected lists.
 
-For example, use this plugin to create a Brevo automation based on customers who purchase a specific product.
+This plugin provides a simple and reliable way of adding customers to Brevo lists based on the product they purchase, which is useful for Brevo automations.
 
 Features include:
 
-* Adds customer to selected Brevo lists for a given product when order is completed
-* Includes customer email, first name, and last name in the Brevo contact
-* Includes order ID, price and date as [transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes)
-* Simpler and more reliable than the JS [Brevo Tracker](https://developers.brevo.com/docs/getting-started-with-brevo-tracker) at what it does
+* Customer added to selected Brevo lists for a given product when purchased
+* Configuration of when during checkout the customer is added to Brevo
+* Customer name and email attributes included in the created Brevo contact
+* [Transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes) included in the created Brevo contact
 
 This plugin is open source and contributions are welcome [on GitHub](https://github.com/AlecRust/brevwoo).
 

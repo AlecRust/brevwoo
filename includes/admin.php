@@ -120,13 +120,13 @@ class BrevWooAdmin
 
         // Add "Brevo API key" setting field
         add_settings_field(
-            'brevo_api_key', // HTML id
+            'brevwoo_brevo_api_key', // HTML id
             __('Brevo API key', 'brevwoo'), // field title
             [$this, 'renderApiKeyInput'], // callback
             'brevwoo-admin', // page
             'brevwoo_setting_section', // section
             [
-                'id' => 'brevo_api_key',
+                'id' => 'brevwoo_brevo_api_key',
                 'option_name' => 'brevwoo_brevo_api_key',
             ]
         );
@@ -138,6 +138,32 @@ class BrevWooAdmin
             [
                 'default' => '',
                 'sanitize_callback' => 'sanitize_text_field',
+            ]
+        );
+
+        // Add "Add to Brevo trigger" setting field
+        add_settings_field(
+            'brevwoo_order_status_trigger', // HTML id
+            __('Add to Brevo trigger', 'brevwoo'), // field title
+            [$this, 'renderOrderStatusTriggerSelect'], // callback
+            'brevwoo-admin', // page
+            'brevwoo_setting_section', // section
+            [
+                'id' => 'brevwoo_order_status_trigger',
+                'option_name' => 'brevwoo_order_status_trigger',
+            ]
+        );
+
+        // Register "Add to Brevo trigger" setting
+        register_setting(
+            'brevwoo_option_group', // settings group name
+            'brevwoo_order_status_trigger', // option name
+            [
+                'default' => 'completed',
+                'sanitize_callback' => [
+                    $this,
+                    'sanitizeOrderStatusTriggerInput',
+                ],
             ]
         );
     }
@@ -217,6 +243,58 @@ class BrevWooAdmin
             target="_blank">%s</a></p>',
             esc_html__('Read the Brevo API key guide', 'brevwoo')
         );
+    }
+
+    /**
+     * Sanitize "Add to Brevo trigger" select input.
+     */
+    public function sanitizeOrderStatusTriggerInput($input)
+    {
+        $valid = ['completed', 'processing', 'pending'];
+        if (in_array($input, $valid, true)) {
+            return $input;
+        }
+        return 'completed';
+    }
+
+    /**
+     * Render "Add to Brevo trigger" select input.
+     */
+    public function renderOrderStatusTriggerSelect($val)
+    {
+        $field_id = $val['id'];
+        $name = $val['option_name'];
+        $value = get_option($name, 'completed');
+
+        $options = [
+            'completed' => esc_html__('Completed', 'brevwoo'),
+            'processing' => esc_html__('Processing', 'brevwoo'),
+            'pending' => esc_html__('Pending', 'brevwoo'),
+        ];
+
+        echo '<select id="' .
+            esc_attr($field_id) .
+            '" name="' .
+            esc_attr($name) .
+            '">';
+        foreach ($options as $key => $label) {
+            $selected = $value === $key ? ' selected' : '';
+            echo '<option value="' .
+                esc_attr($key) .
+                '"' .
+                $selected .
+                '>' .
+                $label .
+                '</option>';
+        }
+        echo '</select>';
+
+        echo '<p class="description">' .
+            esc_html__(
+                'Select which WooCommerce order status adds the customer to Brevo.',
+                'brevwoo'
+            ) .
+            '</p>';
     }
 
     /**
@@ -351,7 +429,7 @@ class BrevWooAdmin
     /**
      * Add the WooCommerce customer to the product's Brevo lists.
      */
-    public function processWcOrderCompleted($order_id)
+    public function processWcOrder($order_id)
     {
         $order = wc_get_order($order_id);
 
@@ -430,6 +508,29 @@ class BrevWooAdmin
                 '</a>' .
                 esc_html__(' here.', 'brevwoo') .
                 '</strong></p></div>';
+        }
+    }
+
+    /**
+     * Get the WooCommerce hook to use for adding customer to Brevo lists.
+     *
+     * @return string Hook name
+     */
+    public function getWcCheckoutHook()
+    {
+        $order_status_trigger = get_option(
+            'brevwoo_order_status_trigger',
+            'completed'
+        );
+
+        switch ($order_status_trigger) {
+            case 'processing':
+                return 'woocommerce_order_status_processing';
+            case 'pending':
+                return 'woocommerce_order_status_pending';
+            case 'completed':
+            default:
+                return 'woocommerce_order_status_completed';
         }
     }
 }

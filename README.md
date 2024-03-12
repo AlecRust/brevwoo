@@ -6,14 +6,14 @@
 
 Allows connecting each WooCommerce product to any number of Brevo lists.
 
-When a customer completes an order, they are added to the selected lists.
+When a customer purchases the product, they are added to the selected lists.
 
 ## Features
 
--   Adds customer to selected Brevo lists for a given product when order is completed
--   Includes customer email, first name, and last name in the Brevo contact
--   Includes order ID, price and date as [transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes)
--   Simpler and more reliable than the JS [Brevo Tracker](https://developers.brevo.com/docs/getting-started-with-brevo-tracker) at what it does
+-   Customer added to selected Brevo lists for a given product when purchased
+-   Configuration of when during checkout the customer is added to Brevo
+-   Customer name and email attributes included in the created Brevo contact
+-   [Transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes) included in the created Brevo contact
 
 ## Installation
 
