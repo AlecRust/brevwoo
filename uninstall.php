@@ -2,7 +2,7 @@
 /**
  * Fired when the plugin is uninstalled.
  *
- * @link    https://www.alecrust.com/
+ * @link    https://github.com/AlecRust/brevwoo
  * @package BrevWoo
  */
 

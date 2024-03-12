@@ -12,9 +12,9 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       brevwoo
  *
- * @package           BrevWoo
- * @author            Alec Rust
- * @link              https://www.alecrust.com/
+ * @package BrevWoo
+ * @author  Alec Rust
+ * @link    https://github.com/AlecRust/brevwoo
  */
 
 require plugin_dir_path(__FILE__) . 'vendor/autoload.php';
