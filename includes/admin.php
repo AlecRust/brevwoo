@@ -94,8 +94,8 @@ class BrevWooAdmin
         ?>
         <div class="wrap">
             <h2><?php esc_html_e('BrevWoo', 'brevwoo'); ?></h2>
-            <?php $this->renderBrevoConnectionStatus(); ?>
-            <form method="post" action="options.php">
+            <?php $this->renderBrevoStatusNotice(); ?>
+            <form action="options.php" method="post">
                 <?php
                 settings_fields('brevwoo_option_group');
                 do_settings_sections('brevwoo-admin');
@@ -171,7 +171,7 @@ class BrevWooAdmin
     /**
      * Render Brevo API connection status notice.
      */
-    private function renderBrevoConnectionStatus()
+    private function renderBrevoStatusNotice()
     {
         if (!$this->apiClient) {
             return;
