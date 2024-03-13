@@ -145,7 +145,7 @@ class BrevWooAdmin
         add_settings_field(
             'brevwoo_order_status_trigger', // HTML id
             __('Add to Brevo trigger', 'brevwoo'), // field title
-            [$this, 'renderOrderStatusTriggerSelect'], // callback
+            [$this, 'renderOrderStatusTriggerInput'], // callback
             'brevwoo-admin', // page
             'brevwoo_setting_section', // section
             [
@@ -260,7 +260,7 @@ class BrevWooAdmin
     /**
      * Render "Add to Brevo trigger" select input.
      */
-    public function renderOrderStatusTriggerSelect($val)
+    public function renderOrderStatusTriggerInput($val)
     {
         $field_id = $val['id'];
         $name = $val['option_name'];
