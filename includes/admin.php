@@ -401,12 +401,12 @@ class BrevWooAdmin
      */
     public function saveSelectedLists($post_id)
     {
-        // Check nonce is set and valid, and if user has permission to edit
-        if (
-            !isset($_POST['_wpnonce']) ||
-            !wp_verify_nonce($_POST['_wpnonce'], 'update-post_' . $post_id) ||
-            !current_user_can('edit_product', $post_id)
-        ) {
+        // Verify nonce, user permission, and return early if checks fail
+        $nonceIsValid =
+            isset($_POST['_wpnonce']) &&
+            wp_verify_nonce($_POST['_wpnonce'], 'update-post_' . $post_id);
+        $userCanEdit = current_user_can('edit_product', $post_id);
+        if (!$nonceIsValid || !$userCanEdit) {
             return;
         }
 
