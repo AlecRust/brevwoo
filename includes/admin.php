@@ -401,8 +401,14 @@ class BrevWooAdmin
      */
     public function saveSelectedLists($post_id)
     {
-        // Verify the nonce before proceeding
-        check_admin_referer('update-post_' . $post_id);
+        // Check nonce is set and valid, and if user has permission to edit
+        if (
+            !isset($_POST['_wpnonce']) ||
+            !wp_verify_nonce($_POST['_wpnonce'], 'update-post_' . $post_id) ||
+            !current_user_can('edit_product', $post_id)
+        ) {
+            return;
+        }
 
         if (isset($_POST['brevwoo_brevo_list_ids'])) {
             $brevo_list_ids = array_map(
