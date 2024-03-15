@@ -328,7 +328,7 @@ class BrevWooAdmin
                 sprintf(
                     // translators: %s is a link to the BrevWoo settings page
                     esc_html__(
-                        'Please %s on the BrevWoo settings page.',
+                        'Enter a Brevo API key on the %s to load your lists.',
                         'brevwoo'
                     ),
                     '<a href="' .
@@ -340,7 +340,7 @@ class BrevWooAdmin
                             )
                         ) .
                         '">' .
-                        esc_html__('enter your Brevo API key', 'brevwoo') .
+                        esc_html__('BrevWoo settings page', 'brevwoo') .
                         '</a>'
                 )
             );
