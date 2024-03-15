@@ -374,7 +374,11 @@ class BrevWooAdmin
                         style="min-height: 100px; width: 100%;"
                         multiple>';
             foreach ($lists as $id => $name) {
-                $selected = in_array($id, $brevo_list_ids) ? ' selected' : '';
+                $selected =
+                    (empty($brevo_list_ids) && $id === '') ||
+                    in_array($id, $brevo_list_ids)
+                        ? ' selected'
+                        : '';
                 echo '<option value="' .
                     esc_attr($id) .
                     '"' .
@@ -411,22 +415,25 @@ class BrevWooAdmin
         }
 
         if (isset($_POST['brevwoo_brevo_list_ids'])) {
+            // Sanitize the options
             $brevo_list_ids = array_map(
                 'sanitize_text_field',
                 $_POST['brevwoo_brevo_list_ids']
             );
 
-            // Filter out empty values to prevent "None (disabled)" being saved
+            // Remove 'None' option to prevent it being saved
             $brevo_list_ids = array_filter($brevo_list_ids, function ($value) {
                 return $value !== '';
             });
 
-            // Delete existing meta to avoid duplicates
+            // Delete all current lists (user may be deselecting all)
             delete_post_meta($post_id, 'brevwoo_brevo_list_ids');
 
-            // Add each new value separately to store them as an array
-            foreach ($brevo_list_ids as $list_id) {
-                add_post_meta($post_id, 'brevwoo_brevo_list_ids', $list_id);
+            // If any valid lists are selected, save them
+            if (!empty($brevo_list_ids)) {
+                foreach ($brevo_list_ids as $list_id) {
+                    add_post_meta($post_id, 'brevwoo_brevo_list_ids', $list_id);
+                }
             }
         }
     }
