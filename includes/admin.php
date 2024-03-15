@@ -316,11 +316,7 @@ class BrevWooAdmin
      */
     public function renderEditProductPanelContent($post)
     {
-        $brevo_list_ids = get_post_meta(
-            $post->ID,
-            'brevwoo_brevo_list_ids',
-            false
-        );
+        $brevo_list_ids = get_post_meta($post->ID, 'brevwoo_brevo_list_ids');
 
         if (!$this->apiClient) {
             printf(
@@ -421,10 +417,8 @@ class BrevWooAdmin
                 $_POST['brevwoo_brevo_list_ids']
             );
 
-            // Remove 'None' option to prevent it being saved
-            $brevo_list_ids = array_filter($brevo_list_ids, function ($value) {
-                return $value !== '';
-            });
+            // Strip out any non-list IDs (including 'None' option)
+            $brevo_list_ids = array_filter($brevo_list_ids);
 
             // Delete all current lists (user may be deselecting all)
             delete_post_meta($post_id, 'brevwoo_brevo_list_ids');
@@ -449,8 +443,7 @@ class BrevWooAdmin
             $product_id = $item->get_product_id();
             $brevo_list_ids = get_post_meta(
                 $product_id,
-                'brevwoo_brevo_list_ids',
-                false
+                'brevwoo_brevo_list_ids'
             );
 
             if (!empty($brevo_list_ids)) {
