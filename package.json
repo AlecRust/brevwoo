@@ -1,7 +1,7 @@
 {
   "name": "brevwoo",
   "version": "0.0.4",
-  "description": "Connect WooCommerce products to Brevo lists.",
+  "description": "Simple and reliable WooCommerce to Brevo integration.",
   "author": "Alec Rust (https://www.alecrust.com/)",
   "license": "GPL-2.0-or-later",
   "repository": "https://github.com/AlecRust/brevwoo",

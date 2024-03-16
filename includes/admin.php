@@ -141,6 +141,29 @@ class BrevWooAdmin
             ]
         );
 
+        // Add "Default Brevo lists" setting field
+        add_settings_field(
+            'brevwoo_default_brevo_lists', // HTML id
+            __('Default Brevo lists', 'brevwoo'), // field title
+            [$this, 'renderDefaultListsInput'], // callback
+            'brevwoo-admin', // page
+            'brevwoo_setting_section', // section
+            [
+                'id' => 'brevwoo_default_brevo_lists',
+                'option_name' => 'brevwoo_default_brevo_lists',
+            ]
+        );
+
+        // Register "Default Brevo lists" setting
+        register_setting(
+            'brevwoo_option_group', // settings group name
+            'brevwoo_default_brevo_lists', // option name
+            [
+                'default' => [],
+                'sanitize_callback' => [$this, 'sanitizeDefaultListsInput'],
+            ]
+        );
+
         // Add "Add to Brevo trigger" setting field
         add_settings_field(
             'brevwoo_order_status_trigger', // HTML id
@@ -246,15 +269,78 @@ class BrevWooAdmin
     }
 
     /**
-     * Sanitize "Add to Brevo trigger" select input.
+     * Render the "Default Brevo lists" field.
      */
-    public function sanitizeOrderStatusTriggerInput($input)
+    public function renderDefaultListsInput($val)
     {
-        $valid = ['completed', 'processing', 'pending'];
-        if (in_array($input, $valid, true)) {
-            return $input;
+        $field_id = $val['id'];
+        $name = $val['option_name'];
+        $default_brevo_lists = get_option($name, []);
+
+        if (!$this->apiClient) {
+            echo '<p>' . esc_html__('Unavailable', 'brevwoo') . '</p>';
+            return;
         }
-        return 'completed';
+
+        try {
+            $result = $this->apiClient->getLists();
+            $lists = [
+                '' => esc_html__(
+                    'Disabled (product-specific lists only)',
+                    'brevwoo'
+                ),
+            ];
+            foreach ($result['lists'] as $list) {
+                $lists[$list['id']] = '#' . $list['id'] . ' ' . $list['name'];
+            }
+
+            echo '<select id="' .
+                esc_attr($field_id) .
+                '" name="' .
+                esc_attr($name) .
+                '[]" style="min-height: 100px; width: 100%;" multiple>';
+            foreach ($lists as $id => $name) {
+                $selected =
+                    (empty($default_brevo_lists) && $id === '') ||
+                    in_array($id, $default_brevo_lists)
+                        ? ' selected'
+                        : '';
+                echo '<option value="' .
+                    esc_attr($id) .
+                    '"' .
+                    esc_attr($selected) .
+                    '>' .
+                    esc_html($name) .
+                    '</option>';
+            }
+            echo '</select>';
+
+            echo '<p class="description">' .
+                esc_html__(
+                    'Select the Brevo lists customers who buy any product will be added to.',
+                    'brevwoo'
+                ) .
+                '</p>';
+        } catch (Exception $e) {
+            echo '<p>' . esc_html__('Unavailable', 'brevwoo') . '</p>';
+        }
+    }
+
+    /**
+     * Sanitize "Default Brevo lists" multi-select input.
+     */
+    public function sanitizeDefaultListsInput($input)
+    {
+        // Ensure $input is an array
+        $input = (array) $input;
+
+        // Sanitize each element in the array
+        $input = array_map('sanitize_text_field', $input);
+
+        // Strip out any non-list IDs (including 'Disabled' option)
+        $input = array_filter($input);
+
+        return $input;
     }
 
     /**
@@ -294,6 +380,18 @@ class BrevWooAdmin
                 'brevwoo'
             ) .
             '</p>';
+    }
+
+    /**
+     * Sanitize "Add to Brevo trigger" select input.
+     */
+    public function sanitizeOrderStatusTriggerInput($input)
+    {
+        $valid = ['completed', 'processing', 'pending'];
+        if (in_array($input, $valid, true)) {
+            return $input;
+        }
+        return 'completed';
     }
 
     /**
@@ -345,14 +443,16 @@ class BrevWooAdmin
 
         try {
             $result = $this->apiClient->getLists();
-            $lists = ['' => esc_html__('None (disabled)', 'brevwoo')];
+            $lists = [
+                '' => esc_html__('Disabled (default lists only)', 'brevwoo'),
+            ];
             foreach ($result['lists'] as $list) {
                 $lists[$list['id']] = '#' . $list['id'] . ' ' . $list['name'];
             }
 
             echo '<p class="howto">' .
                 esc_html__(
-                    'Select the Brevo lists to add customers to when they purchase this product.',
+                    'Select Brevo lists below to add customers to when they buy this product.',
                     'brevwoo'
                 ) .
                 '<span class="woocommerce-help-tip" style="margin-bottom: 1px;" data-tip="' .
@@ -384,6 +484,24 @@ class BrevWooAdmin
                     '</option>';
             }
             echo '</select>';
+            printf(
+                '<p class="howto">%s</p>',
+                sprintf(
+                    // translators: %s is a link to the BrevWoo settings page
+                    esc_html__('Select default lists in %s.', 'brevwoo'),
+                    '<a href="' .
+                        esc_url(
+                            add_query_arg(
+                                'page',
+                                $this->plugin_name,
+                                get_admin_url() . 'options-general.php'
+                            )
+                        ) .
+                        '">' .
+                        esc_html__('BrevWoo settings', 'brevwoo') .
+                        '</a>'
+                )
+            );
         } catch (Exception $e) {
             echo '<div class="notice notice-error notice-alt inline">
                 <p><strong>' .
@@ -402,22 +520,22 @@ class BrevWooAdmin
     public function saveSelectedLists($post_id)
     {
         // Verify nonce, user permission, and return early if checks fail
-        $nonceIsValid =
+        $nonce_valid =
             isset($_POST['_wpnonce']) &&
             wp_verify_nonce($_POST['_wpnonce'], 'update-post_' . $post_id);
-        $userCanEdit = current_user_can('edit_product', $post_id);
-        if (!$nonceIsValid || !$userCanEdit) {
+        $can_edit = current_user_can('edit_product', $post_id);
+        if (!$nonce_valid || !$can_edit) {
             return;
         }
 
         if (isset($_POST['brevwoo_brevo_list_ids'])) {
-            // Sanitize the options
+            // Sanitize each element in the array
             $brevo_list_ids = array_map(
                 'sanitize_text_field',
                 $_POST['brevwoo_brevo_list_ids']
             );
 
-            // Strip out any non-list IDs (including 'None' option)
+            // Strip out any non-list IDs (including 'Disabled' option)
             $brevo_list_ids = array_filter($brevo_list_ids);
 
             // Delete all current lists (user may be deselecting all)
@@ -438,16 +556,23 @@ class BrevWooAdmin
     public function processWcOrder($order_id)
     {
         $order = wc_get_order($order_id);
+        $default_list_ids = array_map(
+            'intval',
+            get_option('brevwoo_default_brevo_lists', [])
+        );
 
         foreach ($order->get_items() as $item) {
             $product_id = $item->get_product_id();
-            $brevo_list_ids = get_post_meta(
-                $product_id,
-                'brevwoo_brevo_list_ids'
+            $product_list_ids = array_map(
+                'intval',
+                get_post_meta($product_id, 'brevwoo_brevo_list_ids')
+            );
+            $combined_list_ids = array_unique(
+                array_merge($default_list_ids, $product_list_ids)
             );
 
-            if (!empty($brevo_list_ids)) {
-                $this->addOrUpdateBrevoContact($order, $brevo_list_ids);
+            if (!empty($combined_list_ids)) {
+                $this->addOrUpdateBrevoContact($order, $combined_list_ids);
             }
         }
     }
@@ -456,7 +581,7 @@ class BrevWooAdmin
      * Create or update a Brevo contact.
      * @SuppressWarnings(PHPMD.MissingImport)
      */
-    public function addOrUpdateBrevoContact($order, $listIds)
+    public function addOrUpdateBrevoContact($order, $list_ids)
     {
         if (!$this->apiClient) {
             error_log(
@@ -484,12 +609,12 @@ class BrevWooAdmin
                 'ORDER_PRICE' => $order_total,
                 'ORDER_DATE' => $order_date,
             ],
-            'listIds' => array_map('intval', $listIds), // Ensure listIds are integers
+            'list_ids' => $list_ids,
         ]);
 
         try {
             $this->apiClient->createOrUpdateContact($createContact);
-            $this->logContactAddedToBrevo($email, $listIds, strval($order_id));
+            $this->logContactAddedToBrevo($email, $list_ids, strval($order_id));
         } catch (Exception $e) {
             error_log(
                 'BrevWoo: Error creating or updating Brevo contact: ' .
@@ -501,29 +626,29 @@ class BrevWooAdmin
     /**
      * Log Brevo contact add to Activity Log plugin (if installed).
      */
-    private function logContactAddedToBrevo($email, $listIds, $orderId)
+    private function logContactAddedToBrevo($email, $list_ids, $order_id)
     {
         if (!function_exists('aal_insert_log')) {
             return;
         }
 
-        $logMessage = sprintf(
+        $log_message = sprintf(
             '%s added to Brevo lists %s via order #%s',
             $email,
             implode(
                 ', ',
-                array_map(function ($listId) {
-                    return '#' . $listId;
-                }, $listIds)
+                array_map(function ($list_id) {
+                    return '#' . $list_id;
+                }, $list_ids)
             ),
-            $orderId
+            $order_id
         );
 
         aal_insert_log([
             'action' => 'complete',
             'object_type' => 'Users',
             'object_subtype' => 'BrevWoo',
-            'object_name' => $logMessage,
+            'object_name' => $log_message,
         ]);
     }
 

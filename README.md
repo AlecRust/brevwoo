@@ -7,9 +7,7 @@
 
 > WordPress plugin to integrate WooCommerce with Brevo
 
-Allows connecting each WooCommerce product to any number of Brevo lists.
-
-When a customer buys the product, they are added to the selected lists.
+Set default Brevo lists that customers are added to when they buy a product, and/or set lists for specific products.
 
 ## Features
 
