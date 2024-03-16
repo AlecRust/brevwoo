@@ -489,12 +489,42 @@ class BrevWooAdmin
 
         try {
             $this->apiClient->createOrUpdateContact($createContact);
+            $this->logContactAddedToBrevo($email, $listIds, strval($order_id));
         } catch (Exception $e) {
             error_log(
                 'BrevWoo: Error creating or updating Brevo contact: ' .
                     $e->getMessage()
             );
         }
+    }
+
+    /**
+     * Log Brevo contact add to Activity Log plugin (if installed).
+     */
+    private function logContactAddedToBrevo($email, $listIds, $orderId)
+    {
+        if (!function_exists('aal_insert_log')) {
+            return;
+        }
+
+        $logMessage = sprintf(
+            '%s added to Brevo lists %s via order #%s',
+            $email,
+            implode(
+                ', ',
+                array_map(function ($listId) {
+                    return '#' . $listId;
+                }, $listIds)
+            ),
+            $orderId
+        );
+
+        aal_insert_log([
+            'action' => 'complete',
+            'object_type' => 'Users',
+            'object_subtype' => 'BrevWoo',
+            'object_name' => $logMessage,
+        ]);
     }
 
     /**

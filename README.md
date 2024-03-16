@@ -17,6 +17,7 @@ When a customer buys the product, they are added to the selected lists.
 -   Configuration of when during checkout the customer is added to Brevo
 -   Customer name and email attributes included in the created Brevo contact
 -   [Transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes) included in the created Brevo contact
+-   Useful debug logging added to [Activity Log](https://wordpress.org/plugins/aryo-activity-log/) plugin if installed
 
 ## Installation
 

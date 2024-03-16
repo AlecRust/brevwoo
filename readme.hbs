@@ -24,6 +24,7 @@ Features include:
 * Configuration of when during checkout the customer is added to Brevo
 * Customer name and email attributes included in the created Brevo contact
 * [Transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes) included in the created Brevo contact
+* Useful debug logging added to [Activity Log](https://wordpress.org/plugins/aryo-activity-log/) plugin if installed
 
 This plugin is open source and contributions are welcome [on GitHub](https://github.com/AlecRust/brevwoo).
 
