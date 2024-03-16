@@ -1,8 +1,15 @@
 {
     "name": "alecrust/brevwoo",
     "description": "Simple and reliable WooCommerce to Brevo integration.",
+    "homepage": "https://github.com/AlecRust/brevwoo",
     "license": "GPL-2.0-or-later",
     "type": "wordpress-plugin",
+    "authors": [
+        {
+            "name": "Alec Rust",
+            "homepage": "https://www.alecrust.com/"
+        }
+    ],
     "require": {
         "getbrevo/brevo-php": "^2.0"
     },
