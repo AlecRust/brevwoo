@@ -36,7 +36,6 @@ class BrevWooAdmin
 
     /**
      * Initialize the class and set its properties.
-     * @SuppressWarnings(PHPMD.MissingImport)
      *
      * @param      string    $plugin_name       The name of this plugin.
      * @param      string    $version    The version of this plugin.
@@ -50,6 +49,7 @@ class BrevWooAdmin
 
     /**
      * Initialize the API client
+     * @SuppressWarnings(PHPMD.MissingImport)
      */
     private function initializeApiClient()
     {
