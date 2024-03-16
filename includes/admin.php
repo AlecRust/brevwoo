@@ -30,7 +30,7 @@ class BrevWooAdmin
     /**
      * API client for Brevo.
      *
-     * @var BrevWooApiClient
+     * @var BrevWooApiClient|null
      */
     protected $apiClient;
 
