@@ -1,6 +1,6 @@
 {
     "name": "alecrust/brevwoo",
-    "description": "Dependencies for the BrevWoo WordPress plugin.",
+    "description": "Simple and reliable WooCommerce to Brevo integration.",
     "license": "GPL-2.0-or-later",
     "type": "wordpress-plugin",
     "require": {
