@@ -1,11 +1,7 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "enabledManagers": ["composer", "github-actions"],
-    "extends": [
-        "config:recommended",
-        "schedule:monthly",
-        ":disableDependencyDashboard"
-    ],
+    "extends": ["config:recommended", "schedule:monthly", ":disableDependencyDashboard"],
     "labels": ["dependencies"],
     "packageRules": [
         {

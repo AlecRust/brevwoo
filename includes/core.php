@@ -69,10 +69,7 @@ class BrevWoo
      */
     private function defineAdminHooks()
     {
-        $plugin_admin = new BrevWooAdmin(
-            $this->getPluginName(),
-            $this->getVersion()
-        );
+        $plugin_admin = new BrevWooAdmin($this->getPluginName(), $this->getVersion());
 
         // Admin settings page
         add_action('admin_init', [$plugin_admin, 'settingsPageInit']);
@@ -81,10 +78,7 @@ class BrevWoo
         add_action('admin_menu', [$plugin_admin, 'addMenuItem']);
 
         // Plugin settings link on "Plugins" page
-        add_filter('plugin_action_links_brevwoo/brevwoo.php', [
-            $plugin_admin,
-            'addSettingsLink',
-        ]);
+        add_filter('plugin_action_links_brevwoo/brevwoo.php', [$plugin_admin, 'addSettingsLink']);
 
         // Add "BrevWoo" panel to edit product page
         add_action('add_meta_boxes', [$plugin_admin, 'addEditProductPanel']);
@@ -93,10 +87,7 @@ class BrevWoo
         add_action('save_post_product', [$plugin_admin, 'saveSelectedLists']);
 
         // Add customer to Brevo lists when the (user defined) WC order status is reached
-        add_action($plugin_admin->getWcCheckoutHook(), [
-            $plugin_admin,
-            'processWcOrder',
-        ]);
+        add_action($plugin_admin->getWcCheckoutHook(), [$plugin_admin, 'processWcOrder']);
 
         // Display admin notice if WooCommerce is not active
         add_action('admin_notices', [$plugin_admin, 'checkRequiredPlugins']);

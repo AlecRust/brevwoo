@@ -74,14 +74,9 @@ class BrevWooAdmin
     public function addSettingsLink($links)
     {
         $url = esc_url(
-            add_query_arg(
-                'page',
-                $this->plugin_name,
-                get_admin_url() . 'options-general.php'
-            )
+            add_query_arg('page', $this->plugin_name, get_admin_url() . 'options-general.php')
         );
-        $settings_link =
-            "<a href=\"$url\">" . esc_html__('Settings', 'brevwoo') . '</a>';
+        $settings_link = "<a href=\"$url\">" . esc_html__('Settings', 'brevwoo') . '</a>';
         array_unshift($links, $settings_link);
         return $links;
     }
@@ -183,10 +178,7 @@ class BrevWooAdmin
             'brevwoo_order_status_trigger', // option name
             [
                 'default' => 'completed',
-                'sanitize_callback' => [
-                    $this,
-                    'sanitizeOrderStatusTriggerInput',
-                ],
+                'sanitize_callback' => [$this, 'sanitizeOrderStatusTriggerInput'],
             ]
         );
     }
@@ -285,10 +277,7 @@ class BrevWooAdmin
         try {
             $result = $this->apiClient->getLists();
             $lists = [
-                '' => esc_html__(
-                    'Disabled (product-specific lists only)',
-                    'brevwoo'
-                ),
+                '' => esc_html__('Disabled (product-specific lists only)', 'brevwoo'),
             ];
             foreach ($result['lists'] as $list) {
                 $lists[$list['id']] = '#' . $list['id'] . ' ' . $list['name'];
@@ -358,11 +347,7 @@ class BrevWooAdmin
             'pending' => esc_html__('Pending', 'brevwoo'),
         ];
 
-        echo '<select id="' .
-            esc_attr($field_id) .
-            '" name="' .
-            esc_attr($name) .
-            '">';
+        echo '<select id="' . esc_attr($field_id) . '" name="' . esc_attr($name) . '">';
         foreach ($options as $key => $label) {
             echo '<option value="' .
                 esc_attr($key) .
@@ -421,10 +406,7 @@ class BrevWooAdmin
                 '<p>%s</p>',
                 sprintf(
                     // translators: %s is a link to the BrevWoo settings page
-                    esc_html__(
-                        'Enter a Brevo API key on the %s to load your lists.',
-                        'brevwoo'
-                    ),
+                    esc_html__('Enter a Brevo API key on the %s to load your lists.', 'brevwoo'),
                     '<a href="' .
                         esc_url(
                             add_query_arg(
@@ -471,8 +453,7 @@ class BrevWooAdmin
                         multiple>';
             foreach ($lists as $id => $name) {
                 $selected =
-                    (empty($brevo_list_ids) && $id === '') ||
-                    in_array($id, $brevo_list_ids)
+                    (empty($brevo_list_ids) && $id === '') || in_array($id, $brevo_list_ids)
                         ? ' selected'
                         : '';
                 echo '<option value="' .
@@ -530,10 +511,7 @@ class BrevWooAdmin
 
         if (isset($_POST['brevwoo_brevo_list_ids'])) {
             // Sanitize each element in the array
-            $brevo_list_ids = array_map(
-                'sanitize_text_field',
-                $_POST['brevwoo_brevo_list_ids']
-            );
+            $brevo_list_ids = array_map('sanitize_text_field', $_POST['brevwoo_brevo_list_ids']);
 
             // Strip out any non-list IDs (including 'Disabled' option)
             $brevo_list_ids = array_filter($brevo_list_ids);
@@ -556,10 +534,7 @@ class BrevWooAdmin
     public function processWcOrder($order_id)
     {
         $order = wc_get_order($order_id);
-        $default_list_ids = array_map(
-            'intval',
-            get_option('brevwoo_default_brevo_lists', [])
-        );
+        $default_list_ids = array_map('intval', get_option('brevwoo_default_brevo_lists', []));
 
         foreach ($order->get_items() as $item) {
             $product_id = $item->get_product_id();
@@ -567,9 +542,7 @@ class BrevWooAdmin
                 'intval',
                 get_post_meta($product_id, 'brevwoo_brevo_list_ids')
             );
-            $combined_list_ids = array_unique(
-                array_merge($default_list_ids, $product_list_ids)
-            );
+            $combined_list_ids = array_unique(array_merge($default_list_ids, $product_list_ids));
 
             if (!empty($combined_list_ids)) {
                 $this->addOrUpdateBrevoContact($order, $combined_list_ids);
@@ -584,9 +557,7 @@ class BrevWooAdmin
     public function addOrUpdateBrevoContact($order, $list_ids)
     {
         if (!$this->apiClient) {
-            error_log(
-                'BrevWoo: Brevo API key not set, cannot add contact to Brevo'
-            );
+            error_log('BrevWoo: Brevo API key not set, cannot add contact to Brevo');
             return;
         }
 
@@ -616,10 +587,7 @@ class BrevWooAdmin
             $this->apiClient->createOrUpdateContact($createContact);
             $this->logContactAddedToBrevo($email, $list_ids, strval($order_id));
         } catch (Exception $e) {
-            error_log(
-                'BrevWoo: Error creating or updating Brevo contact: ' .
-                    $e->getMessage()
-            );
+            error_log('BrevWoo: Error creating or updating Brevo contact: ' . $e->getMessage());
         }
     }
 
@@ -678,10 +646,7 @@ class BrevWooAdmin
      */
     public function getWcCheckoutHook()
     {
-        $order_status_trigger = get_option(
-            'brevwoo_order_status_trigger',
-            'completed'
-        );
+        $order_status_trigger = get_option('brevwoo_order_status_trigger', 'completed');
 
         switch ($order_status_trigger) {
             case 'processing':
