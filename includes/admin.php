@@ -45,8 +45,14 @@ class BrevWooAdmin
     {
         $this->plugin_name = $plugin_name;
         $this->version = $version;
+        $this->initializeApiClient();
+    }
 
-        // Initialize the API client
+    /**
+     * Initialize the API client
+     */
+    private function initializeApiClient()
+    {
         $brevo_api_key = get_option('brevwoo_brevo_api_key', '');
         if (!empty($brevo_api_key)) {
             require_once plugin_dir_path(__FILE__) . 'api.php';
