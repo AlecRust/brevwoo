@@ -187,7 +187,7 @@ class BrevWooAdmin
         } catch (Exception $e) {
             echo '<div class="notice notice-error notice-alt">
                 <p><strong>' .
-                esc_html__('Could not connect to Brevo', 'brevwoo') .
+                esc_html__('Error connecting to Brevo', 'brevwoo') .
                 '</strong></p>
                 <p>' .
                 esc_html($e->getMessage()) .
