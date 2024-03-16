@@ -583,7 +583,7 @@ class BrevWooAdmin
                 'ORDER_PRICE' => $order_total,
                 'ORDER_DATE' => $order_date,
             ],
-            'list_ids' => $list_ids,
+            'listIds' => $list_ids,
         ]);
 
         try {
