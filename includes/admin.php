@@ -235,7 +235,7 @@ class BrevWooAdmin
 
         printf(
             '<p class="description">%s <a href="https://app.brevo.com/settings/keys/api" target="_blank">%s</a>.</p>',
-            esc_html__('Create an API key for BrevWoo in your', 'brevwoo'),
+            esc_html__('Set an API key created for BrevWoo in your', 'brevwoo'),
             esc_html__('Brevo account', 'brevwoo')
         );
         printf(
