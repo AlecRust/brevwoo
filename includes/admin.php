@@ -155,7 +155,7 @@ class BrevWooAdmin
             'brevwoo_default_brevo_lists', // option name
             [
                 'default' => [],
-                'sanitize_callback' => [$this, 'sanitizeDefaultListsInput'],
+                'sanitize_callback' => [$this, 'sanitizeListIdsInput'],
             ]
         );
 
@@ -316,15 +316,15 @@ class BrevWooAdmin
     }
 
     /**
-     * Sanitize "Default Brevo lists" multi-select input.
+     * Generic function to sanitize list IDs input.
      */
-    public function sanitizeDefaultListsInput($input)
+    public function sanitizeListIdsInput($input)
     {
         // Ensure $input is an array
         $input = (array) $input;
 
         // Sanitize each element in the array
-        $input = array_map('sanitize_text_field', $input);
+        $input = array_map('intval', $input);
 
         // Strip out any non-list IDs (including 'Disabled' option)
         $input = array_filter($input);
@@ -510,11 +510,8 @@ class BrevWooAdmin
         }
 
         if (isset($_POST['brevwoo_brevo_list_ids'])) {
-            // Sanitize each element in the array
-            $brevo_list_ids = array_map('sanitize_text_field', $_POST['brevwoo_brevo_list_ids']);
-
-            // Strip out any non-list IDs (including 'Disabled' option)
-            $brevo_list_ids = array_filter($brevo_list_ids);
+            // Sanitize the input
+            $brevo_list_ids = $this->sanitizeListIdsInput($_POST['brevwoo_brevo_list_ids']);
 
             // Delete all current lists (user may be deselecting all)
             delete_post_meta($post_id, 'brevwoo_brevo_list_ids');
