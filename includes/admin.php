@@ -335,7 +335,8 @@ class BrevWooAdmin
         // Strip out any non-list IDs (including 'Disabled' option)
         $input = array_filter($input);
 
-        return $input;
+        // Re-index the array
+        return array_values($input);
     }
 
     /**
@@ -405,7 +406,12 @@ class BrevWooAdmin
      */
     public function renderEditProductPanelContent($post)
     {
-        $brevo_list_ids = get_post_meta($post->ID, 'brevwoo_brevo_list_ids');
+        $brevo_list_ids = get_post_meta($post->ID, 'brevwoo_brevo_list_ids', true);
+
+        // Initialize as empty array if the option is not yet set
+        if (!is_array($brevo_list_ids)) {
+            $brevo_list_ids = [];
+        }
 
         if (!$this->apiClient) {
             printf(
@@ -519,15 +525,8 @@ class BrevWooAdmin
             // Sanitize the input
             $brevo_list_ids = $this->sanitizeListIdsInput($_POST['brevwoo_brevo_list_ids']);
 
-            // Delete all current lists (user may be deselecting all)
-            delete_post_meta($post_id, 'brevwoo_brevo_list_ids');
-
-            // If any valid lists are selected, save them
-            if (!empty($brevo_list_ids)) {
-                foreach ($brevo_list_ids as $list_id) {
-                    add_post_meta($post_id, 'brevwoo_brevo_list_ids', $list_id);
-                }
-            }
+            // Save the list of IDs as a meta entry, overwriting any existing value
+            update_post_meta($post_id, 'brevwoo_brevo_list_ids', $brevo_list_ids);
         }
     }
 
@@ -543,7 +542,7 @@ class BrevWooAdmin
             $product_id = $item->get_product_id();
             $product_list_ids = array_map(
                 'intval',
-                get_post_meta($product_id, 'brevwoo_brevo_list_ids')
+                get_post_meta($product_id, 'brevwoo_brevo_list_ids', true)
             );
             $combined_list_ids = array_unique(array_merge($default_list_ids, $product_list_ids));
 
