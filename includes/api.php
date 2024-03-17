@@ -69,6 +69,18 @@ class BrevWooApiClient
     }
 
     /**
+     * Fetches all folders from Brevo.
+     * https://developers.brevo.com/reference/getfolders-1
+     *
+     * @param int $limit  Number of folders to fetch (50 max)
+     * @param int $offset Offset for fetching folders.
+     */
+    public function getFolders($limit = 50, $offset = 0)
+    {
+        return $this->contactsApiInstance->getFolders($limit, $offset);
+    }
+
+    /**
      * Creates or updates a contact in Brevo.
      * https://developers.brevo.com/reference/createcontact
      *

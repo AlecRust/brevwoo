@@ -195,10 +195,7 @@ class BrevWooAdmin
     public function renderSettingsDescription()
     {
         echo '<p>' .
-            esc_html__(
-                'Provide a Brevo API key below to connect BrevWoo to your Brevo account.',
-                'brevwoo'
-            ) .
+            esc_html__('Control the global settings for BrevWoo below.', 'brevwoo') .
             '</p>';
     }
 
@@ -248,16 +245,18 @@ class BrevWooAdmin
         $default_brevo_lists = get_option($name, []);
 
         if (!$this->apiClient) {
-            echo '<p>' . esc_html__('Unavailable', 'brevwoo') . '</p>';
+            echo '<p class="description">' . esc_html__('Unavailable', 'brevwoo') . '</p>';
             return;
         }
 
         try {
-            $result = $this->apiClient->getLists();
+            $listsResult = $this->apiClient->getLists();
+            $allFoldersResult = $this->apiClient->getFolders();
             $this->renderSelectListsInput(
                 $field_id, // HTML ID and name attribute
                 $default_brevo_lists, // Currently selected list IDs
-                $result['lists'], // All Brevo lists from API
+                $listsResult['lists'], // All Brevo lists from API
+                $allFoldersResult['folders'], // All Brevo folders from API
                 __('Disabled (product-specific lists only)', 'brevwoo') // Disabled option label
             );
             echo '<p class="description">' .
@@ -267,7 +266,7 @@ class BrevWooAdmin
                 ) .
                 '</p>';
         } catch (Exception $e) {
-            echo '<p>' . esc_html__('Unavailable', 'brevwoo') . '</p>';
+            echo '<p class="description">' . esc_html__('Unavailable', 'brevwoo') . '</p>';
         }
     }
 
@@ -380,7 +379,8 @@ class BrevWooAdmin
         }
 
         try {
-            $result = $this->apiClient->getLists();
+            $listsResult = $this->apiClient->getLists();
+            $allFoldersResult = $this->apiClient->getFolders();
             echo '<p class="howto">' .
                 esc_html__(
                     'Select Brevo lists below to add customers to when they buy this product.',
@@ -399,7 +399,8 @@ class BrevWooAdmin
             $this->renderSelectListsInput(
                 'brevwoo_brevo_list_ids', // HTML ID and name attribute
                 $brevo_list_ids, // Currently selected list IDs
-                $result['lists'], // All Brevo lists from API
+                $listsResult['lists'], // All Brevo lists from API
+                $allFoldersResult['folders'], // All Brevo folders from API
                 __('Disabled (default lists only)', 'brevwoo') // Disabled option label
             );
             printf(
@@ -552,23 +553,44 @@ class BrevWooAdmin
     }
 
     /**
-     * Renders a multiple select dropdown for Brevo lists.
+     * Enqueues custom admin styles.
+     */
+    public function enqueueAdminStyles()
+    {
+        wp_enqueue_style(
+            'brevwoo-admin-styles',
+            plugin_dir_url(__FILE__) . '../style.css',
+            [], // no stylesheet dependencies
+            $this->version // include plugin version in query string
+        );
+    }
+
+    /**
+     * Renders a multiple select dropdown for Brevo lists, grouped by folder.
      *
      * @param string $fieldId The HTML id and name attribute for the input.
      * @param array $selectedLists An array of the currently selected list IDs.
      * @param array $allLists Brevo API lists response.
+     * @param array $allFolders Brevo API folders response.
      * @param string $disabledLabel The label for the disabled (default) option.
      */
-    private function renderSelectListsInput($fieldId, $selectedLists, $allLists, $disabledLabel)
-    {
-        // Prepare the initial disabled/default option
-        $options = [
-            '' => esc_html__($disabledLabel, 'brevwoo'),
-        ];
+    private function renderSelectListsInput(
+        $fieldId,
+        $selectedLists,
+        $allLists,
+        $allFolders,
+        $disabledLabel
+    ) {
+        // Create a map of folder IDs to folder names
+        $folderMap = [];
+        foreach ($allFolders as $folder) {
+            $folderMap[$folder['id']] = $folder['name'];
+        }
 
-        // Construct the options array
+        // Group lists by folder
+        $groupedLists = [];
         foreach ($allLists as $list) {
-            $options[$list['id']] = '#' . $list['id'] . ' ' . $list['name'];
+            $groupedLists[$list['folderId']][] = $list;
         }
 
         // Start the select element
@@ -576,21 +598,32 @@ class BrevWooAdmin
             esc_attr($fieldId) .
             '" name="' .
             esc_attr($fieldId) .
-            '[]" style="min-height: 100px; width: 100%;" multiple required>';
+            '[]" class="brevwoo-select-lists-input" multiple required>';
 
-        // Render the options elements
-        foreach ($options as $id => $name) {
-            $selected =
-                (empty($selectedLists) && $id === '') || in_array($id, $selectedLists)
-                    ? ' selected'
-                    : '';
-            echo '<option value="' .
-                esc_attr($id) .
-                '"' .
-                esc_attr($selected) .
-                '>' .
-                esc_html($name) .
-                '</option>';
+        // The initial disabled/default option
+        echo '<option value=""' .
+            (empty($selectedLists) ? ' selected' : '') .
+            '>' .
+            esc_html($disabledLabel) .
+            '</option>';
+
+        // Render grouped lists
+        foreach ($groupedLists as $folderId => $lists) {
+            $folderName = isset($folderMap[$folderId])
+                ? $folderMap[$folderId]
+                : __('No folder', 'brevwoo');
+            echo '<optgroup label="' . esc_attr($folderName) . '">';
+            foreach ($lists as $list) {
+                $selected = in_array($list['id'], $selectedLists) ? ' selected' : '';
+                echo '<option value="' .
+                    esc_attr($list['id']) .
+                    '"' .
+                    esc_attr($selected) .
+                    '>' .
+                    esc_html('#' . $list['id'] . ' ' . $list['name']) .
+                    '</option>';
+            }
+            echo '</optgroup>';
         }
         echo '</select>';
     }

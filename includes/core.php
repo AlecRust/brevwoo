@@ -71,6 +71,9 @@ class BrevWoo
     {
         $plugin_admin = new BrevWooAdmin($this->getPluginName(), $this->getVersion());
 
+        // Admin custom styles
+        add_action('admin_enqueue_scripts', [$plugin_admin, 'enqueueAdminStyles']);
+
         // Admin settings page
         add_action('admin_init', [$plugin_admin, 'settingsPageInit']);
 

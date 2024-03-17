@@ -1,0 +1,28 @@
+/**
+ * CSS for admin-specific functionality
+ *
+ * @package BrevWoo
+ * @author  Alec Rust
+ * @link    https://github.com/AlecRust/brevwoo
+ */
+
+.wp-core-ui select.brevwoo-select-lists-input {
+    width: 100%;
+    min-height: 150px;
+    cursor: default;
+    resize: vertical;
+}
+
+.wp-core-ui select.brevwoo-select-lists-input:hover {
+    color: #2c3338;
+}
+
+.wp-core-ui select.brevwoo-select-lists-input optgroup option {
+    padding-left: 10px;
+}
+
+@media (min-width: 783px) {
+    .wp-core-ui select.brevwoo-select-lists-input {
+        max-width: 350px;
+    }
+}
