@@ -79,9 +79,7 @@ class BrevWooAdmin
      */
     public function addSettingsLink($links)
     {
-        $url = esc_url(
-            add_query_arg('page', $this->plugin_name, get_admin_url() . 'options-general.php')
-        );
+        $url = esc_url($this->pluginSettingsPageUrl());
         $settings_link = "<a href=\"$url\">" . esc_html__('Settings', 'brevwoo') . '</a>';
         array_unshift($links, $settings_link);
         return $links;
@@ -398,13 +396,7 @@ class BrevWooAdmin
                     // translators: %s is a link to the BrevWoo settings page
                     esc_html__('Enter a Brevo API key on the %s to load your lists.', 'brevwoo'),
                     '<a href="' .
-                        esc_url(
-                            add_query_arg(
-                                'page',
-                                $this->plugin_name,
-                                get_admin_url() . 'options-general.php'
-                            )
-                        ) .
+                        esc_url($this->pluginSettingsPageUrl()) .
                         '">' .
                         esc_html__('BrevWoo settings page', 'brevwoo') .
                         '</a>'
@@ -442,13 +434,7 @@ class BrevWooAdmin
                     // translators: %s is a link to the BrevWoo settings page
                     esc_html__('Select default lists in %s.', 'brevwoo'),
                     '<a href="' .
-                        esc_url(
-                            add_query_arg(
-                                'page',
-                                $this->plugin_name,
-                                get_admin_url() . 'options-general.php'
-                            )
-                        ) .
+                        esc_url($this->pluginSettingsPageUrl()) .
                         '">' .
                         esc_html__('BrevWoo settings', 'brevwoo') .
                         '</a>'
@@ -594,6 +580,14 @@ class BrevWooAdmin
                 '</option>';
         }
         echo '</select>';
+    }
+
+    /**
+     * Return the URL for the plugin settings page.
+     */
+    private function pluginSettingsPageUrl()
+    {
+        return add_query_arg('page', $this->plugin_name, get_admin_url() . 'options-general.php');
     }
 
     /**
