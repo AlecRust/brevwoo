@@ -282,34 +282,12 @@ class BrevWooAdmin
 
         try {
             $result = $this->apiClient->getLists();
-            $lists = [
-                '' => esc_html__('Disabled (product-specific lists only)', 'brevwoo'),
-            ];
-            foreach ($result['lists'] as $list) {
-                $lists[$list['id']] = '#' . $list['id'] . ' ' . $list['name'];
-            }
-
-            echo '<select id="' .
-                esc_attr($field_id) .
-                '" name="' .
-                esc_attr($name) .
-                '[]" style="min-height: 100px; width: 100%;" multiple required>';
-            foreach ($lists as $id => $name) {
-                $selected =
-                    (empty($default_brevo_lists) && $id === '') ||
-                    in_array($id, $default_brevo_lists)
-                        ? ' selected'
-                        : '';
-                echo '<option value="' .
-                    esc_attr($id) .
-                    '"' .
-                    esc_attr($selected) .
-                    '>' .
-                    esc_html($name) .
-                    '</option>';
-            }
-            echo '</select>';
-
+            $this->renderSelectListsInput(
+                $field_id, // HTML ID and name attribute
+                $default_brevo_lists, // Currently selected list IDs
+                $result['lists'], // All Brevo lists from API
+                __('Disabled (product-specific lists only)', 'brevwoo') // Disabled option label
+            );
             echo '<p class="description">' .
                 esc_html__(
                     'Select the Brevo lists customers who buy any product will be added to.',
@@ -437,13 +415,6 @@ class BrevWooAdmin
 
         try {
             $result = $this->apiClient->getLists();
-            $lists = [
-                '' => esc_html__('Disabled (default lists only)', 'brevwoo'),
-            ];
-            foreach ($result['lists'] as $list) {
-                $lists[$list['id']] = '#' . $list['id'] . ' ' . $list['name'];
-            }
-
             echo '<p class="howto">' .
                 esc_html__(
                     'Select Brevo lists below to add customers to when they buy this product.',
@@ -459,24 +430,12 @@ class BrevWooAdmin
             echo '<label for="brevwoo_brevo_list_ids" class="hidden">' .
                 esc_html__('Brevo Lists', 'brevwoo') .
                 '</label>';
-            echo '<select id="brevwoo_brevo_list_ids"
-                        name="brevwoo_brevo_list_ids[]"
-                        style="min-height: 100px; width: 100%;"
-                        multiple>';
-            foreach ($lists as $id => $name) {
-                $selected =
-                    (empty($brevo_list_ids) && $id === '') || in_array($id, $brevo_list_ids)
-                        ? ' selected'
-                        : '';
-                echo '<option value="' .
-                    esc_attr($id) .
-                    '"' .
-                    esc_attr($selected) .
-                    '>' .
-                    esc_html($name) .
-                    '</option>';
-            }
-            echo '</select>';
+            $this->renderSelectListsInput(
+                'brevwoo_brevo_list_ids', // HTML ID and name attribute
+                $brevo_list_ids, // Currently selected list IDs
+                $result['lists'], // All Brevo lists from API
+                __('Disabled (default lists only)', 'brevwoo') // Disabled option label
+            );
             printf(
                 '<p class="howto">%s</p>',
                 sprintf(
@@ -591,6 +550,50 @@ class BrevWooAdmin
         } catch (Exception $e) {
             error_log('BrevWoo: Error creating or updating Brevo contact: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * Renders a multiple select dropdown for Brevo lists.
+     *
+     * @param string $fieldId The HTML id and name attribute for the input.
+     * @param array $selectedLists An array of the currently selected list IDs.
+     * @param array $allLists Brevo API lists response.
+     * @param string $disabledLabel The label for the disabled (default) option.
+     */
+    private function renderSelectListsInput($fieldId, $selectedLists, $allLists, $disabledLabel)
+    {
+        // Prepare the initial disabled/default option
+        $options = [
+            '' => esc_html__($disabledLabel, 'brevwoo'),
+        ];
+
+        // Construct the options array
+        foreach ($allLists as $list) {
+            $options[$list['id']] = '#' . $list['id'] . ' ' . $list['name'];
+        }
+
+        // Start the select element
+        echo '<select id="' .
+            esc_attr($fieldId) .
+            '" name="' .
+            esc_attr($fieldId) .
+            '[]" style="min-height: 100px; width: 100%;" multiple required>';
+
+        // Render the options elements
+        foreach ($options as $id => $name) {
+            $selected =
+                (empty($selectedLists) && $id === '') || in_array($id, $selectedLists)
+                    ? ' selected'
+                    : '';
+            echo '<option value="' .
+                esc_attr($id) .
+                '"' .
+                esc_attr($selected) .
+                '>' .
+                esc_html($name) .
+                '</option>';
+        }
+        echo '</select>';
     }
 
     /**
