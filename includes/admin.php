@@ -293,7 +293,7 @@ class BrevWooAdmin
                 esc_attr($field_id) .
                 '" name="' .
                 esc_attr($name) .
-                '[]" style="min-height: 100px; width: 100%;" multiple>';
+                '[]" style="min-height: 100px; width: 100%;" multiple required>';
             foreach ($lists as $id => $name) {
                 $selected =
                     (empty($default_brevo_lists) && $id === '') ||
@@ -354,7 +354,7 @@ class BrevWooAdmin
             'pending' => esc_html__('Pending', 'brevwoo'),
         ];
 
-        echo '<select id="' . esc_attr($field_id) . '" name="' . esc_attr($name) . '">';
+        echo '<select id="' . esc_attr($field_id) . '" name="' . esc_attr($name) . '" required>';
         foreach ($options as $key => $label) {
             echo '<option value="' .
                 esc_attr($key) .
