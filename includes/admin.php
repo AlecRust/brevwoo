@@ -188,34 +188,6 @@ class BrevWooAdmin
     }
 
     /**
-     * Render Brevo API connection status notice.
-     */
-    private function renderBrevoStatusNotice()
-    {
-        if (!$this->apiClient) {
-            return;
-        }
-
-        try {
-            $this->apiClient->getAccount();
-            echo '<div class="notice notice-success notice-alt">
-                <p><strong>' .
-                esc_html__('Successfully connected to Brevo', 'brevwoo') .
-                '</strong></p>
-              </div>';
-        } catch (Exception $e) {
-            echo '<div class="notice notice-error notice-alt">
-                <p><strong>' .
-                esc_html__('Error connecting to Brevo', 'brevwoo') .
-                '</strong></p>
-                <p>' .
-                esc_html($e->getMessage()) .
-                '</p>
-              </div>';
-        }
-    }
-
-    /**
      * Render main description on plugin settings page.
      */
     public function renderSettingsDescription()
@@ -539,6 +511,45 @@ class BrevWooAdmin
     }
 
     /**
+     * Display admin notice if WooCommerce is not active.
+     */
+    public function checkRequiredPlugins()
+    {
+        if (!is_plugin_active('woocommerce/woocommerce.php')) {
+            echo '<div class="error"><p><strong>' .
+                esc_html__(
+                    'BrevWoo requires WooCommerce to be installed and active. You can download ',
+                    'brevwoo'
+                ) .
+                '<a href="https://woocommerce.com/" target="_blank">' .
+                esc_html__('WooCommerce', 'brevwoo') .
+                '</a>' .
+                esc_html__(' here.', 'brevwoo') .
+                '</strong></p></div>';
+        }
+    }
+
+    /**
+     * Get the WooCommerce hook to use for adding customer to Brevo lists.
+     *
+     * @return string Hook name
+     */
+    public function getWcCheckoutHook()
+    {
+        $order_status_trigger = get_option('brevwoo_order_status_trigger', 'completed');
+
+        switch ($order_status_trigger) {
+            case 'processing':
+                return 'woocommerce_order_status_processing';
+            case 'pending':
+                return 'woocommerce_order_status_pending';
+            case 'completed':
+            default:
+                return 'woocommerce_order_status_completed';
+        }
+    }
+
+    /**
      * Renders a multiple select dropdown for Brevo lists.
      *
      * @param string $fieldId The HTML id and name attribute for the input.
@@ -583,6 +594,34 @@ class BrevWooAdmin
     }
 
     /**
+     * Render Brevo API connection status notice.
+     */
+    private function renderBrevoStatusNotice()
+    {
+        if (!$this->apiClient) {
+            return;
+        }
+
+        try {
+            $this->apiClient->getAccount();
+            echo '<div class="notice notice-success notice-alt">
+                <p><strong>' .
+                esc_html__('Successfully connected to Brevo', 'brevwoo') .
+                '</strong></p>
+              </div>';
+        } catch (Exception $e) {
+            echo '<div class="notice notice-error notice-alt">
+                <p><strong>' .
+                esc_html__('Error connecting to Brevo', 'brevwoo') .
+                '</strong></p>
+                <p>' .
+                esc_html($e->getMessage()) .
+                '</p>
+              </div>';
+        }
+    }
+
+    /**
      * Return the URL for the plugin settings page.
      */
     private function pluginSettingsPageUrl()
@@ -617,44 +656,5 @@ class BrevWooAdmin
             'object_subtype' => 'BrevWoo',
             'object_name' => $log_message,
         ]);
-    }
-
-    /**
-     * Display admin notice if WooCommerce is not active.
-     */
-    public function checkRequiredPlugins()
-    {
-        if (!is_plugin_active('woocommerce/woocommerce.php')) {
-            echo '<div class="error"><p><strong>' .
-                esc_html__(
-                    'BrevWoo requires WooCommerce to be installed and active. You can download ',
-                    'brevwoo'
-                ) .
-                '<a href="https://woocommerce.com/" target="_blank">' .
-                esc_html__('WooCommerce', 'brevwoo') .
-                '</a>' .
-                esc_html__(' here.', 'brevwoo') .
-                '</strong></p></div>';
-        }
-    }
-
-    /**
-     * Get the WooCommerce hook to use for adding customer to Brevo lists.
-     *
-     * @return string Hook name
-     */
-    public function getWcCheckoutHook()
-    {
-        $order_status_trigger = get_option('brevwoo_order_status_trigger', 'completed');
-
-        switch ($order_status_trigger) {
-            case 'processing':
-                return 'woocommerce_order_status_processing';
-            case 'pending':
-                return 'woocommerce_order_status_pending';
-            case 'completed':
-            default:
-                return 'woocommerce_order_status_completed';
-        }
     }
 }
