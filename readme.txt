@@ -3,7 +3,7 @@ Contributors:      alecrust
 Tags:              marketing, automation, sendinblue, brevo, woocommerce
 Requires at least: 4.6
 Tested up to:      6.5
-Stable tag:        0.0.4
+Stable tag:        0.0.5
 Requires PHP:      7.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -40,7 +40,7 @@ This plugin is open source and contributions are welcome [on GitHub](https://git
 
 = What is Brevo? =
 
-[Brevo](https://www.brevo.com/) (formerly Sendinblue) is a marketing automation platform. This plugin allows you to add a customer to Brevo lists when they purchase a specific WooCommerce product.
+[Brevo](https://www.brevo.com/) (formerly Sendinblue) is a marketing automation platform. This plugin adds customers to Brevo when they purchase your WooCommerce products.
 
 = Where do I get a Brevo API key? =
 
