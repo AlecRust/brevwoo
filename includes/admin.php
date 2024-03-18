@@ -93,7 +93,9 @@ class BrevWooAdmin
         ?>
         <div class="wrap">
             <h2><?php esc_html_e('BrevWoo', 'brevwoo'); ?></h2>
-            <?php $this->renderBrevoStatusNotice(); ?>
+            <?php if ($this->apiClient) {
+                $this->renderBrevoStatusNotice();
+            } ?>
             <form action="options.php" method="post">
                 <?php
                 settings_fields('brevwoo_option_group');
@@ -598,10 +600,6 @@ class BrevWooAdmin
      */
     private function renderBrevoStatusNotice()
     {
-        if (!$this->apiClient) {
-            return;
-        }
-
         try {
             $this->apiClient->getAccount();
             echo '<div class="notice notice-success notice-alt">
