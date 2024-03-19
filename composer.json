@@ -1,6 +1,6 @@
 {
     "name": "alecrust/brevwoo",
-    "description": "Simple and reliable WooCommerce to Brevo integration.",
+    "description": "Add WooCommerce customers to Brevo the simple way.",
     "homepage": "https://github.com/AlecRust/brevwoo",
     "license": "GPL-2.0-or-later",
     "type": "wordpress-plugin",
