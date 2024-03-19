@@ -553,7 +553,7 @@ class BrevWooAdmin
     }
 
     /**
-     * Enqueues custom admin styles.
+     * Enqueue custom admin styles.
      */
     public function enqueueAdminStyles()
     {
@@ -566,7 +566,7 @@ class BrevWooAdmin
     }
 
     /**
-     * Renders a multiple select dropdown for Brevo lists, grouped by folder.
+     * Render a multiple select dropdown for Brevo lists, grouped by folder.
      *
      * @param string $fieldId The HTML id and name attribute for the input.
      * @param array $selectedLists An array of the currently selected list IDs.
