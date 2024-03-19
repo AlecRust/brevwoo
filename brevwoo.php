@@ -5,7 +5,7 @@
  * Plugin URI:        http://github.com/AlecRust/brevwoo
  * GitHub Plugin URI: AlecRust/brevwoo
  * Description:       Simple and reliable WooCommerce to Brevo integration.
- * Version:           0.0.5
+ * Version:           0.0.6
  * Author:            Alec Rust
  * Author URI:        https://www.alecrust.com/
  * License:           GPL-2.0-or-later
@@ -27,7 +27,7 @@ if (!defined('WPINC')) {
 /**
  * Plugin version.
  */
-define('BREVWOO_VERSION', '0.0.5');
+define('BREVWOO_VERSION', '0.0.6');
 
 /**
  * Load core plugin class defining all hooks.
