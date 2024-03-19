@@ -3,6 +3,9 @@
     "plugins": [
         ".",
         "https://downloads.wordpress.org/plugin/woocommerce.latest-stable.zip",
-        "https://downloads.wordpress.org/plugin/plugin-check.latest-stable.zip"
+        "https://downloads.wordpress.org/plugin/plugin-check.latest-stable.zip",
+        "https://downloads.wordpress.org/plugin/aryo-activity-log.latest-stable.zip",
+        "https://downloads.wordpress.org/plugin/mailin.latest-stable.zip",
+        "https://downloads.wordpress.org/plugin/woocommerce-sendinblue-newsletter-subscription.latest-stable.zip"
     ]
 }
