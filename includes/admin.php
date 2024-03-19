@@ -265,6 +265,14 @@ class BrevWooAdmin
                     'brevwoo'
                 ) .
                 '</p>';
+            echo '<p class="description brevwoo-select-lists-help-note">' .
+                '<span class="dashicons dashicons-info-outline" style="font-size: 19px;"></span> ' .
+                esc_html__('Hold ', 'brevwoo') .
+                '<kbd>Cmd</kbd>' .
+                esc_html__(' or ', 'brevwoo') .
+                '<kbd>Ctrl</kbd>' .
+                esc_html__(' on your keyboard to select multiple lists', 'brevwoo') .
+                '</p>';
         } catch (Exception $e) {
             echo '<p class="description">' . esc_html__('Unavailable', 'brevwoo') . '</p>';
         }
