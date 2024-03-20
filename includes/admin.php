@@ -394,11 +394,8 @@ class BrevWooAdmin
                     'Select Brevo lists below to add customers to when they buy this product.',
                     'brevwoo'
                 ) .
-                '<span class="woocommerce-help-tip" style="margin-bottom: 1px;" data-tip="' .
-                esc_attr__(
-                    'Use your keyboard to select multiple lists e.g. hold "command" on Mac.',
-                    'brevwoo'
-                ) .
+                '<span class="woocommerce-help-tip" style="margin-bottom: 2px;" data-tip="' .
+                esc_attr__('Hold Cmd or Ctrl to select multiple lists', 'brevwoo') .
                 '"></span>' .
                 '</p>';
             echo '<label for="brevwoo_brevo_list_ids" class="hidden">' .

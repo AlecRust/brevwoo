@@ -5,7 +5,7 @@
 
 # BrevWoo [![Lint](https://github.com/AlecRust/brevwoo/actions/workflows/lint.yml/badge.svg)](https://github.com/AlecRust/brevwoo/actions/workflows/lint.yml)
 
-> WordPress plugin to integrate WooCommerce with Brevo
+> WordPress plugin that adds WooCommerce customers to Brevo lists.
 
 Set default Brevo lists that customers are added to when they buy a product, and/or set lists for specific products.
 
