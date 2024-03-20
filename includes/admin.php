@@ -144,47 +144,47 @@ class BrevWooAdmin
 
         // Add "Default Brevo lists" setting field
         add_settings_field(
-            'brevwoo_default_brevo_lists', // HTML id
+            'brevwoo_default_lists', // HTML id
             __('Default Brevo lists', 'brevwoo'), // field title
             [$this, 'renderDefaultListsInput'], // callback
             'brevwoo-admin', // page
             'brevwoo_setting_section', // section
             [
-                'id' => 'brevwoo_default_brevo_lists',
-                'option_name' => 'brevwoo_default_brevo_lists',
+                'id' => 'brevwoo_default_lists',
+                'option_name' => 'brevwoo_default_lists',
             ]
         );
 
         // Register "Default Brevo lists" setting
         register_setting(
             'brevwoo_option_group', // settings group name
-            'brevwoo_default_brevo_lists', // option name
+            'brevwoo_default_lists', // option name
             [
                 'default' => [],
-                'sanitize_callback' => [$this, 'sanitizeListIdsInput'],
+                'sanitize_callback' => [$this, 'sanitizeListsInput'],
             ]
         );
 
         // Add "Add to Brevo trigger" setting field
         add_settings_field(
-            'brevwoo_order_status_trigger', // HTML id
+            'brevwoo_order_status', // HTML id
             __('Add to Brevo trigger', 'brevwoo'), // field title
-            [$this, 'renderOrderStatusTriggerInput'], // callback
+            [$this, 'renderOrderStatusInput'], // callback
             'brevwoo-admin', // page
             'brevwoo_setting_section', // section
             [
-                'id' => 'brevwoo_order_status_trigger',
-                'option_name' => 'brevwoo_order_status_trigger',
+                'id' => 'brevwoo_order_status',
+                'option_name' => 'brevwoo_order_status',
             ]
         );
 
         // Register "Add to Brevo trigger" setting
         register_setting(
             'brevwoo_option_group', // settings group name
-            'brevwoo_order_status_trigger', // option name
+            'brevwoo_order_status', // option name
             [
                 'default' => 'completed',
-                'sanitize_callback' => [$this, 'sanitizeOrderStatusTriggerInput'],
+                'sanitize_callback' => [$this, 'sanitizeOrderStatusInput'],
             ]
         );
     }
@@ -279,9 +279,9 @@ class BrevWooAdmin
     }
 
     /**
-     * Generic function to sanitize list IDs input.
+     * Sanitize lists multi-select input.
      */
-    public function sanitizeListIdsInput($input)
+    public function sanitizeListsInput($input)
     {
         // Ensure $input is an array
         $input = (array) $input;
@@ -299,7 +299,7 @@ class BrevWooAdmin
     /**
      * Render "Add to Brevo trigger" select input.
      */
-    public function renderOrderStatusTriggerInput($val)
+    public function renderOrderStatusInput($val)
     {
         $field_id = $val['id'];
         $name = $val['option_name'];
@@ -334,7 +334,7 @@ class BrevWooAdmin
     /**
      * Sanitize "Add to Brevo trigger" select input.
      */
-    public function sanitizeOrderStatusTriggerInput($input)
+    public function sanitizeOrderStatusInput($input)
     {
         $valid = ['completed', 'processing', 'pending'];
         if (in_array($input, $valid, true)) {
@@ -351,7 +351,7 @@ class BrevWooAdmin
         add_meta_box(
             'brevwoo',
             __('BrevWoo', 'brevwoo'),
-            [$this, 'renderEditProductPanelContent'],
+            [$this, 'renderEditProductPanel'],
             'product',
             'side',
             'default'
@@ -361,13 +361,13 @@ class BrevWooAdmin
     /**
      * Render edit product page BrevWoo panel.
      */
-    public function renderEditProductPanelContent($post)
+    public function renderEditProductPanel($post)
     {
-        $brevo_list_ids = get_post_meta($post->ID, 'brevwoo_brevo_list_ids', true);
+        $product_lists = get_post_meta($post->ID, '_brevwoo_product_lists', true);
 
         // Initialize as empty array if the option is not yet set
-        if (!is_array($brevo_list_ids)) {
-            $brevo_list_ids = [];
+        if (!is_array($product_lists)) {
+            $product_lists = [];
         }
 
         if (!$this->apiClient) {
@@ -398,12 +398,12 @@ class BrevWooAdmin
                 esc_attr__('Hold Cmd or Ctrl to select multiple lists', 'brevwoo') .
                 '"></span>' .
                 '</p>';
-            echo '<label for="brevwoo_brevo_list_ids" class="hidden">' .
+            echo '<label for="brevwoo_product_lists" class="hidden">' .
                 esc_html__('Brevo Lists', 'brevwoo') .
                 '</label>';
             $this->renderSelectListsInput(
-                'brevwoo_brevo_list_ids', // HTML ID and name attribute
-                $brevo_list_ids, // Currently selected list IDs
+                'brevwoo_product_lists', // HTML ID and name attribute
+                $product_lists, // Currently selected list IDs
                 $listsResult['lists'], // All Brevo lists from API
                 $allFoldersResult['folders'], // All Brevo folders from API
                 __('Disabled (default lists only)', 'brevwoo') // Disabled option label
@@ -446,12 +446,12 @@ class BrevWooAdmin
             return;
         }
 
-        if (isset($_POST['brevwoo_brevo_list_ids'])) {
+        if (isset($_POST['brevwoo_product_lists'])) {
             // Sanitize the input
-            $brevo_list_ids = $this->sanitizeListIdsInput($_POST['brevwoo_brevo_list_ids']);
+            $product_lists = $this->sanitizeListsInput($_POST['brevwoo_product_lists']);
 
             // Save the list of IDs as a meta entry, overwriting any existing value
-            update_post_meta($post_id, 'brevwoo_brevo_list_ids', $brevo_list_ids);
+            update_post_meta($post_id, '_brevwoo_product_lists', $product_lists);
         }
     }
 
@@ -461,18 +461,18 @@ class BrevWooAdmin
     public function processWcOrder($order_id)
     {
         $order = wc_get_order($order_id);
-        $default_list_ids = array_map('intval', get_option('brevwoo_default_brevo_lists', []));
+        $default_lists = array_map('intval', get_option('brevwoo_default_lists', []));
 
         foreach ($order->get_items() as $item) {
             $product_id = $item->get_product_id();
-            $product_list_ids = array_map(
+            $product_lists = array_map(
                 'intval',
-                get_post_meta($product_id, 'brevwoo_brevo_list_ids', true)
+                get_post_meta($product_id, '_brevwoo_product_lists', true)
             );
-            $combined_list_ids = array_unique(array_merge($default_list_ids, $product_list_ids));
+            $combined_lists = array_unique(array_merge($default_lists, $product_lists));
 
-            if (!empty($combined_list_ids)) {
-                $this->addOrUpdateBrevoContact($order, $combined_list_ids);
+            if (!empty($combined_lists)) {
+                $this->addOrUpdateBrevoContact($order, $combined_lists);
             }
         }
     }
@@ -544,9 +544,9 @@ class BrevWooAdmin
      */
     public function getWcCheckoutHook()
     {
-        $order_status_trigger = get_option('brevwoo_order_status_trigger', 'completed');
+        $order_status = get_option('brevwoo_order_status', 'completed');
 
-        switch ($order_status_trigger) {
+        switch ($order_status) {
             case 'processing':
                 return 'woocommerce_order_status_processing';
             case 'pending':

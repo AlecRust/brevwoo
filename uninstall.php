@@ -13,8 +13,8 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 
 // Delete main plugin options from the wp_options table
 delete_option('brevwoo_brevo_api_key');
-delete_option('brevwoo_default_brevo_lists');
-delete_option('brevwoo_order_status_trigger');
+delete_option('brevwoo_default_lists');
+delete_option('brevwoo_order_status');
 
 // Delete WooCommerce product meta
 if (class_exists('WooCommerce')) {
@@ -25,6 +25,6 @@ if (class_exists('WooCommerce')) {
     ];
     $products = get_posts($args);
     foreach ($products as $product_id) {
-        delete_post_meta($product_id, 'brevwoo_brevo_list_ids');
+        delete_post_meta($product_id, '_brevwoo_product_lists');
     }
 }
