@@ -421,14 +421,17 @@ class BrevWooAdmin
                 )
             );
         } catch (Exception $e) {
-            echo '<div class="notice notice-error notice-alt inline">
-                <p><strong>' .
+            $message =
+                '<p><strong>' .
                 esc_html__('Error fetching Brevo lists', 'brevwoo') .
-                '</strong></p>
-                <p>' .
+                '</strong></p><p>' .
                 esc_html($e->getMessage()) .
-                '</p>
-              </div>';
+                '</p>';
+            wp_admin_notice($message, [
+                'type' => 'error',
+                'paragraph_wrap' => false,
+                'additional_classes' => ['inline'],
+            ]);
         }
     }
 
@@ -524,7 +527,8 @@ class BrevWooAdmin
     public function checkRequiredPlugins()
     {
         if (!is_plugin_active('woocommerce/woocommerce.php')) {
-            echo '<div class="error"><p><strong>' .
+            $message =
+                '<p><strong>' .
                 esc_html__(
                     'BrevWoo requires WooCommerce to be installed and active. You can download ',
                     'brevwoo'
@@ -533,7 +537,11 @@ class BrevWooAdmin
                 esc_html__('WooCommerce', 'brevwoo') .
                 '</a>' .
                 esc_html__(' here.', 'brevwoo') .
-                '</strong></p></div>';
+                '</strong></p>';
+            wp_admin_notice($message, [
+                'type' => 'error',
+                'paragraph_wrap' => false,
+            ]);
         }
     }
 
@@ -640,20 +648,26 @@ class BrevWooAdmin
     {
         try {
             $this->apiClient->getAccount();
-            echo '<div class="notice notice-success notice-alt">
-                <p><strong>' .
+            $message =
+                '<p><strong>' .
                 esc_html__('Successfully connected to Brevo', 'brevwoo') .
-                '</strong></p>
-              </div>';
+                '</strong></p>';
+            wp_admin_notice($message, [
+                'type' => 'success',
+                'paragraph_wrap' => false,
+                'additional_classes' => ['notice-alt'],
+            ]);
         } catch (Exception $e) {
-            echo '<div class="notice notice-error notice-alt">
-                <p><strong>' .
+            $message =
+                '<p><strong>' .
                 esc_html__('Error connecting to Brevo', 'brevwoo') .
-                '</strong></p>
-                <p>' .
+                '</strong></p><p>' .
                 esc_html($e->getMessage()) .
-                '</p>
-              </div>';
+                '</p>';
+            wp_admin_notice($message, [
+                'type' => 'error',
+                'paragraph_wrap' => false,
+            ]);
         }
     }
 
