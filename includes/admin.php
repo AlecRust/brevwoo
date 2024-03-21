@@ -215,8 +215,7 @@ class BrevWooAdmin
                 value="%s"
                 placeholder="%s"
                 class="regular-text"
-                autocomplete="off"
-                required>',
+                autocomplete="off">',
             esc_attr($field_id),
             esc_attr($name),
             esc_attr($value),
@@ -243,9 +242,17 @@ class BrevWooAdmin
         $field_id = $val['id'];
         $name = $val['option_name'];
         $default_brevo_lists = get_option($name, []);
+        $brevo_api_key = get_option('brevwoo_brevo_api_key', '');
+
+        if (empty($brevo_api_key)) {
+            echo '<p class="description">' .
+                esc_html__('Set an API key to load lists.', 'brevwoo') .
+                '</p>';
+            return;
+        }
 
         if (!$this->apiClient) {
-            echo '<p class="description">' . esc_html__('Unavailable', 'brevwoo') . '</p>';
+            echo '<p class="description">' . esc_html__('Could not load lists', 'brevwoo') . '</p>';
             return;
         }
 
@@ -274,7 +281,7 @@ class BrevWooAdmin
                 esc_html__(' on your keyboard to select multiple lists', 'brevwoo') .
                 '</p>';
         } catch (Exception $e) {
-            echo '<p class="description">' . esc_html__('Unavailable', 'brevwoo') . '</p>';
+            echo '<p class="description">' . esc_html__('Could not load lists', 'brevwoo') . '</p>';
         }
     }
 
@@ -311,7 +318,7 @@ class BrevWooAdmin
             'pending' => esc_html__('Pending', 'brevwoo'),
         ];
 
-        echo '<select id="' . esc_attr($field_id) . '" name="' . esc_attr($name) . '" required>';
+        echo '<select id="' . esc_attr($field_id) . '" name="' . esc_attr($name) . '">';
         foreach ($options as $key => $label) {
             echo '<option value="' .
                 esc_attr($key) .
@@ -325,7 +332,7 @@ class BrevWooAdmin
 
         echo '<p class="description">' .
             esc_html__(
-                'Select which WooCommerce order status adds the customer to Brevo.',
+                'Select which WooCommerce order status adds a customer to Brevo.',
                 'brevwoo'
             ) .
             '</p>';
@@ -375,11 +382,11 @@ class BrevWooAdmin
                 '<p>%s</p>',
                 sprintf(
                     // translators: %s is a link to the BrevWoo settings page
-                    esc_html__('Enter a Brevo API key on the %s to load your lists.', 'brevwoo'),
+                    esc_html__('Enter a Brevo API key in the %s to load lists.', 'brevwoo'),
                     '<a href="' .
                         esc_url($this->pluginSettingsPageUrl()) .
                         '">' .
-                        esc_html__('BrevWoo settings page', 'brevwoo') .
+                        esc_html__('BrevWoo settings', 'brevwoo') .
                         '</a>'
                 )
             );
@@ -611,7 +618,7 @@ class BrevWooAdmin
             esc_attr($fieldId) .
             '" name="' .
             esc_attr($fieldId) .
-            '[]" class="brevwoo-select-lists-input" multiple required>';
+            '[]" class="brevwoo-select-lists-input" multiple>';
 
         // The initial disabled/default option
         echo '<option value=""' .
