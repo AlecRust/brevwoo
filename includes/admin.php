@@ -79,7 +79,7 @@ class BrevWooAdmin
      */
     public function addSettingsLink($links)
     {
-        $url = esc_url($this->pluginSettingsPageUrl());
+        $url = esc_url($this->getPluginSettingsUrl());
         $settings_link = "<a href=\"$url\">" . esc_html__('Settings', 'brevwoo') . '</a>';
         array_unshift($links, $settings_link);
         return $links;
@@ -384,7 +384,7 @@ class BrevWooAdmin
                     // translators: %s is a link to the BrevWoo settings page
                     esc_html__('Enter a Brevo API key in the %s to load lists.', 'brevwoo'),
                     '<a href="' .
-                        esc_url($this->pluginSettingsPageUrl()) .
+                        esc_url($this->getPluginSettingsUrl()) .
                         '">' .
                         esc_html__('BrevWoo settings', 'brevwoo') .
                         '</a>'
@@ -421,7 +421,7 @@ class BrevWooAdmin
                     // translators: %s is a link to the BrevWoo settings page
                     esc_html__('Select default lists in %s.', 'brevwoo'),
                     '<a href="' .
-                        esc_url($this->pluginSettingsPageUrl()) .
+                        esc_url($this->getPluginSettingsUrl()) .
                         '">' .
                         esc_html__('BrevWoo settings', 'brevwoo') .
                         '</a>'
@@ -466,93 +466,6 @@ class BrevWooAdmin
     }
 
     /**
-     * Add the WooCommerce customer to the product's Brevo lists.
-     */
-    public function processWcOrder($order_id)
-    {
-        $order = wc_get_order($order_id);
-        $default_lists = array_map('intval', get_option('brevwoo_default_lists', []));
-
-        foreach ($order->get_items() as $item) {
-            $product_id = $item->get_product_id();
-            $product_lists = array_map(
-                'intval',
-                get_post_meta($product_id, '_brevwoo_product_lists', true)
-            );
-            $combined_lists = array_unique(array_merge($default_lists, $product_lists));
-
-            if (!empty($combined_lists)) {
-                $this->addOrUpdateBrevoContact($order, $combined_lists);
-            }
-        }
-    }
-
-    /**
-     * Create or update a Brevo contact.
-     * @SuppressWarnings(PHPMD.MissingImport)
-     */
-    public function addOrUpdateBrevoContact($order, $list_ids)
-    {
-        if (!$this->apiClient) {
-            error_log('BrevWoo: Brevo API key not set, cannot add contact to Brevo');
-            return;
-        }
-
-        // Collect order details
-        $email = $order->get_billing_email();
-        $first_name = $order->get_billing_first_name();
-        $last_name = $order->get_billing_last_name();
-        $order_id = $order->get_id();
-        $order_total = $order->get_total();
-        $order_date = $order->get_date_created()->date('d-m-Y');
-
-        // Create the contact object
-        $createContact = new Brevo\Client\Model\CreateContact([
-            'email' => $email,
-            'updateEnabled' => true,
-            'attributes' => [
-                'FIRSTNAME' => $first_name,
-                'LASTNAME' => $last_name,
-                'ORDER_ID' => strval($order_id),
-                'ORDER_PRICE' => $order_total,
-                'ORDER_DATE' => $order_date,
-            ],
-            'listIds' => $list_ids,
-        ]);
-
-        try {
-            $this->apiClient->createOrUpdateContact($createContact);
-            $this->logContactAddedToBrevo($email, $list_ids, strval($order_id));
-        } catch (Exception $e) {
-            error_log('BrevWoo: Error creating or updating Brevo contact: ' . $e->getMessage());
-        }
-    }
-
-    /**
-     * Display admin notice if WooCommerce is not active.
-     */
-    public function checkRequiredPlugins()
-    {
-        if (!is_plugin_active('woocommerce/woocommerce.php')) {
-            $message =
-                '<p><strong>' .
-                esc_html__(
-                    'BrevWoo requires WooCommerce to be installed and active. You can download ',
-                    'brevwoo'
-                ) .
-                '<a href="https://woocommerce.com/" target="_blank">' .
-                esc_html__('WooCommerce', 'brevwoo') .
-                '</a>' .
-                esc_html__(' here.', 'brevwoo') .
-                '</strong></p>';
-            wp_admin_notice($message, [
-                'type' => 'error',
-                'paragraph_wrap' => false,
-            ]);
-        }
-    }
-
-    /**
      * Get the WooCommerce hook to use for adding customer to Brevo lists.
      *
      * @return string Hook name
@@ -583,6 +496,52 @@ class BrevWooAdmin
             [], // no stylesheet dependencies
             $this->version // include plugin version in query string
         );
+    }
+
+    /**
+     * Display admin notice if WooCommerce is not active.
+     */
+    public function renderRequiredPluginNotice()
+    {
+        if (!is_plugin_active('woocommerce/woocommerce.php')) {
+            $message =
+                '<p><strong>' .
+                esc_html__(
+                    'BrevWoo requires WooCommerce to be installed and active. You can download ',
+                    'brevwoo'
+                ) .
+                '<a href="https://woocommerce.com/" target="_blank">' .
+                esc_html__('WooCommerce', 'brevwoo') .
+                '</a>' .
+                esc_html__(' here.', 'brevwoo') .
+                '</strong></p>';
+            wp_admin_notice($message, [
+                'type' => 'error',
+                'paragraph_wrap' => false,
+            ]);
+        }
+    }
+
+    /**
+     * Add the WooCommerce customer to the product's Brevo lists.
+     */
+    public function processWcOrder($order_id)
+    {
+        $order = wc_get_order($order_id);
+        $default_lists = array_map('intval', get_option('brevwoo_default_lists', []));
+
+        foreach ($order->get_items() as $item) {
+            $product_id = $item->get_product_id();
+            $product_lists = array_map(
+                'intval',
+                get_post_meta($product_id, '_brevwoo_product_lists', true)
+            );
+            $combined_lists = array_unique(array_merge($default_lists, $product_lists));
+
+            if (!empty($combined_lists)) {
+                $this->addOrUpdateBrevoContact($order, $combined_lists);
+            }
+        }
     }
 
     /**
@@ -681,9 +640,50 @@ class BrevWooAdmin
     /**
      * Return the URL for the plugin settings page.
      */
-    private function pluginSettingsPageUrl()
+    private function getPluginSettingsUrl()
     {
         return add_query_arg('page', $this->plugin_name, get_admin_url() . 'options-general.php');
+    }
+
+    /**
+     * Create or update a Brevo contact.
+     * @SuppressWarnings(PHPMD.MissingImport)
+     */
+    private function addOrUpdateBrevoContact($order, $list_ids)
+    {
+        if (!$this->apiClient) {
+            error_log('BrevWoo: Brevo API key not set, cannot add contact to Brevo');
+            return;
+        }
+
+        // Collect order details
+        $email = $order->get_billing_email();
+        $first_name = $order->get_billing_first_name();
+        $last_name = $order->get_billing_last_name();
+        $order_id = $order->get_id();
+        $order_total = $order->get_total();
+        $order_date = $order->get_date_created()->date('d-m-Y');
+
+        // Create the contact object
+        $createContact = new Brevo\Client\Model\CreateContact([
+            'email' => $email,
+            'updateEnabled' => true,
+            'attributes' => [
+                'FIRSTNAME' => $first_name,
+                'LASTNAME' => $last_name,
+                'ORDER_ID' => strval($order_id),
+                'ORDER_PRICE' => $order_total,
+                'ORDER_DATE' => $order_date,
+            ],
+            'listIds' => $list_ids,
+        ]);
+
+        try {
+            $this->apiClient->createOrUpdateContact($createContact);
+            $this->logContactAddedToBrevo($email, $list_ids, strval($order_id));
+        } catch (Exception $e) {
+            error_log('BrevWoo: Error creating or updating Brevo contact: ' . $e->getMessage());
+        }
     }
 
     /**

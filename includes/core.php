@@ -93,7 +93,7 @@ class BrevWoo
         add_action($plugin_admin->getWcCheckoutHook(), [$plugin_admin, 'processWcOrder']);
 
         // Display admin notice if WooCommerce is not active
-        add_action('admin_notices', [$plugin_admin, 'checkRequiredPlugins']);
+        add_action('admin_notices', [$plugin_admin, 'renderRequiredPluginNotice']);
     }
 
     /**
