@@ -27,7 +27,7 @@ Features include:
 * [Transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes) included in the created Brevo contact
 * Useful debug logging added to [Activity Log](https://wordpress.org/plugins/aryo-activity-log/) plugin if installed
 
-This plugin is open source and contributions are welcome [on GitHub](https://github.com/AlecRust/brevwoo).
+This plugin is not affiliated with or endorsed by Brevo. It's open source, and contributions are welcome [on GitHub](https://github.com/AlecRust/brevwoo).
 
 == Installation ==
 
@@ -47,6 +47,20 @@ This plugin is open source and contributions are welcome [on GitHub](https://git
 You can create a Brevo API key for this plugin in the "SMTP & API" section of your Brevo account settings, in the "API Keys" tab.
 
 View the [official Brevo documentation](https://developers.brevo.com/docs/getting-started#quick-start) for more information.
+
+= Doesn't Brevo already have a WooCommerce plugin? =
+
+Yes, Brevo has an [official WooCommerce plugin](https://wordpress.org/plugins/woocommerce-sendinblue-newsletter-subscription/) as well as a [main plugin](https://wordpress.org/plugins/mailin/). BrevWoo is a complimentary plugin that provides a simple set of features including adding customers to product-specific lists.
+
+You may or may not need any of the three plugins, check the features of each to see which best suits your needs. Having BrevWoo installed alongside the official Brevo plugins should not cause any conflicts.
+
+= Can I add customers to multiple lists? =
+
+Yes. You can select any number of default lists in the plugin settings, and also select any number of product-specific lists in each edit product page.
+
+= If I rename a list in Brevo, will this plugin still work? =
+
+Yes, the plugin uses the list ID, not the list name, so renaming a list in Brevo will not affect the plugin.
 
 == Screenshots ==
 
