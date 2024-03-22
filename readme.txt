@@ -44,7 +44,9 @@ This plugin is not affiliated with or endorsed by Brevo. It's open source, and c
 
 = Where do I get a Brevo API key? =
 
-You can create a Brevo API key for this plugin in the "SMTP & API" section of your Brevo account settings, in the "API Keys" tab.
+From the "SMTP & API" section of your Brevo account settings, in the "API Keys" tab. It's recommended to create a new API key for this plugin e.g. you could label it "BrevWoo".
+
+Once you have an API key, enter it in the plugin settings at **Settings > BrevWoo**.
 
 View the [official Brevo documentation](https://developers.brevo.com/docs/getting-started#quick-start) for more information.
 

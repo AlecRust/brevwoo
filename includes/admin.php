@@ -539,7 +539,7 @@ class BrevWooAdmin
             $combined_lists = array_unique(array_merge($default_lists, $product_lists));
 
             if (!empty($combined_lists)) {
-                $this->addOrUpdateBrevoContact($order, $combined_lists);
+                $this->createBrevoContact($order, $combined_lists);
             }
         }
     }
@@ -608,6 +608,55 @@ class BrevWooAdmin
     }
 
     /**
+     * Return the URL for the plugin settings page.
+     */
+    private function getPluginSettingsUrl()
+    {
+        return add_query_arg('page', $this->plugin_name, get_admin_url() . 'options-general.php');
+    }
+
+    /**
+     * Create or update a Brevo contact, including the list IDs to add them to.
+     * @SuppressWarnings(PHPMD.MissingImport)
+     */
+    private function createBrevoContact($order, $list_ids)
+    {
+        if (!$this->apiClient) {
+            error_log('BrevWoo: Brevo API key not set, cannot add contact to Brevo');
+            return;
+        }
+
+        // Collect order details
+        $email = $order->get_billing_email();
+        $first_name = $order->get_billing_first_name();
+        $last_name = $order->get_billing_last_name();
+        $order_id = $order->get_id();
+        $order_total = $order->get_total();
+        $order_date = $order->get_date_created()->date('d-m-Y');
+
+        // Create the contact object
+        $createContact = new Brevo\Client\Model\CreateContact([
+            'email' => $email,
+            'updateEnabled' => true,
+            'attributes' => [
+                'FIRSTNAME' => $first_name,
+                'LASTNAME' => $last_name,
+                'ORDER_ID' => strval($order_id),
+                'ORDER_PRICE' => $order_total,
+                'ORDER_DATE' => $order_date,
+            ],
+            'listIds' => $list_ids,
+        ]);
+
+        try {
+            $this->apiClient->createContact($createContact);
+            $this->logContactCreated($email, $list_ids, strval($order_id));
+        } catch (Exception $e) {
+            error_log('BrevWoo: Error creating Brevo contact: ' . $e->getMessage());
+        }
+    }
+
+    /**
      * Render Brevo API connection status notice.
      */
     private function renderBrevoStatusNotice()
@@ -638,58 +687,9 @@ class BrevWooAdmin
     }
 
     /**
-     * Return the URL for the plugin settings page.
-     */
-    private function getPluginSettingsUrl()
-    {
-        return add_query_arg('page', $this->plugin_name, get_admin_url() . 'options-general.php');
-    }
-
-    /**
-     * Create or update a Brevo contact.
-     * @SuppressWarnings(PHPMD.MissingImport)
-     */
-    private function addOrUpdateBrevoContact($order, $list_ids)
-    {
-        if (!$this->apiClient) {
-            error_log('BrevWoo: Brevo API key not set, cannot add contact to Brevo');
-            return;
-        }
-
-        // Collect order details
-        $email = $order->get_billing_email();
-        $first_name = $order->get_billing_first_name();
-        $last_name = $order->get_billing_last_name();
-        $order_id = $order->get_id();
-        $order_total = $order->get_total();
-        $order_date = $order->get_date_created()->date('d-m-Y');
-
-        // Create the contact object
-        $createContact = new Brevo\Client\Model\CreateContact([
-            'email' => $email,
-            'updateEnabled' => true,
-            'attributes' => [
-                'FIRSTNAME' => $first_name,
-                'LASTNAME' => $last_name,
-                'ORDER_ID' => strval($order_id),
-                'ORDER_PRICE' => $order_total,
-                'ORDER_DATE' => $order_date,
-            ],
-            'listIds' => $list_ids,
-        ]);
-
-        try {
-            $this->apiClient->createOrUpdateContact($createContact);
-            $this->logContactAddedToBrevo($email, $list_ids, strval($order_id));
-        } catch (Exception $e) {
-            error_log('BrevWoo: Error creating or updating Brevo contact: ' . $e->getMessage());
-        }
-    }
-
-    /**
      * Log Brevo contact add to Activity Log plugin (if installed).
      */
-    private function logContactAddedToBrevo($email, $list_ids, $order_id)
+    private function logContactCreated($email, $list_ids, $order_id)
     {
         if (!function_exists('aal_insert_log')) {
             return;
