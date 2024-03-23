@@ -249,14 +249,15 @@ class BrevWooAdmin
         $brevo_api_key = get_option('brevwoo_brevo_api_key', '');
 
         if (empty($brevo_api_key)) {
-            echo '<p class="description">' .
-                esc_html__('Set an API key to load lists.', 'brevwoo') .
-                '</p>';
+            printf(
+                '<p class="description">%s</p>',
+                esc_html__('Set an API key to load lists.', 'brevwoo')
+            );
             return;
         }
 
         if (!$this->apiClient) {
-            echo '<p class="description">' . esc_html__('Could not load lists', 'brevwoo') . '</p>';
+            printf('<p class="description">%s</p>', esc_html__('Could not load lists', 'brevwoo'));
             return;
         }
 
@@ -270,22 +271,23 @@ class BrevWooAdmin
                 $allFoldersResult['folders'], // All Brevo folders from API
                 __('Disabled (product-specific lists only)', 'brevwoo') // Disabled option label
             );
-            echo '<p class="description">' .
+            printf(
+                '<p class="description">%s</p>',
                 esc_html__(
                     'Select the Brevo lists customers who buy any product will be added to.',
                     'brevwoo'
-                ) .
-                '</p>';
-            echo '<p class="description brevwoo-select-lists-help-note">' .
-                '<span class="dashicons dashicons-info-outline" style="font-size: 19px;"></span> ' .
-                esc_html__('Hold ', 'brevwoo') .
-                '<kbd>Cmd</kbd>' .
-                esc_html__(' or ', 'brevwoo') .
-                '<kbd>Ctrl</kbd>' .
-                esc_html__(' on your keyboard to select multiple lists', 'brevwoo') .
-                '</p>';
+                )
+            );
+            printf(
+                '<p class="description brevwoo-select-lists-help-note">' .
+                    '<span class="dashicons dashicons-info-outline" style="font-size: 19px;"></span> ' .
+                    '%s <kbd>Cmd</kbd> %s <kbd>Ctrl</kbd> %s</p>',
+                esc_html__('Hold ', 'brevwoo'),
+                esc_html__('or ', 'brevwoo'),
+                esc_html__('to select multiple lists or deselect lists', 'brevwoo')
+            );
         } catch (Exception $e) {
-            echo '<p class="description">' . esc_html__('Could not load lists', 'brevwoo') . '</p>';
+            printf('<p class="description">%s</p>', esc_html__('Could not load lists', 'brevwoo'));
         }
     }
 
@@ -334,12 +336,10 @@ class BrevWooAdmin
         }
         echo '</select>';
 
-        echo '<p class="description">' .
-            esc_html__(
-                'Select which WooCommerce order status adds a customer to Brevo.',
-                'brevwoo'
-            ) .
-            '</p>';
+        printf(
+            '<p class="description">%s</p>',
+            esc_html__('Select which WooCommerce order status adds a customer to Brevo.', 'brevwoo')
+        );
     }
 
     /**
@@ -400,18 +400,20 @@ class BrevWooAdmin
         try {
             $listsResult = $this->apiClient->getLists();
             $allFoldersResult = $this->apiClient->getFolders();
-            echo '<p class="howto">' .
+            printf(
+                '<p class="howto">%s' .
+                    '<span class="woocommerce-help-tip" style="margin-bottom: 2px;" data-tip="%s"></span>' .
+                    '</p>',
                 esc_html__(
                     'Select Brevo lists below to add customers to when they buy this product.',
                     'brevwoo'
-                ) .
-                '<span class="woocommerce-help-tip" style="margin-bottom: 2px;" data-tip="' .
-                esc_attr__('Hold Cmd or Ctrl to select multiple lists', 'brevwoo') .
-                '"></span>' .
-                '</p>';
-            echo '<label for="brevwoo_product_lists" class="hidden">' .
-                esc_html__('Brevo Lists', 'brevwoo') .
-                '</label>';
+                ),
+                esc_attr__('Hold Cmd or Ctrl to select multiple lists or deselect lists', 'brevwoo')
+            );
+            printf(
+                '<label for="brevwoo_product_lists" class="hidden">%s</label>',
+                esc_html__('Product Brevo Lists', 'brevwoo')
+            );
             $this->renderSelectListsInput(
                 'brevwoo_product_lists', // HTML ID and name attribute
                 $product_lists, // Currently selected list IDs
