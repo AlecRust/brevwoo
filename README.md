@@ -16,7 +16,7 @@ Set default Brevo lists that customers are added to when they buy a product, and
 -   Configuration of when during checkout a customer is added to Brevo
 -   Customer name and email attributes included in the created Brevo contact
 -   [Transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes) included in the created Brevo contact
--   Useful debug logging added to [Activity Log](https://wordpress.org/plugins/aryo-activity-log/) plugin if installed
+-   Optional debug entries added to WooCommerce logs
 
 ## Installation
 

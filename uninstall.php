@@ -15,6 +15,7 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
 delete_option('brevwoo_brevo_api_key');
 delete_option('brevwoo_default_lists');
 delete_option('brevwoo_order_status');
+delete_option('brevwoo_debug_logging');
 
 // Delete WooCommerce product meta
 if (class_exists('WooCommerce')) {

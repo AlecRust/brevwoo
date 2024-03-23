@@ -85,8 +85,8 @@ class BrevWooApiClient
      * https://developers.brevo.com/reference/createcontact
      *
      */
-    public function createContact($createContact)
+    public function createContact($brevoContact)
     {
-        return $this->contactsApiInstance->createContact($createContact);
+        return $this->contactsApiInstance->createContact($brevoContact);
     }
 }

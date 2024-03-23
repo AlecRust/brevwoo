@@ -35,6 +35,11 @@ class BrevWooAdmin
     protected $apiClient;
 
     /**
+     * WooCommerce logger.
+     */
+    protected $wcLogger;
+
+    /**
      * Initialize the class and set its properties.
      *
      * @param      string    $plugin_name       The name of this plugin.
@@ -58,6 +63,18 @@ class BrevWooAdmin
             require_once plugin_dir_path(__FILE__) . 'api.php';
             $this->apiClient = new BrevWooApiClient($brevo_api_key);
         }
+    }
+
+    /**
+     * Initialize the WooCommerce logger.
+     */
+    public function initializeWcLogger()
+    {
+        if (!function_exists('wc_get_logger')) {
+            return;
+        }
+
+        $this->wcLogger = wc_get_logger();
     }
 
     /**
@@ -165,10 +182,10 @@ class BrevWooAdmin
             ]
         );
 
-        // Add "Add to Brevo trigger" setting field
+        // Add "Order status trigger" setting field
         add_settings_field(
             'brevwoo_order_status', // HTML id
-            __('Add to Brevo trigger', 'brevwoo'), // field title
+            __('Order status trigger', 'brevwoo'), // field title
             [$this, 'renderOrderStatusInput'], // callback
             'brevwoo-admin', // page
             'brevwoo_setting_section', // section
@@ -178,13 +195,36 @@ class BrevWooAdmin
             ]
         );
 
-        // Register "Add to Brevo trigger" setting
+        // Register "Order status trigger" setting
         register_setting(
             'brevwoo_option_group', // settings group name
             'brevwoo_order_status', // option name
             [
                 'default' => 'completed',
                 'sanitize_callback' => [$this, 'sanitizeOrderStatusInput'],
+            ]
+        );
+
+        // Add "Debug logging" setting field
+        add_settings_field(
+            'brevwoo_debug_logging', // HTML id
+            __('Debug logging', 'brevwoo'), // field title
+            [$this, 'renderDebugLoggingInput'], // callback
+            'brevwoo-admin', // page
+            'brevwoo_setting_section', // section
+            [
+                'id' => 'brevwoo_debug_logging',
+                'option_name' => 'brevwoo_debug_logging',
+            ]
+        );
+
+        // Register "Debug logging" checkbox setting
+        register_setting(
+            'brevwoo_option_group', // settings group name
+            'brevwoo_debug_logging', // option name
+            [
+                'default' => '0',
+                'sanitize_callback' => [$this, 'sanitizeCheckboxInput'],
             ]
         );
     }
@@ -310,7 +350,7 @@ class BrevWooAdmin
     }
 
     /**
-     * Render "Add to Brevo trigger" select input.
+     * Render "Order status trigger" select input.
      */
     public function renderOrderStatusInput($val)
     {
@@ -343,7 +383,7 @@ class BrevWooAdmin
     }
 
     /**
-     * Sanitize "Add to Brevo trigger" select input.
+     * Sanitize "Order status trigger" select input.
      */
     public function sanitizeOrderStatusInput($input)
     {
@@ -352,6 +392,42 @@ class BrevWooAdmin
             return $input;
         }
         return 'completed';
+    }
+
+    /**
+     * Render "Debug logging" checkbox input.
+     */
+    public function renderDebugLoggingInput($val)
+    {
+        $field_id = $val['id'];
+        $name = $val['option_name'];
+        $value = get_option($name, '0');
+
+        printf(
+            '<label for="%s"><input type="checkbox" id="%s" name="%s" value="1" %s> %s</label>',
+            esc_attr($field_id),
+            esc_attr($field_id),
+            esc_attr($name),
+            checked('1', $value, false),
+            esc_html__('Enable debug logging', 'brevwoo')
+        );
+
+        $wc_logs_url = admin_url('admin.php?page=wc-status&tab=logs');
+        printf(
+            '<p class="description">%s <a href="%s" target="_blank">%s</a> %s.</p>',
+            esc_html__('Add to', 'brevwoo'),
+            esc_url($wc_logs_url),
+            esc_html__('WooCommerce logs', 'brevwoo'),
+            esc_html__('when a customer is added to Brevo', 'brevwoo')
+        );
+    }
+
+    /**
+     * Sanitize checkbox input.
+     */
+    public function sanitizeCheckboxInput($input)
+    {
+        return !empty($input) ? '1' : '0';
     }
 
     /**
@@ -627,8 +703,16 @@ class BrevWooAdmin
      */
     private function createBrevoContact($order, $list_ids)
     {
+        // Get the brevwoo_debug_logging option
+        $debug_logging = get_option('brevwoo_debug_logging', '0');
+
         if (!$this->apiClient) {
-            error_log('BrevWoo: Brevo API key not set, cannot add contact to Brevo');
+            $error_message = __(
+                'API client not initialized, could not add contact to Brevo',
+                'brevwoo'
+            );
+            error_log('BrevWoo: ' . $error_message);
+            $this->wcLogger->error($error_message);
             return;
         }
 
@@ -639,9 +723,10 @@ class BrevWooAdmin
         $order_id = $order->get_id();
         $order_total = $order->get_total();
         $order_date = $order->get_date_created()->date('d-m-Y');
+        $order_status = $order->get_status();
 
         // Create the contact object
-        $createContact = new Brevo\Client\Model\CreateContact([
+        $brevoContact = new Brevo\Client\Model\CreateContact([
             'email' => $email,
             'updateEnabled' => true,
             'attributes' => [
@@ -655,10 +740,14 @@ class BrevWooAdmin
         ]);
 
         try {
-            $this->apiClient->createContact($createContact);
-            $this->logContactCreated($email, $list_ids, strval($order_id));
+            $this->apiClient->createContact($brevoContact);
+            if ($debug_logging === '1') {
+                $this->logContactCreated($email, $list_ids, strval($order_id), $order_status);
+            }
         } catch (Exception $e) {
-            error_log('BrevWoo: Error creating Brevo contact: ' . $e->getMessage());
+            $error_message = 'Error creating Brevo contact: ' . $e->getMessage();
+            error_log('BrevWoo: ' . $error_message);
+            $this->wcLogger->error($error_message);
         }
     }
 
@@ -693,31 +782,22 @@ class BrevWooAdmin
     }
 
     /**
-     * Log Brevo contact add to Activity Log plugin (if installed).
+     * Log Brevo contact add to WooCommerce.
      */
-    private function logContactCreated($email, $list_ids, $order_id)
+    private function logContactCreated($email, $list_ids, $order_id, $order_status)
     {
-        if (!function_exists('aal_insert_log')) {
-            return;
-        }
-
         $log_message = sprintf(
-            '%s added to Brevo lists %s via order #%s',
+            'Order #%s %s status added %s to Brevo list %s',
+            $order_id,
+            $order_status,
             $email,
             implode(
                 ', ',
                 array_map(function ($list_id) {
                     return '#' . $list_id;
                 }, $list_ids)
-            ),
-            $order_id
+            )
         );
-
-        aal_insert_log([
-            'action' => 'complete',
-            'object_type' => 'Users',
-            'object_subtype' => 'BrevWoo',
-            'object_name' => $log_message,
-        ]);
+        $this->wcLogger->info($log_message);
     }
 }

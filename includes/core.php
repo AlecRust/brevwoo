@@ -89,6 +89,9 @@ class BrevWoo
         // Save selected Brevo lists to a product when it's saved
         add_action('save_post_product', [$plugin_admin, 'saveSelectedLists']);
 
+        // Initialize WooCommerce logger
+        add_action('woocommerce_loaded', [$plugin_admin, 'initializeWcLogger']);
+
         // Add customer to Brevo lists when the (user defined) WC order status is reached
         add_action($plugin_admin->getWcCheckoutHook(), [$plugin_admin, 'processWcOrder']);
 
