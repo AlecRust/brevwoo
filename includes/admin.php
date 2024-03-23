@@ -194,9 +194,13 @@ class BrevWooAdmin
      */
     public function renderSettingsDescription()
     {
-        echo '<p>' .
-            esc_html__('Control the global settings for BrevWoo below.', 'brevwoo') .
-            '</p>';
+        printf(
+            '<p>%s. <a href="%s" target="_blank">%s</a> %s.</p>',
+            esc_html__('Control the global settings for BrevWoo below', 'brevwoo'),
+            esc_url(admin_url('edit.php?post_type=product')),
+            esc_html__('Edit a WooCommerce product', 'brevwoo'),
+            esc_html__('to set product-specific lists', 'brevwoo')
+        );
     }
 
     /**
