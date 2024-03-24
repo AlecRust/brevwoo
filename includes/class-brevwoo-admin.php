@@ -16,7 +16,6 @@ class BrevWoo_Admin {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @access private
 	 * @var    string $plugin_name The ID of this plugin.
 	 */
 	private $plugin_name;
@@ -24,7 +23,6 @@ class BrevWoo_Admin {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @access private
 	 * @var    string $version The current version of this plugin.
 	 */
 	private $version;

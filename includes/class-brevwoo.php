@@ -15,7 +15,6 @@ class BrevWoo {
 	/**
 	 * Unique identifier of this plugin.
 	 *
-	 * @access protected
 	 * @var    string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
@@ -23,7 +22,6 @@ class BrevWoo {
 	/**
 	 * Current version of the plugin.
 	 *
-	 * @access protected
 	 * @var    string    $version    The current version of the plugin.
 	 */
 	protected $version;
@@ -49,7 +47,6 @@ class BrevWoo {
 	/**
 	 * Load required plugin dependencies.
 	 *
-	 * @access private
 	 * @return void
 	 */
 	private function load_dependencies() {
@@ -61,7 +58,6 @@ class BrevWoo {
 	 *
 	 * @SuppressWarnings(PHPMD.MissingImport)
 	 *
-	 * @access private
 	 * @return void
 	 */
 	private function define_admin_hooks() {
