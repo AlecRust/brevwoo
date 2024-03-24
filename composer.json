@@ -1,30 +1,32 @@
 {
-    "name": "alecrust/brevwoo",
-    "description": "Add WooCommerce customers to Brevo the simple way.",
-    "homepage": "https://github.com/AlecRust/brevwoo",
-    "license": "GPL-2.0-or-later",
-    "type": "wordpress-plugin",
-    "authors": [
-        {
-            "name": "Alec Rust",
-            "homepage": "https://www.alecrust.com/"
-        }
-    ],
-    "require": {
-        "getbrevo/brevo-php": "^2.0"
-    },
-    "require-dev": {
-        "phpro/grumphp": "^2.5.0",
-        "phpmd/phpmd": "^2.15.0",
-        "nikic/php-parser": "^5.0.2",
-        "povils/phpmnd": "^3.4.1",
-        "squizlabs/php_codesniffer": "^3.9.0",
-        "phpstan/phpstan": "^1.10",
-        "szepeviktor/phpstan-wordpress": "^1.3"
-    },
-    "config": {
-        "allow-plugins": {
-            "phpro/grumphp": true
-        }
-    }
+	"name": "alecrust/brevwoo",
+	"description": "Add WooCommerce customers to Brevo the simple way.",
+	"homepage": "https://github.com/AlecRust/brevwoo",
+	"license": "GPL-2.0-or-later",
+	"type": "wordpress-plugin",
+	"authors": [
+		{
+			"name": "Alec Rust",
+			"homepage": "https://www.alecrust.com/"
+		}
+	],
+	"require": {
+		"getbrevo/brevo-php": "^2.0"
+	},
+	"require-dev": {
+		"phpro/grumphp": "^2.5.0",
+		"phpmd/phpmd": "^2.15.0",
+		"nikic/php-parser": "^5.0.2",
+		"povils/phpmnd": "^3.4.1",
+		"squizlabs/php_codesniffer": "^3.9.0",
+		"phpstan/phpstan": "^1.10",
+		"szepeviktor/phpstan-wordpress": "^1.3",
+		"wp-coding-standards/wpcs": "^3.0"
+	},
+	"config": {
+		"allow-plugins": {
+			"phpro/grumphp": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	}
 }

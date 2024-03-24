@@ -4,14 +4,14 @@ parameters:
             visitors:
                 forbidden_function_calls:
                     blacklist:
-                        - "var_dump"
-                        - "print_r"
+                        - 'var_dump'
+                        - 'print_r'
         phpversion:
-            project: "7.0"
+            project: '7.0'
         phpcs:
-            standard: PSR2
+            standard: WordPress
         phpmd:
-            ruleset: ["cleancode", "naming"]
+            ruleset: ['cleancode', 'naming']
         phpmnd:
         phpstan:
             memory_limit: 512M

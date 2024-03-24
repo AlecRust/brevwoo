@@ -14,14 +14,14 @@ jobs:
             - name: Setup Node
               uses: actions/setup-node@v4
               with:
-                  node-version: "lts/*"
-                  cache: "npm"
+                  node-version: 'lts/*'
+                  cache: 'npm'
             - name: Install Node packages
               run: npm ci
             - name: Set up PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: "8.3"
+                  php-version: '8.3'
             - name: Install Composer packages
               run: composer install --prefer-dist --no-progress --no-suggest
             - name: Run lint
@@ -37,7 +37,7 @@ jobs:
             - name: Set up PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: "8.3"
+                  php-version: '8.3'
             - name: Install Composer packages
               run: composer install --no-dev --optimize-autoloader
             - name: Clean up old SVN tags

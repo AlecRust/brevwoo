@@ -7,32 +7,32 @@
  */
 
 .wp-core-ui select.brevwoo-select-lists-input {
-    width: 100%;
-    cursor: default;
-    resize: vertical;
+	width: 100%;
+	cursor: default;
+	resize: vertical;
 }
 
 .wp-core-ui select.brevwoo-select-lists-input:hover {
-    color: #2c3338;
+	color: #2c3338;
 }
 
 .wp-core-ui select.brevwoo-select-lists-input optgroup option {
-    padding-left: 10px;
+	padding-left: 10px;
 }
 
 .form-table td .brevwoo-select-lists-help-note {
-    display: none;
+	display: none;
 }
 
 @media (min-width: 783px) {
-    .wp-core-ui select.brevwoo-select-lists-input {
-        max-width: 350px;
-        min-height: 150px;
-    }
+	.wp-core-ui select.brevwoo-select-lists-input {
+		max-width: 350px;
+		min-height: 150px;
+	}
 
-    .form-table td .brevwoo-select-lists-help-note {
-        display: block;
-        font-size: 13px;
-        margin-top: 10px;
-    }
+	.form-table td .brevwoo-select-lists-help-note {
+		display: block;
+		font-size: 13px;
+		margin-top: 10px;
+	}
 }

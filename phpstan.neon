@@ -2,7 +2,6 @@ includes:
     - vendor/szepeviktor/phpstan-wordpress/extension.neon
 
 parameters:
-    level: 5
+    level: 6
     ignoreErrors:
         - '#^Function wc_get_order not found\.$#'
-        - '#^Property BrevWooAdmin::\$version is never read, only written\.$#'

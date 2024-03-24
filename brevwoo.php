@@ -1,5 +1,4 @@
 <?php
-// phpcs:disable
 /**
  * Plugin Name:       BrevWoo
  * Plugin URI:        http://github.com/AlecRust/brevwoo
@@ -17,31 +16,34 @@
  * @link    https://github.com/AlecRust/brevwoo
  */
 
-require plugin_dir_path(__FILE__) . 'vendor/autoload.php';
-
 // Abort if this file is called directly.
-if (!defined('WPINC')) {
-    die();
+if ( ! defined( 'WPINC' ) ) {
+	die();
 }
+
+/**
+ * Load Composer autoloader.
+ */
+require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 
 /**
  * Plugin version.
  */
-define('BREVWOO_VERSION', '0.0.8');
+define( 'BREVWOO_VERSION', '0.0.8' );
 
 /**
  * Load core plugin class defining all hooks.
  */
-require plugin_dir_path(__FILE__) . 'includes/core.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/class-brevwoo.php';
 
 /**
  * Begin plugin execution.
+ *
+ * @return void
  * @SuppressWarnings(PHPMD.MissingImport)
  */
-function run_brevwoo()
-{
-    $plugin = new BrevWoo();
-    $plugin->init();
+function run_brevwoo() {
+	$plugin = new BrevWoo();
+	$plugin->init();
 }
 run_brevwoo();
-// phpcs:enable
