@@ -50,7 +50,7 @@ class BrevWoo_ApiClient {
 	}
 
 	/**
-	 * Fetches the account information from Brevo.
+	 * Fetch the account information from Brevo.
 	 * https://developers.brevo.com/reference/getaccount
 	 *
 	 * @return Brevo\Client\Model\GetAccount
@@ -60,7 +60,7 @@ class BrevWoo_ApiClient {
 	}
 
 	/**
-	 * Fetches all lists from Brevo.
+	 * Fetch all lists from Brevo.
 	 * https://developers.brevo.com/reference/getlists-1
 	 *
 	 * @param int $limit  Number of lists to fetch (50 max).
@@ -72,7 +72,7 @@ class BrevWoo_ApiClient {
 	}
 
 	/**
-	 * Fetches all folders from Brevo.
+	 * Fetch all folders from Brevo.
 	 * https://developers.brevo.com/reference/getfolders-1
 	 *
 	 * @param int $limit  Number of folders to fetch (50 max).
@@ -84,7 +84,7 @@ class BrevWoo_ApiClient {
 	}
 
 	/**
-	 * Creates or updates a contact in Brevo.
+	 * Create or update a contact in Brevo.
 	 * https://developers.brevo.com/reference/createcontact
 	 *
 	 * @param Brevo\Client\Model\CreateContact $brevo_contact Contact to create or update.
