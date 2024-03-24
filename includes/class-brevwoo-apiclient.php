@@ -2,10 +2,9 @@
 /**
  * API client used to interact with Brevo.
  *
- * @link       https://github.com/AlecRust/brevwoo
  * @package    BrevWoo
  * @subpackage BrevWoo/includes
- * @author     Alec Rust (https://www.alecrust.com/)
+ * @link       https://github.com/AlecRust/brevwoo
  */
 
 /**

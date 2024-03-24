@@ -9,7 +9,7 @@ parameters:
         phpversion:
             project: '7.0'
         phpcs:
-            standard: WordPress
+            standard: ['WordPress', 'WooCommerce']
         phpmd:
             ruleset: ['cleancode', 'naming']
         phpmnd:

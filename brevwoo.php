@@ -7,12 +7,17 @@
  * Version:           0.0.9
  * Author:            Alec Rust
  * Author URI:        https://www.alecrust.com/
- * License:           GPL-2.0-or-later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Developer:         Alec Rust
+ * Developer URI:     https://www.alecrust.com/
  * Text Domain:       brevwoo
  *
+ * WC requires at least: 3.0.0
+ * WC tested up to: 8.7.0
+ *
+ * License:           GPL-2.0-or-later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ *
  * @package BrevWoo
- * @author  Alec Rust
  * @link    https://github.com/AlecRust/brevwoo
  */
 

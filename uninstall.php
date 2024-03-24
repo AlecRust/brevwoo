@@ -2,8 +2,8 @@
 /**
  * Runs when the plugin is uninstalled.
  *
- * @link    https://github.com/AlecRust/brevwoo
  * @package BrevWoo
+ * @link    https://github.com/AlecRust/brevwoo
  */
 
 // If uninstall not called from WordPress, then exit.
