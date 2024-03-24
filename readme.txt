@@ -68,5 +68,6 @@ Yes, the plugin uses the list ID, not the list name, so renaming a list in Brevo
 
 1. Set your Brevo API key in the plugin settings.
 2. Select Brevo lists in the edit product sidebar.
+3. Optional debug entries in WooCommerce logs.
 
 == Changelog ==
