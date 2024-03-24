@@ -4,7 +4,7 @@
  * Plugin URI:        http://github.com/AlecRust/brevwoo
  * GitHub Plugin URI: AlecRust/brevwoo
  * Description:       Add WooCommerce customers to Brevo the simple way.
- * Version:           0.0.8
+ * Version:           0.0.9
  * Author:            Alec Rust
  * Author URI:        https://www.alecrust.com/
  * License:           GPL-2.0-or-later
@@ -29,7 +29,7 @@ require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 /**
  * Plugin version.
  */
-define( 'BREVWOO_VERSION', '0.0.8' );
+define( 'BREVWOO_VERSION', '0.0.9' );
 
 /**
  * Load core plugin class defining all hooks.
