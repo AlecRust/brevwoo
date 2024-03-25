@@ -15,14 +15,14 @@ class BrevWoo_Admin {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @var    string $plugin_name The ID of this plugin.
+	 * @var string $plugin_name The ID of this plugin.
 	 */
 	private $plugin_name;
 
 	/**
 	 * The version of this plugin.
 	 *
-	 * @var    string $version The current version of this plugin.
+	 * @var string $version The current version of this plugin.
 	 */
 	private $version;
 
@@ -595,7 +595,7 @@ class BrevWoo_Admin {
 	public function save_selected_lists( $post_id ) {
 		// Check if nonce is set.
 		if ( ! isset( $_POST['_wpnonce'] ) ) {
-				return;
+			return;
 		}
 
 		// Unslash and verify the nonce, check user permissions.
@@ -604,7 +604,7 @@ class BrevWoo_Admin {
 		$can_edit    = current_user_can( 'edit_post', $post_id );
 
 		if ( ! $nonce_valid || ! $can_edit ) {
-				return;
+			return;
 		}
 
 		if ( isset( $_POST['brevwoo_product_lists'] ) ) {

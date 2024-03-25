@@ -14,14 +14,14 @@ class BrevWoo {
 	/**
 	 * Unique identifier of this plugin.
 	 *
-	 * @var    string    $plugin_name    The string used to uniquely identify this plugin.
+	 * @var string $plugin_name The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
 
 	/**
 	 * Current version of the plugin.
 	 *
-	 * @var    string    $version    The current version of the plugin.
+	 * @var string $version The current version of the plugin.
 	 */
 	protected $version;
 
@@ -120,7 +120,7 @@ class BrevWoo {
 	/**
 	 * Utility returning plugin name uniquely identifying it.
 	 *
-	 * @return string    The name of the plugin.
+	 * @return string The name of the plugin.
 	 */
 	public function get_plugin_name() {
 		return $this->plugin_name;
@@ -129,7 +129,7 @@ class BrevWoo {
 	/**
 	 * Utility returning the version number of the plugin.
 	 *
-	 * @return string    The version number of the plugin.
+	 * @return string The version number of the plugin.
 	 */
 	public function get_version() {
 		return $this->version;
