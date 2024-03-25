@@ -40,6 +40,24 @@ define( 'BREVWOO_VERSION', '0.0.10' );
  */
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-brevwoo.php';
 
+
+/**
+ * Declare plugin compatibility with WC HPOS.
+ * https://github.com/woocommerce/woocommerce/wiki/High-Performance-Order-Storage-Upgrade-Recipe-Book
+ *
+ * @SuppressWarnings(PHPMD.StaticAccess)
+ *
+ * @return void
+ */
+add_action(
+	'before_woocommerce_init',
+	function () {
+		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+		}
+	}
+);
+
 /**
  * Begin plugin execution.
  *
