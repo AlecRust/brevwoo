@@ -589,35 +589,23 @@ class BrevWoo_Admin {
 	/**
 	 * Save selected Brevo lists to product meta.
 	 *
-	 * @param int $post_id The ID of the post being saved.
+	 * @param mixed $product The product being saved.
 	 * @return void
 	 */
-	public function save_selected_lists( $post_id ) {
-		// Check if nonce is set.
-		if ( ! isset( $_POST['_wpnonce'] ) ) {
-			return;
-		}
+	public function save_selected_lists( $product ) {
+		$input = filter_input_array(
+			INPUT_POST,
+			array(
+				'brevwoo_product_lists' => array(
+					'filter' => FILTER_SANITIZE_NUMBER_INT,
+					'flags'  => FILTER_REQUIRE_ARRAY | FILTER_FORCE_ARRAY,
+				),
+			)
+		);
 
-		// Unslash and verify the nonce, check user permissions.
-		$nonce       = wp_unslash( $_POST['_wpnonce'] ); // phpcs:ignore
-		$nonce_valid = wp_verify_nonce( $nonce, 'update-post_' . $post_id );
-		$can_edit    = current_user_can( 'edit_post', $post_id );
-
-		if ( ! $nonce_valid || ! $can_edit ) {
-			return;
-		}
-
-		if ( isset( $_POST['brevwoo_product_lists'] ) ) {
-			// Unslash the input and then sanitize it.
-			$product_lists_raw = wp_unslash( $_POST['brevwoo_product_lists'] ); // phpcs:ignore
-			$product_lists     = $this->sanitize_lists_input( $product_lists_raw );
-
-			// Save the list of IDs as a meta entry, overwriting any existing value.
-			update_post_meta(
-				$post_id,
-				'_brevwoo_product_lists',
-				$product_lists
-			);
+		if ( ! empty( $input['brevwoo_product_lists'] ) ) {
+			$product_lists = $this->sanitize_lists_input( $input['brevwoo_product_lists'] );
+			$product->update_meta_data( '_brevwoo_product_lists', $product_lists );
 		}
 	}
 

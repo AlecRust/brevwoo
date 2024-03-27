@@ -74,6 +74,15 @@ class BrevWoo {
 			)
 		);
 
+		// Display admin notice if WooCommerce is not active.
+		add_action(
+			'admin_notices',
+			array(
+				$plugin_admin,
+				'render_required_plugin_notice',
+			)
+		);
+
 		// Admin settings page.
 		add_action( 'admin_init', array( $plugin_admin, 'settings_page_init' ) );
 
@@ -93,7 +102,10 @@ class BrevWoo {
 		add_action( 'add_meta_boxes', array( $plugin_admin, 'add_edit_product_panel' ) );
 
 		// Save selected Brevo lists to a product when it's saved.
-		add_action( 'save_post_product', array( $plugin_admin, 'save_selected_lists' ) );
+		add_action(
+			'woocommerce_admin_process_product_object',
+			array( $plugin_admin, 'save_selected_lists' )
+		);
 
 		// Initialize WooCommerce logger.
 		add_action( 'woocommerce_loaded', array( $plugin_admin, 'initialize_wc_logger' ) );
@@ -104,15 +116,6 @@ class BrevWoo {
 			array(
 				$plugin_admin,
 				'process_wc_order',
-			)
-		);
-
-		// Display admin notice if WooCommerce is not active.
-		add_action(
-			'admin_notices',
-			array(
-				$plugin_admin,
-				'render_required_plugin_notice',
 			)
 		);
 	}
