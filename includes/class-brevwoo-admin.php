@@ -604,8 +604,13 @@ class BrevWoo_Admin {
 		);
 
 		if ( ! empty( $input['brevwoo_product_lists'] ) ) {
-			$product_lists = $this->sanitize_lists_input( $input['brevwoo_product_lists'] );
-			$product->update_meta_data( '_brevwoo_product_lists', $product_lists );
+			$product_lists = $this->sanitize_lists_input(
+				$input['brevwoo_product_lists']
+			);
+			$product->update_meta_data(
+				'_brevwoo_product_lists',
+				$product_lists
+			);
 		}
 	}
 
