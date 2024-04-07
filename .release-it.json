@@ -1,14 +1,17 @@
 {
 	"plugins": {
 		"@release-it/bumper": {
-			"out": ["brevwoo.php"]
+			"out": [
+				"brevwoo.php",
+				{
+					"file": ".cliff/cliff-readme-txt.toml",
+					"type": "text/plain"
+				}
+			]
 		}
 	},
 	"hooks": {
-		"after:bump": [
-			"auto-changelog -p --commit-limit false --hide-credit --ignore-commit-pattern \"Release ?\\d+\\.\\d+\\.\\d+\"",
-			"auto-changelog -p --output readme.txt --template readme.hbs --commit-limit false --ignore-commit-pattern \"Release ?\\d+\\.\\d+\\.\\d+\""
-		]
+		"after:bump": ["node .cliff/build-changelogs.js"]
 	},
 	"git": {
 		"commitArgs": ["-S"],
