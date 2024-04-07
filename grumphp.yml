@@ -1,13 +1,7 @@
-parameters:
+grumphp:
     tasks:
-        phpparser:
-            visitors:
-                forbidden_function_calls:
-                    blacklist:
-                        - 'var_dump'
-                        - 'print_r'
         phpversion:
-            project: '7.0'
+            project: '7.4'
         phpcs:
             standard: ['WordPress', 'WooCommerce']
         phpmd:
