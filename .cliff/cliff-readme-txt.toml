@@ -80,12 +80,13 @@ body = """
 
 {% for commit in commits %}* {{ commit.message | split(pat="
 ") | first | trim }}
-{% endfor %}{% else %}{% endif %}
+{% endfor %}{% endif %}
 """
 
 [git]
 conventional_commits = false
 filter_unconventional = false
+sort_commits = "newest"
 
 [[git.commit_parsers]]
 message = "^Release"
