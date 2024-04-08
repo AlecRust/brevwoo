@@ -653,7 +653,7 @@ class BrevWoo_Admin {
 	 * @return void
 	 */
 	public function render_required_plugin_notice() {
-		if ( ! is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+		if ( ! class_exists( 'WooCommerce' ) ) {
 			$message =
 				'<p><strong>' .
 				esc_html__(
