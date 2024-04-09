@@ -26,7 +26,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
- * Load Composer autoloader.
+ * Load Composer entry point.
  */
 require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 
