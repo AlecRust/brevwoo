@@ -367,17 +367,7 @@ class BrevWoo_Admin {
 	 * @return array<int> Sanitized input.
 	 */
 	public function sanitize_lists_input( $input ) {
-		// Ensure $input is an array.
-		$input = (array) $input;
-
-		// Sanitize each element in the array.
-		$input = array_map( 'intval', $input );
-
-		// Strip out any non-list IDs (including 'Disabled' option).
-		$input = array_filter( $input );
-
-		// Re-index the array.
-		return array_values( $input );
+		return array_values( array_filter( array_map( 'intval', $input ) ) );
 	}
 
 	/**
@@ -532,6 +522,10 @@ class BrevWoo_Admin {
 		try {
 			$all_lists_result   = $this->api_client->get_lists();
 			$all_folders_result = $this->api_client->get_folders();
+			wp_nonce_field(
+				'brevwoo_edit_product_nonce_action',
+				'brevwoo_edit_product_nonce'
+			);
 			printf(
 				'<p class="howto">%s' .
 					'<span class="woocommerce-help-tip" style="margin-bottom: 2px;" data-tip="%s"></span>' .
@@ -593,24 +587,17 @@ class BrevWoo_Admin {
 	 * @return void
 	 */
 	public function save_selected_lists( $product ) {
-		$input = filter_input_array(
-			INPUT_POST,
-			array(
-				'brevwoo_product_lists' => array(
-					'filter' => FILTER_SANITIZE_NUMBER_INT,
-					'flags'  => FILTER_REQUIRE_ARRAY | FILTER_FORCE_ARRAY,
-				),
-			)
-		);
+		if (
+			! isset( $_POST['brevwoo_edit_product_nonce'], $_POST['brevwoo_product_lists'] ) ||
+			! wp_verify_nonce( sanitize_key( $_POST['brevwoo_edit_product_nonce'] ), 'brevwoo_edit_product_nonce_action' )
+		) {
+			return;
+		}
 
-		if ( ! empty( $input['brevwoo_product_lists'] ) ) {
-			$product_lists = $this->sanitize_lists_input(
-				$input['brevwoo_product_lists']
-			);
-			$product->update_meta_data(
-				'_brevwoo_product_lists',
-				$product_lists
-			);
+		if ( is_array( $_POST['brevwoo_product_lists'] ) ) {
+			$raw_lists       = wp_unslash( $_POST['brevwoo_product_lists'] ); // phpcs:ignore
+			$sanitized_lists = $this->sanitize_lists_input( $raw_lists );
+			$product->update_meta_data( '_brevwoo_product_lists', $sanitized_lists );
 		}
 	}
 
