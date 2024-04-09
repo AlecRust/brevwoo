@@ -64,8 +64,8 @@ add_action(
  * @return void
  * @SuppressWarnings(PHPMD.MissingImport)
  */
-function run_brevwoo() {
+function brevwoo_init() {
 	$plugin = new BrevWoo();
 	$plugin->init();
 }
-run_brevwoo();
+brevwoo_init();
