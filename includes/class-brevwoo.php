@@ -104,7 +104,7 @@ class BrevWoo {
 		// Save selected Brevo lists to a product when it's saved.
 		add_action(
 			'woocommerce_admin_process_product_object',
-			array( $plugin_admin, 'save_selected_lists' )
+			array( $plugin_admin, 'save_product_lists' )
 		);
 
 		// Initialize WooCommerce logger.

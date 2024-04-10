@@ -367,7 +367,9 @@ class BrevWoo_Admin {
 	 * @return array<int> Sanitized input.
 	 */
 	public function sanitize_lists_input( $input ) {
-		return array_values( array_filter( array_map( 'intval', $input ) ) );
+		return array_values(
+			array_filter( array_map( 'intval', $input ) )
+		);
 	}
 
 	/**
@@ -586,7 +588,7 @@ class BrevWoo_Admin {
 	 * @param mixed $product The product being saved.
 	 * @return void
 	 */
-	public function save_selected_lists( $product ) {
+	public function save_product_lists( $product ) {
 		if (
 			! isset( $_POST['brevwoo_edit_product_nonce'], $_POST['brevwoo_product_lists'] ) ||
 			! wp_verify_nonce( sanitize_key( $_POST['brevwoo_edit_product_nonce'] ), 'brevwoo_edit_product_nonce_action' )
@@ -595,8 +597,12 @@ class BrevWoo_Admin {
 		}
 
 		if ( is_array( $_POST['brevwoo_product_lists'] ) ) {
-			$raw_lists       = wp_unslash( $_POST['brevwoo_product_lists'] ); // phpcs:ignore
-			$sanitized_lists = $this->sanitize_lists_input( $raw_lists );
+			// Sanitize here instead of using sanitize_lists_input to keep WPCS happy.
+			$sanitized_lists = array_values(
+				array_filter(
+					array_map( 'intval', wp_unslash( $_POST['brevwoo_product_lists'] ) )
+				)
+			);
 			$product->update_meta_data( '_brevwoo_product_lists', $sanitized_lists );
 		}
 	}
