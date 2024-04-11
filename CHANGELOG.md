@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+#### [1.0.3](https://github.com/AlecRust/brevwoo/releases/tag/1.0.3)
+
+> 11 April 2024
+
+-   Fix changelogs [`92afee3`](https://github.com/AlecRust/brevwoo/commit/92afee350aa9ffa8ccffca0a970d75fc82f0572a)
+-   Remove --latest from git-cliff command [`e925cf1`](https://github.com/AlecRust/brevwoo/commit/e925cf1ff6d21e7a565bd527e5e6e8034c5ef23f)
+-   Add missing release to changelogs [`5d57cfd`](https://github.com/AlecRust/brevwoo/commit/5d57cfdefed8dac74d619a283b720e98359ef3f1)
+-   Adjust deploy workflow permissions [`9577dca`](https://github.com/AlecRust/brevwoo/commit/9577dca5c5f5e6c2fc9928d777851908afcb8ba8)
+
 #### [1.0.2](https://github.com/AlecRust/brevwoo/releases/tag/1.0.2)
 
 > 11 April 2024

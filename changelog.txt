@@ -1,5 +1,11 @@
 == Changelog ==
 
+2024-04-11 - version 1.0.3
+* Fix changelogs
+* Remove --latest from git-cliff command
+* Add missing release to changelogs
+* Adjust deploy workflow permissions
+
 2024-04-11 - version 1.0.2
 * Improve plugin icon
 * Fix old dev commits in changelog
