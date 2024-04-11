@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+#### [1.0.5](https://github.com/AlecRust/brevwoo/releases/tag/1.0.5)
+
+> 11 April 2024
+
+-   Simplify features list [`37b58ca`](https://github.com/AlecRust/brevwoo/commit/37b58cac7d8cb6840afd99cd939eb05a6bf390fa)
+-   Improve plugin icon and banner [`837b6c5`](https://github.com/AlecRust/brevwoo/commit/837b6c5bd919916b996ace8faa4e474a064aca83)
+-   Improve screenshot descriptions [`f3f8973`](https://github.com/AlecRust/brevwoo/commit/f3f8973eb1569bf9fce5f635f41c7ae5abc3d0d8)
+
 #### [1.0.4](https://github.com/AlecRust/brevwoo/releases/tag/1.0.4)
 
 > 11 April 2024
