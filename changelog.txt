@@ -1,5 +1,8 @@
 == Changelog ==
 
+2024-04-11 - version 1.0.4
+* Fix error submitting form when "Default Brevo lists" is not rendered
+
 2024-04-11 - version 1.0.3
 * Fix changelogs
 * Remove --latest from git-cliff command

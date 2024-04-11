@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+#### [1.0.4](https://github.com/AlecRust/brevwoo/releases/tag/1.0.4)
+
+> 11 April 2024
+
+-   Fix error submitting form when "Default Brevo lists" is not rendered [`4081383`](https://github.com/AlecRust/brevwoo/commit/40813831df6b9df8b25e34312faa14c23e06c303)
+
 #### [1.0.3](https://github.com/AlecRust/brevwoo/releases/tag/1.0.3)
 
 > 11 April 2024
