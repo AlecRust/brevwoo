@@ -2,6 +2,3 @@
 
 2024-04-11 - version 1.0.1
 * Improve tag deletion SVN commit message
-
-2024-04-11 - version 1.0.0
-* Initial public release

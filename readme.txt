@@ -3,7 +3,7 @@ Contributors:      alecrust
 Tags:              marketing, automation, sendinblue, brevo, woocommerce
 Requires at least: 4.6
 Tested up to:      6.5
-Stable tag:        1.0.1
+Stable tag:        1.0.2
 Requires PHP:      7.4
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -75,7 +75,3 @@ Yes, the plugin uses the list ID, not the list name, so renaming a list in Brevo
 = 1.0.1 - 2024-04-11 =
 
 * Improve tag deletion SVN commit message
-
-= 1.0.0 - 2024-04-11 =
-
-* Initial public release
