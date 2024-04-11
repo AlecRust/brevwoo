@@ -1,7 +1,13 @@
 == Changelog ==
 
+2024-04-11 - version 1.0.2
+* Improve plugin icon
+* Fix old dev commits in changelog
+* Remove "v" prefix from git-cliff commands
+
 2024-04-11 - version 1.0.1
 * Improve tag deletion SVN commit message
 
 2024-04-11 - version 1.0.0
-* Initial public release
+* Adjust changelog.txt formatting
+* Tidy for initial release

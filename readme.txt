@@ -72,10 +72,17 @@ Yes, the plugin uses the list ID, not the list name, so renaming a list in Brevo
 
 == Changelog ==
 
+= 1.0.2 - 2024-04-11 =
+
+* Improve plugin icon
+* Fix old dev commits in changelog
+* Remove "v" prefix from git-cliff commands
+
 = 1.0.1 - 2024-04-11 =
 
 * Improve tag deletion SVN commit message
 
 = 1.0.0 - 2024-04-11 =
 
-* Initial public release
+* Adjust changelog.txt formatting
+* Tidy for initial release
