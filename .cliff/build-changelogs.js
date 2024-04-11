@@ -2,9 +2,9 @@ const { execSync } = require('child_process');
 const packageJson = require('../package.json');
 
 const nextVersion = packageJson.version;
-const changelogMdCmd = `git-cliff --config .cliff/cliff-changelog-md.toml -o CHANGELOG.md --tag ${nextVersion} --latest`;
-const changelogTxtCmd = `git-cliff --config .cliff/cliff-changelog-txt.toml -o changelog.txt --tag ${nextVersion} --latest`;
-const readmeTxtCmd = `git-cliff --config .cliff/cliff-readme-txt.toml -o readme.txt --tag ${nextVersion} --latest`;
+const changelogMdCmd = `git-cliff --config .cliff/cliff-changelog-md.toml -o CHANGELOG.md --tag ${nextVersion}`;
+const changelogTxtCmd = `git-cliff --config .cliff/cliff-changelog-txt.toml -o changelog.txt --tag ${nextVersion}`;
+const readmeTxtCmd = `git-cliff --config .cliff/cliff-readme-txt.toml -o readme.txt --tag ${nextVersion}`;
 
 try {
 	execSync(changelogMdCmd, { stdio: 'inherit' });
