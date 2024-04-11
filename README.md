@@ -1,8 +1,5 @@
 ![Banner](.wordpress-org/banner-1544x500.png)
 
-> [!IMPORTANT]
-> This plugin is pending approval to the WordPress Plugin Directory. It must be built from source until then.
-
 # BrevWoo [![Lint](https://github.com/AlecRust/brevwoo/actions/workflows/lint.yml/badge.svg)](https://github.com/AlecRust/brevwoo/actions/workflows/lint.yml)
 
 > WordPress plugin that adds WooCommerce customers to Brevo lists.
@@ -24,7 +21,7 @@ Install from the [WordPress Plugin Directory](https://wordpress.org/plugins/brev
 [Releases](https://github.com/AlecRust/brevwoo/releases).
 
 Once activated, add your [Brevo API key](https://developers.brevo.com/docs/getting-started#quick-start) at
-**Settings > BrevWoo** then edit a product to select some Brevo lists.
+**Settings > BrevWoo**.
 
 ## Development
 
