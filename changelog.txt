@@ -1,4 +1,152 @@
 == Changelog ==
 
+2024-04-11 - version 1.0.1
+* Improve tag deletion SVN commit message
+
 2024-04-11 - version 1.0.0
-* Initial public release
+* Adjust changelog.txt formatting
+* Tidy for initial release
+* Tweak order in .distignore
+* Bump dev version
+* Refactor to avoid ignoring WPCS error
+* Bump dev version
+* Fix stable tag in output readme.txt
+* Prefix public function
+* Refactor saving of product lists
+* Include composer.json in plugin dist
+* Improve consistency of checking for WooCommerce
+* Add plugin Blueprint file
+* Sort changelogs consistently
+* Add changelog.txt file required by WooCommerce extensions
+* Use latest version of all development Composer packages
+* Bump npm dependencies
+* Use git-cliff for changelog building
+* Set PHP version to build Composer dependencies with
+* Tidy
+* Bump dev version
+* Bump Composer dependencies
+* Improve how product meta is saved
+* Declare compatibility with WC High-Performance Order Storage
+* Tidy
+* Remove "GitHub Plugin URI"
+* Bump dev version
+* Adhere to WC coding standards
+* Remove @access tags
+* Bump dev version
+* Bump Composer dependencies
+* Refactor to adhere to WordPress Coding Standards
+* Bump dev version
+* Improve screenshots
+* Log to WC, add new debug logging option
+* Consistently use printf() for paragraphs
+* Improve plugin settings page description
+* Improve input height on mobile
+* Tidy
+* Improve FAQs
+* Improve plugin banner
+* Improve functions order
+* Bump Composer packages
+* Bump @wordpress/env version
+* Bump dev version
+* Improve errors, remove required attributes
+* Use wp_admin_notice for error alerts
+* Improve naming
+* Improve tooltip copy
+* Improve plugin description
+* Display help below "Default Brevo lists" field
+* Tidy comments
+* Bump dev version
+* Group list options by folder name
+* Add more plugins to development environment
+* Remove WooCommerce plugin dependency for now
+* Set WooCommerce as plugin dependency
+* Improve how API status notice is rendered
+* Bump Composer dependencies
+* Improve order of functions
+* Add function to get settings page URL
+* Refactor to render both select fields from one function
+* Bump dev version
+* Add required attributes to new plugin settings fields
+* Remove storefront theme from dev environment
+* Delete WooCommerce product meta on uninstall
+* Improve how list IDs are saved against products
+* Update README
+* Increase PHPStan level
+* Improve FAQ
+* Set more Composer options
+* Use standard plugin description in Composer config
+* Fix key name
+* Fix lint
+* Add initializeApiClient() function
+* Sanitize list IDs as integers before save
+* Increase max line length
+* Add "Default Brevo lists" plugin option
+* Log contact creation to Activity Log plugin if installed
+* Improve copy
+* Improve copy
+* Improve alert copy
+* Simplify product meta saving and fetching
+* Persist "None" as the default option
+* Tidy copy
+* Bump dev version
+* Fix lint
+* Improve post meta saving security
+* Bump @wordpress/env version
+* Add Storefront WooCommerce theme to development themes
+* Delete brevwoo_order_status_trigger on plugin uninstall
+* Improve function name
+* Improve function name
+* Tidy copy
+* Add README notice
+* Fix Plugin Check errors
+* Upgrade getbrevo/brevo-php to v2.0
+* Add plugin option "Add to Brevo trigger"
+* Display admin notice if WooCommerce is not active
+* Improve @link comments
+* Update screenshot
+* Add help tooltip above multiple select input
+* Add license to Composer config
+* Add PHPStan
+* Tidy copy
+* Tidy copy
+* Improve README
+* Improve README
+* Bump dev version
+* Tidy README
+* Improve plugin images and description
+* Tidy comments
+* Simplify GrumPHP config
+* Fix line length
+* Simplify security when saving selected lists
+* Make Brevo API key input a required field
+* Simplify edit product page panel ID
+* Improve links under Brevo API key input
+* Namespace custom product meta option
+* Fix lint
+* Bump development version
+* Fix disabling of behavior by selecting "None (disabled)"
+* Fix error when loading new product page
+* Add logo icons and cover image
+* Disable autocomplete on Brevo API key input
+* Fix lint
+* Create a dedicated class for Brevo API interactions
+* Add support for selecting multiple Brevo lists
+* Add missing translators comment
+* Improve input description
+* Improve error notices
+* Improve security of saving product meta
+* Improve HTML escaping
+* Simplify Renovate config
+* Stop formatting package-lock.json with Prettier
+* Merge pull request #1 from AlecRust/renovate/squizlabs-php_codesniffer-3.x
+* Update dependency squizlabs/php_codesniffer to ^3.9.0
+* Disable Composer dev dependency Renovate updates
+* Add Renovate config
+* Improve screenshots and copy
+* Fix location of translators comments
+* Remove mention of Git Updater
+* Improve README
+* Add translators comments
+* Add Plugin Check to development plugins
+* Use 4 space formatting, fix lint
+* Initial commit
