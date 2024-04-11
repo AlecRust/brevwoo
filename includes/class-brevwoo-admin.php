@@ -367,6 +367,7 @@ class BrevWoo_Admin {
 	 * @return array<int> Sanitized input.
 	 */
 	public function sanitize_lists_input( $input ) {
+		$input = (array) $input;
 		return array_values(
 			array_filter( array_map( 'intval', $input ) )
 		);
