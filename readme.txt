@@ -20,12 +20,11 @@ This plugin can help with Brevo automations by reliably adding customers to Brev
 
 Features include:
 
-* Customer added to default Brevo lists selected in plugin settings
-* Customer added to product-specific Brevo lists selected on edit product page
-* Configuration of when during checkout a customer is added to Brevo
-* Customer name and email attributes included in the created Brevo contact
-* [Transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes) included in the created Brevo contact
-* Optional debug entries added to WooCommerce logs
+* Add customers to specific Brevo lists based on products they buy
+* Add customers to default Brevo lists when they buy any product
+* Select when during checkout the customer is added to Brevo
+* Contacts created in Brevo include [transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes)
+* Optional logging included to help debug any issues
 
 This plugin is not affiliated with or endorsed by Brevo. It's open source, and contributions are welcome [on GitHub](https://github.com/AlecRust/brevwoo).
 
@@ -66,9 +65,9 @@ Yes, the plugin uses the list ID, not the list name, so renaming a list in Brevo
 
 == Screenshots ==
 
-1. Set your Brevo API key in the plugin settings.
-2. Select Brevo lists in the edit product sidebar.
-3. Optional debug entries in WooCommerce logs.
+1. Configure global settings and default lists.
+2. Select product-specific lists on the edit product page.
+3. View optional debug entries in WooCommerce logs.
 
 == Changelog ==
 
