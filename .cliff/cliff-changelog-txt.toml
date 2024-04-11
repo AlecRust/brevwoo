@@ -4,8 +4,7 @@ header = """
 """
 body = """
 {% if version %}
-= {{ version | trim_start_matches(pat="v") }} {{ "-" }} {{ timestamp | date(format="%Y-%m-%d") | default(value="") }} =
-
+{{ timestamp | date(format="%Y-%m-%d") | default(value="") }} - version {{ version | trim_start_matches(pat="v") }}
 {% for commit in commits %}* {{ commit.message | split(pat="
 ") | first | trim }}
 {% endfor %}{% endif %}
