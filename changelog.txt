@@ -1,5 +1,10 @@
 == Changelog ==
 
+2024-04-12 - version 1.0.6
+* Bump release-it version
+* Tidy README
+* Don't activate WooCommerce by default in plugin demo
+
 2024-04-11 - version 1.0.5
 * Simplify features list
 * Improve plugin icon and banner

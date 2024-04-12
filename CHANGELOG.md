@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+#### [1.0.6](https://github.com/AlecRust/brevwoo/releases/tag/1.0.6)
+
+> 12 April 2024
+
+-   Bump release-it version [`6a9af88`](https://github.com/AlecRust/brevwoo/commit/6a9af8872b0f167127110053acf6258b7d336d31)
+-   Tidy README [`f0e85b8`](https://github.com/AlecRust/brevwoo/commit/f0e85b858b3d4448bf676083e72122a537d158aa)
+-   Don't activate WooCommerce by default in plugin demo [`28fb5fc`](https://github.com/AlecRust/brevwoo/commit/28fb5fc67f7b1280b2547edf8541a08ea4e04be7)
+
 #### [1.0.5](https://github.com/AlecRust/brevwoo/releases/tag/1.0.5)
 
 > 11 April 2024

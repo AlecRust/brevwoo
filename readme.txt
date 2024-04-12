@@ -3,7 +3,7 @@ Contributors:      alecrust
 Tags:              marketing, automation, sendinblue, brevo, woocommerce
 Requires at least: 4.6
 Tested up to:      6.5
-Stable tag:        1.0.5
+Stable tag:        1.0.6
 Requires PHP:      7.4
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -71,6 +71,12 @@ You may or may not need any of the three plugins, check the features of each to 
 3. View optional debug entries in WooCommerce logs.
 
 == Changelog ==
+
+= 1.0.6 - 2024-04-12 =
+
+* Bump release-it version
+* Tidy README
+* Don't activate WooCommerce by default in plugin demo
 
 = 1.0.5 - 2024-04-11 =
 
