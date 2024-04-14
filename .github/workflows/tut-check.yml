@@ -1,4 +1,4 @@
-name: Check "Tested up to" version
+name: '"Tested up to" check'
 
 on:
     schedule:
