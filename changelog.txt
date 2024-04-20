@@ -1,5 +1,12 @@
 == Changelog ==
 
+2024-04-20 - version 1.0.7
+* Bump @wordpress npm packages
+* Bump Composer packages
+* Fix workflow path
+* Fix workflow name
+* Add weekly "Tested up to" CI check
+
 2024-04-12 - version 1.0.6
 * Bump release-it version
 * Tidy README

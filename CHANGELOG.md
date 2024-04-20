@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+#### [1.0.7](https://github.com/AlecRust/brevwoo/releases/tag/1.0.7)
+
+> 20 April 2024
+
+-   Bump @wordpress npm packages [`fea706a`](https://github.com/AlecRust/brevwoo/commit/fea706ad9f396e4a4b307836db383b595afb10e1)
+-   Bump Composer packages [`d259bca`](https://github.com/AlecRust/brevwoo/commit/d259bcacd94cdb069d76390f45aaa8f3d72ee9dc)
+-   Fix workflow path [`8c043b8`](https://github.com/AlecRust/brevwoo/commit/8c043b876969e1bb74ebf7cfd31a7fb4b589edb9)
+-   Fix workflow name [`d500739`](https://github.com/AlecRust/brevwoo/commit/d500739c7ea6553fa290cf329643bf87645ab95e)
+-   Add weekly "Tested up to" CI check [`1d162ab`](https://github.com/AlecRust/brevwoo/commit/1d162abf387c485bc528ad29e5c55b49064a3532)
+
 #### [1.0.6](https://github.com/AlecRust/brevwoo/releases/tag/1.0.6)
 
 > 12 April 2024
