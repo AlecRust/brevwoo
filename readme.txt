@@ -26,7 +26,7 @@ Features include:
 * Contacts created in Brevo include [transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes)
 * Optional logging included to help debug any issues
 
-This plugin is not affiliated with or endorsed by Brevo. It's open source, and contributions are welcome [on GitHub](https://github.com/AlecRust/brevwoo).
+This plugin is not affiliated with Brevo. It's open source, and contributions are welcome [on GitHub](https://github.com/AlecRust/brevwoo).
 
 == Installation ==
 
