@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+#### [1.0.8](https://github.com/AlecRust/brevwoo/releases/tag/1.0.8)
+
+> 11 May 2024
+
+-   Bump Composer dependencies [`dd042fd`](https://github.com/AlecRust/brevwoo/commit/dd042fdf351152923aa65ad7243558b55daf387e)
+-   Bump Node dependencies [`e282307`](https://github.com/AlecRust/brevwoo/commit/e282307cfc877a86eacc4074ee76990328cd07c7)
+-   Tidy README [`6cd935e`](https://github.com/AlecRust/brevwoo/commit/6cd935ea50d1907d11ae1af8fb5b41a0d5ac1a15)
+-   Remove Node script to simplify build process [`a53e442`](https://github.com/AlecRust/brevwoo/commit/a53e44299dc1bc9b95dfc4a585fd630332beda55)
+
 #### [1.0.7](https://github.com/AlecRust/brevwoo/releases/tag/1.0.7)
 
 > 20 April 2024

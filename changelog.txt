@@ -1,5 +1,11 @@
 == Changelog ==
 
+2024-05-11 - version 1.0.8
+* Bump Composer dependencies
+* Bump Node dependencies
+* Tidy README
+* Remove Node script to simplify build process
+
 2024-04-20 - version 1.0.7
 * Bump @wordpress npm packages
 * Bump Composer packages
