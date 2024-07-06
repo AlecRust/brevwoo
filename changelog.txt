@@ -1,5 +1,11 @@
 == Changelog ==
 
+2024-07-06 - version 1.0.9
+* Update WordPress "Tested up to" to 6.6
+* Update "WC tested up to" to 9
+* Bump Composer dependencies
+* Bump Node dependencies
+
 2024-05-11 - version 1.0.8
 * Bump Composer dependencies
 * Bump Node dependencies

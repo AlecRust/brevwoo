@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+#### [1.0.9](https://github.com/AlecRust/brevwoo/releases/tag/1.0.9)
+
+> 6 July 2024
+
+-   Update WordPress "Tested up to" to 6.6 [`766850c`](https://github.com/AlecRust/brevwoo/commit/766850cb7835ecda66312bbadd96c0b201db7ecf)
+-   Update "WC tested up to" to 9 [`246ee5f`](https://github.com/AlecRust/brevwoo/commit/246ee5f1195cd17d82798120cab5b8c8ef1bb4b2)
+-   Bump Composer dependencies [`d83b0e6`](https://github.com/AlecRust/brevwoo/commit/d83b0e61871e0f93c00ad946b09267fc931021e7)
+-   Bump Node dependencies [`311b6e4`](https://github.com/AlecRust/brevwoo/commit/311b6e4b25adf4edf74645c56e3f57d340b338f7)
+
 #### [1.0.8](https://github.com/AlecRust/brevwoo/releases/tag/1.0.8)
 
 > 11 May 2024
