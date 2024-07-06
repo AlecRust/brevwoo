@@ -14,11 +14,11 @@
 	},
 	"devDependencies": {
 		"@release-it/bumper": "^6.0.1",
-		"@wordpress/env": "^9.9.0",
-		"@wordpress/prettier-config": "^3.14.0",
+		"@wordpress/env": "^10.2.0",
+		"@wordpress/prettier-config": "^4.2.0",
 		"husky": "^9.0.11",
-		"lint-staged": "^15.2.2",
-		"prettier": "^3.2.5",
-		"release-it": "^17.2.1"
+		"lint-staged": "^15.2.7",
+		"prettier": "^3.3.2",
+		"release-it": "^17.4.1"
 	}
 }
