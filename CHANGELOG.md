@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+#### [1.0.10](https://github.com/AlecRust/brevwoo/releases/tag/1.0.10)
+
+> 15 September 2024
+
+-   Update "WC tested up to" version [`28d9a08`](https://github.com/AlecRust/brevwoo/commit/28d9a08f2363eebc071c474afc795ea77bb93433)
+-   Update WordPress "Tested up to" to 6.7 [`60347ff`](https://github.com/AlecRust/brevwoo/commit/60347ff1eee86db4505cd541f8b758db4b627efc)
+-   Bump Node dependencies [`12b8a8b`](https://github.com/AlecRust/brevwoo/commit/12b8a8b09092653ce2d04ce3d2460623f1516d21)
+-   Bump Composer dependencies [`f5a9602`](https://github.com/AlecRust/brevwoo/commit/f5a96024576123097d0ff94edaec61aa97e0c6df)
+-   Merge pull request #4 from AlecRust/renovate/getbrevo-brevo-php-2.x-lockfile [`9d05f46`](https://github.com/AlecRust/brevwoo/commit/9d05f46b2e4778c45ba2a8192da7891ffdb10362)
+-   Update dependency getbrevo/brevo-php to v2.0.2 [`d265717`](https://github.com/AlecRust/brevwoo/commit/d265717b4119b30793511d2d045eee5ab9e13c27)
+
 #### [1.0.9](https://github.com/AlecRust/brevwoo/releases/tag/1.0.9)
 
 > 6 July 2024

@@ -1,5 +1,13 @@
 == Changelog ==
 
+2024-09-15 - version 1.0.10
+* Update "WC tested up to" version
+* Update WordPress "Tested up to" to 6.7
+* Bump Node dependencies
+* Bump Composer dependencies
+* Merge pull request #4 from AlecRust/renovate/getbrevo-brevo-php-2.x-lockfile
+* Update dependency getbrevo/brevo-php to v2.0.2
+
 2024-07-06 - version 1.0.9
 * Update WordPress "Tested up to" to 6.6
 * Update "WC tested up to" to 9
