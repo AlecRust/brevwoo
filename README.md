@@ -8,11 +8,11 @@ Set default Brevo lists that customers are added to when they buy a product, and
 
 ## Features
 
--   Add customers to specific Brevo lists based on products they buy
--   Add customers to default Brevo lists when they buy any product
--   Select when during checkout the customer is added to Brevo
--   Contacts created in Brevo include [transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes)
--   Optional logging included to help debug any issues
+- Add customers to specific Brevo lists based on products they buy
+- Add customers to default Brevo lists when they buy any product
+- Select when during checkout the customer is added to Brevo
+- Contacts created in Brevo include [transactional attributes](https://help.brevo.com/hc/en-us/articles/10635646979218-Create-and-manage-transactional-attributes)
+- Optional logging included to help debug any issues
 
 ## Installation
 
@@ -26,9 +26,9 @@ Once activated, add your [Brevo API key](https://developers.brevo.com/docs/getti
 
 Ensure you have the following installed:
 
--   [Node.js](https://nodejs.org/)
--   [Composer](https://getcomposer.org/)
--   [Docker](https://www.docker.com/)
+- [Node.js](https://nodejs.org/)
+- [Composer](https://getcomposer.org/)
+- [Docker](https://www.docker.com/)
 
 Start a WordPress instance for developing this plugin:
 
