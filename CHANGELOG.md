@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+#### [1.0.11](https://github.com/AlecRust/brevwoo/releases/tag/1.0.11)
+
+> 10 May 2025
+
+- Update composer lock file to match config [`e8f990e`](https://github.com/AlecRust/brevwoo/commit/e8f990e3616239a64443e691e6a8607ea09dcd06)
+- Update "WC tested up to" version [`3f862d8`](https://github.com/AlecRust/brevwoo/commit/3f862d87d1ba4d4a4d1951e8e1715f27c2a93a10)
+- Update WordPress "Tested up to" to 6.8 [`bc8e768`](https://github.com/AlecRust/brevwoo/commit/bc8e768d8288c6f136d5d4ede68a90961aefda67)
+- Improve imports and fix linting [`82048fe`](https://github.com/AlecRust/brevwoo/commit/82048feb842bf84f25bf31c39331c7912e5d527f)
+- Change minimum PHP version 7.4 -> 8.0 [`1e58e4e`](https://github.com/AlecRust/brevwoo/commit/1e58e4e7e9670a6a3a93cc8bbe60cd18bd83c495)
+- Bump npm packages [`970a68b`](https://github.com/AlecRust/brevwoo/commit/970a68bcbeb5d550f8446df4434534cefa1273a5)
+- Bump Composer deps and CI PHP version [`69dbc17`](https://github.com/AlecRust/brevwoo/commit/69dbc17841634e0c830f0806d16615f9060faf89)
+- Bump npm dependencies [`dc5f781`](https://github.com/AlecRust/brevwoo/commit/dc5f7816093acddd8e5c87dfc26479984e822185)
+- Merge pull request #6 from AlecRust/renovate/getbrevo-brevo-php-2.x-lockfile [`7a9b7cc`](https://github.com/AlecRust/brevwoo/commit/7a9b7cc1beda8ca12321f7893c6b28844177668b)
+- Update dependency getbrevo/brevo-php to v2.0.3 [`e9fa86a`](https://github.com/AlecRust/brevwoo/commit/e9fa86a654c355e8bb6f8554c29b780b14aae7af)
+
 #### [1.0.10](https://github.com/AlecRust/brevwoo/releases/tag/1.0.10)
 
 > 15 September 2024

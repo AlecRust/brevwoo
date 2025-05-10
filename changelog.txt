@@ -1,5 +1,17 @@
 == Changelog ==
 
+2025-05-10 - version 1.0.11
+* Update composer lock file to match config
+* Update "WC tested up to" version
+* Update WordPress "Tested up to" to 6.8
+* Improve imports and fix linting
+* Change minimum PHP version 7.4 -> 8.0
+* Bump npm packages
+* Bump Composer deps and CI PHP version
+* Bump npm dependencies
+* Merge pull request #6 from AlecRust/renovate/getbrevo-brevo-php-2.x-lockfile
+* Update dependency getbrevo/brevo-php to v2.0.3
+
 2024-09-15 - version 1.0.10
 * Update "WC tested up to" version
 * Update WordPress "Tested up to" to 6.7
