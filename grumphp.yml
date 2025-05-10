@@ -1,7 +1,7 @@
 grumphp:
     tasks:
         phpversion:
-            project: '7.4'
+            project: '8.0'
         phpcs:
             standard: ['WordPress', 'WooCommerce']
         phpmd:
