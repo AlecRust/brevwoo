@@ -55,7 +55,7 @@ class BrevWoo {
 	/**
 	 * Register hooks related to the admin area functionality.
 	 *
-	 * @SuppressWarnings(PHPMD.MissingImport)
+	 * @SuppressWarnings(MissingImport)
 	 *
 	 * @return void
 	 */

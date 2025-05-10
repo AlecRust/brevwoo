@@ -62,7 +62,7 @@ add_action(
  * Begin plugin execution.
  *
  * @return void
- * @SuppressWarnings(PHPMD.MissingImport)
+ * @SuppressWarnings(MissingImport)
  */
 function brevwoo_init() {
 	$plugin = new BrevWoo();

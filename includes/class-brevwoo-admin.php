@@ -7,6 +7,9 @@
  * @link       https://github.com/AlecRust/brevwoo
  */
 
+use Brevo\Client\Model\CreateContact;
+use BrevWoo_ApiClient;
+
 /**
  * The admin-specific functionality of the plugin.
  */
@@ -36,7 +39,7 @@ class BrevWoo_Admin {
 	/**
 	 * WooCommerce logger.
 	 *
-	 * @var object
+	 * @var \WC_Logger|object|null
 	 */
 	protected $wc_logger;
 
@@ -54,8 +57,6 @@ class BrevWoo_Admin {
 
 	/**
 	 * Initialize the API client
-	 *
-	 * @SuppressWarnings(PHPMD.MissingImport)
 	 *
 	 * @return void
 	 */
@@ -783,8 +784,6 @@ class BrevWoo_Admin {
 	 * @param mixed      $order The WooCommerce order object.
 	 * @param array<int> $list_ids The list IDs to add the contact to.
 	 * @return void
-	 *
-	 * @SuppressWarnings(PHPMD.MissingImport)
 	 */
 	private function create_brevo_contact( $order, $list_ids ) {
 		// Get the brevwoo_debug_logging option.
@@ -796,7 +795,9 @@ class BrevWoo_Admin {
 				'brevwoo'
 			);
 			error_log( 'BrevWoo: ' . $error_message ); // phpcs:ignore
-			$this->wc_logger->error( $error_message );
+			if ( $this->wc_logger ) {
+				$this->wc_logger->error( $error_message );
+			}
 			return;
 		}
 
@@ -810,7 +811,7 @@ class BrevWoo_Admin {
 		$order_status = $order->get_status();
 
 		// Create the contact object.
-		$brevo_contact = new Brevo\Client\Model\CreateContact(
+		$brevo_contact = new CreateContact(
 			array(
 				'email'         => $email,
 				'updateEnabled' => true,
@@ -839,7 +840,9 @@ class BrevWoo_Admin {
 			$error_message =
 				'Error creating Brevo contact: ' . $e->getMessage();
 			error_log( 'BrevWoo: ' . $error_message ); // phpcs:ignore
-			$this->wc_logger->error( $error_message );
+			if ( $this->wc_logger ) {
+				$this->wc_logger->error( $error_message );
+			}
 		}
 	}
 
@@ -910,6 +913,8 @@ class BrevWoo_Admin {
 				)
 			)
 		);
-		$this->wc_logger->info( $log_message );
+		if ( $this->wc_logger ) {
+			$this->wc_logger->info( $log_message );
+		}
 	}
 }

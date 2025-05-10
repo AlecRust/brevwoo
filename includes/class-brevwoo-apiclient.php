@@ -7,6 +7,11 @@
  * @link       https://github.com/AlecRust/brevwoo
  */
 
+use Brevo\Client\Configuration;
+use Brevo\Client\Api\ContactsApi;
+use Brevo\Client\Api\AccountApi;
+use GuzzleHttp\Client;
+
 /**
  * API client used to interact with Brevo.
  */
@@ -15,35 +20,33 @@ class BrevWoo_ApiClient {
 	/**
 	 * The instance of the ContactsApi.
 	 *
-	 * @var Brevo\Client\Api\ContactsApi
+	 * @var ContactsApi
 	 */
 	private $contacts_instance;
 
 	/**
 	 * The instance of the AccountApi.
 	 *
-	 * @var Brevo\Client\Api\AccountApi
+	 * @var AccountApi
 	 */
 	private $account_instance;
 
 	/**
 	 * Initialize the API client with the provided API key.
 	 *
-	 * @SuppressWarnings(PHPMD.MissingImport)
-	 *
 	 * @param string $api_key Brevo API key.
 	 */
 	public function __construct( $api_key ) {
-		$config                  = Brevo\Client\Configuration::getDefaultConfiguration()->setApiKey(
+		$config                  = Configuration::getDefaultConfiguration()->setApiKey(
 			'api-key',
 			$api_key
 		);
-		$this->contacts_instance = new Brevo\Client\Api\ContactsApi(
-			new GuzzleHttp\Client(),
+		$this->contacts_instance = new ContactsApi(
+			new Client(),
 			$config
 		);
-		$this->account_instance  = new Brevo\Client\Api\AccountApi(
-			new GuzzleHttp\Client(),
+		$this->account_instance  = new AccountApi(
+			new Client(),
 			$config
 		);
 	}
