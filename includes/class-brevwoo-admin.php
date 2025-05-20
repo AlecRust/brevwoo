@@ -794,9 +794,11 @@ class BrevWoo_Admin {
 				'API client not initialized, could not add contact to Brevo',
 				'brevwoo'
 			);
-			error_log( 'BrevWoo: ' . $error_message ); // phpcs:ignore
 			if ( $this->wc_logger ) {
-				$this->wc_logger->error( $error_message );
+				$this->wc_logger->error( $error_message, array( 'source' => 'brevwoo' ) );
+			} else {
+				// Fallback to error_log if wc_logger is not available.
+				error_log( 'BrevWoo: ' . $error_message ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			}
 			return;
 		}
@@ -837,11 +839,12 @@ class BrevWoo_Admin {
 				);
 			}
 		} catch ( Exception $e ) {
-			$error_message =
-				'Error creating Brevo contact: ' . $e->getMessage();
-			error_log( 'BrevWoo: ' . $error_message ); // phpcs:ignore
+			$error_message = __( 'Error creating Brevo contact: ', 'brevwoo' ) . $e->getMessage();
 			if ( $this->wc_logger ) {
-				$this->wc_logger->error( $error_message );
+				$this->wc_logger->error( $error_message, array( 'source' => 'brevwoo' ) );
+			} else {
+				// Fallback to error_log if wc_logger is not available.
+				error_log( 'BrevWoo: ' . $error_message ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			}
 		}
 	}
