@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       BrevWoo
- * Plugin URI:        http://github.com/AlecRust/brevwoo
+ * Plugin URI:        https://github.com/AlecRust/brevwoo
  * Description:       Add WooCommerce customers to Brevo the simple way.
  * Version:           1.0.11
  * Author:            Alec Rust
