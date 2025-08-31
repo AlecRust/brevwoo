@@ -29,7 +29,7 @@ class BrevWoo {
 	 * Define core plugin functionality.
 	 */
 	public function __construct() {
-		$this->version     = defined( 'BREVWOO_VERSION' ) ? BREVWOO_VERSION : '1.0.0';
+		$this->version     = BREVWOO_VERSION;
 		$this->plugin_name = 'brevwoo';
 	}
 
