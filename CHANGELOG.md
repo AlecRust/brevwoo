@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+#### [1.0.12](https://github.com/AlecRust/brevwoo/releases/tag/1.0.12)
+
+> 31 August 2025
+
+- Simplify version assignment in BrevWoo constructor [`b45c91a`](https://github.com/AlecRust/brevwoo/commit/b45c91aa49459e40aea8a1effe73fe26a9dba815)
+- Bump dev dependencies [`c58fa42`](https://github.com/AlecRust/brevwoo/commit/c58fa427c99207722f4cc2de45d1dc4229f81622)
+- Ignore .vscode directory [`5b0d90a`](https://github.com/AlecRust/brevwoo/commit/5b0d90a9f29f56d280b51c7e5062f381e8bf3f70)
+- Update dependency getbrevo/brevo-php to v2.0.10 (#9) [`ba702d5`](https://github.com/AlecRust/brevwoo/commit/ba702d5b1699368d5b3989614fc77e8196d6e031)
+- Bump actions/checkout from 4 to 5 (#10) [`f0f1de2`](https://github.com/AlecRust/brevwoo/commit/f0f1de2f60d264cad98e49fea1d159264fc951bc)
+- Use HTTPS for plugin URI (#8) [`ec19205`](https://github.com/AlecRust/brevwoo/commit/ec19205e14520d87306053b1369bdf33d300b866)
+- Update dependency getbrevo/brevo-php to v2.0.6 (#7) [`694ffd8`](https://github.com/AlecRust/brevwoo/commit/694ffd8cb9eebef6ad720d0560dc6e46f363df5e)
+- Improve lint ignore comments [`d80ab71`](https://github.com/AlecRust/brevwoo/commit/d80ab71c3c8f9cf883689fa2beef189384076b2a)
+
 #### [1.0.11](https://github.com/AlecRust/brevwoo/releases/tag/1.0.11)
 
 > 10 May 2025

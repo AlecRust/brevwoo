@@ -1,5 +1,15 @@
 == Changelog ==
 
+2025-08-31 - version 1.0.12
+* Simplify version assignment in BrevWoo constructor
+* Bump dev dependencies
+* Ignore .vscode directory
+* Update dependency getbrevo/brevo-php to v2.0.10 (#9)
+* Bump actions/checkout from 4 to 5 (#10)
+* Use HTTPS for plugin URI (#8)
+* Update dependency getbrevo/brevo-php to v2.0.6 (#7)
+* Improve lint ignore comments
+
 2025-05-10 - version 1.0.11
 * Update composer lock file to match config
 * Update "WC tested up to" version
