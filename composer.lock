@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "getbrevo/brevo-php",
-            "version": "v2.0.6",
+            "version": "v2.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getbrevo/brevo-php.git",
-                "reference": "5253470e42e7ae5116de1fa0bd2187a0ccfa8e69"
+                "reference": "29b47da0027353ea0c5e2c59e46ec9d600a9baab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getbrevo/brevo-php/zipball/5253470e42e7ae5116de1fa0bd2187a0ccfa8e69",
-                "reference": "5253470e42e7ae5116de1fa0bd2187a0ccfa8e69",
+                "url": "https://api.github.com/repos/getbrevo/brevo-php/zipball/29b47da0027353ea0c5e2c59e46ec9d600a9baab",
+                "reference": "29b47da0027353ea0c5e2c59e46ec9d600a9baab",
                 "shasum": ""
             },
             "require": {
@@ -65,9 +65,9 @@
             ],
             "support": {
                 "issues": "https://github.com/getbrevo/brevo-php/issues",
-                "source": "https://github.com/getbrevo/brevo-php/tree/v2.0.6"
+                "source": "https://github.com/getbrevo/brevo-php/tree/v2.0.10"
             },
-            "time": "2025-05-22T05:49:42+00:00"
+            "time": "2025-08-01T11:22:26+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
