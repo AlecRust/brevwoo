@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+#### [1.0.13](https://github.com/AlecRust/brevwoo/releases/tag/1.0.13)
+
+> 24 October 2025
+
+- Rebuild Composer lockfile [`44c124f`](https://github.com/AlecRust/brevwoo/commit/44c124ffadaee97cbbbc2717b8866768c5bc8402)
+- Bump actions/setup-node from 5 to 6 (#14) [`fef173c`](https://github.com/AlecRust/brevwoo/commit/fef173cb8cbb469de42e7ae0db391f9be5f5afc5)
+- Update dependency getbrevo/brevo-php to v2.0.13 (#12) [`5eaa464`](https://github.com/AlecRust/brevwoo/commit/5eaa46467ca1bb449bf06c2d94da039640fe8d0f)
+- Bump npm dependencies [`44e2aa8`](https://github.com/AlecRust/brevwoo/commit/44e2aa82158ceb8d30f99712e82dba21903dd4c9)
+- Specify packageManager in package.json [`8b49a20`](https://github.com/AlecRust/brevwoo/commit/8b49a2036932b914d294df66569566b90a06d6c4)
+- Update actions/setup-node action to v5 (#13) [`c527ad7`](https://github.com/AlecRust/brevwoo/commit/c527ad7adb1e966158a5685508e7ef1948d7a7ca)
+
 #### [1.0.12](https://github.com/AlecRust/brevwoo/releases/tag/1.0.12)
 
 > 31 August 2025

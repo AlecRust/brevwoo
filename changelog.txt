@@ -1,5 +1,13 @@
 == Changelog ==
 
+2025-10-24 - version 1.0.13
+* Rebuild Composer lockfile
+* Bump actions/setup-node from 5 to 6 (#14)
+* Update dependency getbrevo/brevo-php to v2.0.13 (#12)
+* Bump npm dependencies
+* Specify packageManager in package.json
+* Update actions/setup-node action to v5 (#13)
+
 2025-08-31 - version 1.0.12
 * Simplify version assignment in BrevWoo constructor
 * Bump dev dependencies

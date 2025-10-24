@@ -3,7 +3,7 @@ Contributors:      alecrust
 Tags:              marketing, automation, sendinblue, brevo, woocommerce
 Requires at least: 4.6
 Tested up to:      6.8
-Stable tag:        1.0.12
+Stable tag:        1.0.13
 Requires PHP:      8.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -71,6 +71,15 @@ You may or may not need any of the three plugins, check the features of each to 
 3. View optional debug entries in WooCommerce logs.
 
 == Changelog ==
+
+= 1.0.13 - 2025-10-24 =
+
+* Rebuild Composer lockfile
+* Bump actions/setup-node from 5 to 6 (#14)
+* Update dependency getbrevo/brevo-php to v2.0.13 (#12)
+* Bump npm dependencies
+* Specify packageManager in package.json
+* Update actions/setup-node action to v5 (#13)
 
 = 1.0.12 - 2025-08-31 =
 
