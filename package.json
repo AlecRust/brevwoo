@@ -9,7 +9,7 @@
 		"env": "wp-env",
 		"lint": "prettier --check . && ./vendor/bin/grumphp run",
 		"format": "prettier --write .",
-		"release": "release-it --ci",
+		"release": "GITHUB_TOKEN=${GITHUB_TOKEN:-$(gh auth token)} release-it --ci",
 		"prepare": "husky"
 	},
 	"packageManager": "npm@11.7.0",
