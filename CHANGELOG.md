@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+#### [2.0.0](https://github.com/AlecRust/brevwoo/releases/tag/2.0.0)
+
+> 14 December 2025
+
+- Fix admin PHP warning output [`7dc1de6`](https://github.com/AlecRust/brevwoo/commit/7dc1de63856f0ae9e4e41bc1346f319240d7aa61)
+- Add development login instructions to docs [`26b8775`](https://github.com/AlecRust/brevwoo/commit/26b877575901cf1a0cb723959e05d00bb4d7d16b)
+- Improve robustness of product lists [`c317ea1`](https://github.com/AlecRust/brevwoo/commit/c317ea17c4d874e753a530b5e00aa2b7a0fb1436)
+- Tweak docblock type annotation [`faae4c1`](https://github.com/AlecRust/brevwoo/commit/faae4c11c4ca8bf6251f2b074f0be12e4e1fe506)
+- Increase minimum WP and WC versions [`d26c463`](https://github.com/AlecRust/brevwoo/commit/d26c46397aff7cf6f8d478b558c8576e86725212)
+- Increase minimum WP version 4.6 -> 5.6 [`80bde2a`](https://github.com/AlecRust/brevwoo/commit/80bde2a41096c7b774600b05a7e11eb723f5dcdc)
+- Adjust PHP version checking [`be7facb`](https://github.com/AlecRust/brevwoo/commit/be7facb51cef67cfdd4d1d5d235d3f9e07f47cb8)
+- Update WordPress 'Tested up to' version to 6.9 [`0e00e89`](https://github.com/AlecRust/brevwoo/commit/0e00e89a145b6ab42f20892560654e5d6c76025b)
+- Rebuild Composer lockfile [`3c51110`](https://github.com/AlecRust/brevwoo/commit/3c511102fe236689cc7b484f69aad45ad0dbdb9c)
+- Bump development dependencies [`61db363`](https://github.com/AlecRust/brevwoo/commit/61db363f40567febad4e9fb164706e91c9d4ee73)
+- Update dependency getbrevo/brevo-php to v2.0.14 (#16) [`202208b`](https://github.com/AlecRust/brevwoo/commit/202208b3592e821988011ba77de980e48acfabcf)
+- Bump actions/checkout from 5 to 6 (#15) [`2893625`](https://github.com/AlecRust/brevwoo/commit/289362517cba05e2ead0fb9783e8922316715026)
+
 #### [1.0.13](https://github.com/AlecRust/brevwoo/releases/tag/1.0.13)
 
 > 24 October 2025

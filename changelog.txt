@@ -1,5 +1,19 @@
 == Changelog ==
 
+2025-12-14 - version 2.0.0
+* Fix admin PHP warning output
+* Add development login instructions to docs
+* Improve robustness of product lists
+* Tweak docblock type annotation
+* Increase minimum WP and WC versions
+* Increase minimum WP version 4.6 -> 5.6
+* Adjust PHP version checking
+* Update WordPress 'Tested up to' version to 6.9
+* Rebuild Composer lockfile
+* Bump development dependencies
+* Update dependency getbrevo/brevo-php to v2.0.14 (#16)
+* Bump actions/checkout from 5 to 6 (#15)
+
 2025-10-24 - version 1.0.13
 * Rebuild Composer lockfile
 * Bump actions/setup-node from 5 to 6 (#14)
