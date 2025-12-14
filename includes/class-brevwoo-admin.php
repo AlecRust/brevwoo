@@ -32,7 +32,7 @@ class BrevWoo_Admin {
 	/**
 	 * API client for Brevo.
 	 *
-	 * @var BrevWoo_ApiClient|null
+	 * @var \BrevWoo_ApiClient|null
 	 */
 	protected $api_client;
 
@@ -56,7 +56,7 @@ class BrevWoo_Admin {
 	}
 
 	/**
-	 * Initialize the API client
+	 * Initialize the API client.
 	 *
 	 * @return void
 	 */
