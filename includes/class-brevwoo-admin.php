@@ -8,7 +8,6 @@
  */
 
 use Brevo\Client\Model\CreateContact;
-use BrevWoo_ApiClient;
 
 /**
  * The admin-specific functionality of the plugin.
@@ -58,13 +57,15 @@ class BrevWoo_Admin {
 	/**
 	 * Initialize the API client.
 	 *
+	 * @SuppressWarnings(MissingImport)
+	 *
 	 * @return void
 	 */
 	private function initialize_api_client() {
 		$brevo_api_key = get_option( 'brevwoo_brevo_api_key', '' );
 		if ( ! empty( $brevo_api_key ) ) {
 			require_once plugin_dir_path( __FILE__ ) . 'class-brevwoo-apiclient.php';
-			$this->api_client = new BrevWoo_ApiClient( $brevo_api_key );
+			$this->api_client = new \BrevWoo_ApiClient( $brevo_api_key );
 		}
 	}
 
@@ -857,6 +858,10 @@ class BrevWoo_Admin {
 	 * @return void
 	 */
 	private function render_brevo_status_notice() {
+		if ( ! $this->api_client ) {
+			return;
+		}
+
 		try {
 			$this->api_client->get_account();
 			$message =
