@@ -1,7 +1,7 @@
 {
 	"name": "brevwoo",
 	"version": "2.0.0",
-	"description": "Add WooCommerce customers to Brevo the simple way.",
+	"description": "Add WooCommerce customers to Brevo on product purchase.",
 	"author": "Alec Rust (https://www.alecrust.com/)",
 	"license": "GPL-2.0-or-later",
 	"repository": "https://github.com/AlecRust/brevwoo",

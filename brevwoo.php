@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       BrevWoo
  * Plugin URI:        https://github.com/AlecRust/brevwoo
- * Description:       Add WooCommerce customers to Brevo the simple way.
+ * Description:       Add WooCommerce customers to Brevo on product purchase.
  * Version:           2.0.0
  * Requires at least: 6.4
  * Tested up to:      6.9
