@@ -685,10 +685,13 @@ class BrevWoo_Admin {
 
 		foreach ( $order->get_items() as $item ) {
 			$product_id     = $item->get_product_id();
-			$product_lists  = array_map(
-				'intval',
-				get_post_meta( $product_id, '_brevwoo_product_lists', true )
+			$product_lists  = get_post_meta(
+				$product_id,
+				'_brevwoo_product_lists',
+				true
 			);
+			$product_lists  = is_array( $product_lists ) ? $product_lists : array();
+			$product_lists  = array_map( 'intval', $product_lists );
 			$combined_lists = array_unique(
 				array_merge( $default_lists, $product_lists )
 			);
