@@ -41,3 +41,5 @@ Start a WordPress instance for developing this plugin:
 1. `npm install`
 2. `composer install`
 3. `npm run env start`
+
+Login at `http://localhost:8080/wp-admin` with username `admin` and password `password`.
