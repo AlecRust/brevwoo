@@ -22,6 +22,12 @@ Install from the [WordPress Plugin Directory](https://wordpress.org/plugins/brev
 Once activated, add your [Brevo API key](https://developers.brevo.com/docs/getting-started#quick-start) at
 **Settings > BrevWoo**.
 
+### Requirements
+
+- WordPress 5.6+
+- PHP 8.0+
+- WooCommerce 5.0+
+
 ## Development
 
 Ensure you have the following installed:
