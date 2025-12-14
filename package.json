@@ -12,14 +12,14 @@
 		"release": "release-it --ci",
 		"prepare": "husky"
 	},
-	"packageManager": "npm@11.6.2",
+	"packageManager": "npm@11.7.0",
 	"devDependencies": {
 		"@release-it/bumper": "^7.0.5",
-		"@wordpress/env": "^10.33.0",
-		"@wordpress/prettier-config": "^4.33.0",
+		"@wordpress/env": "^10.36.0",
+		"@wordpress/prettier-config": "^4.36.0",
 		"husky": "^9.1.7",
-		"lint-staged": "^16.2.6",
-		"prettier": "^3.6.2",
-		"release-it": "^19.0.5"
+		"lint-staged": "^16.2.7",
+		"prettier": "^3.7.4",
+		"release-it": "^19.1.0"
 	}
 }
