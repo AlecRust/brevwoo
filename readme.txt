@@ -2,7 +2,7 @@
 Contributors:      alecrust
 Tags:              marketing, automation, sendinblue, brevo, woocommerce
 Requires at least: 4.6
-Tested up to:      6.8
+Tested up to:      6.9
 Stable tag:        1.0.13
 Requires PHP:      8.0
 License:           GPL-2.0-or-later
