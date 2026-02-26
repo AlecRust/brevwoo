@@ -1,5 +1,8 @@
 == Changelog ==
 
+2026-02-26 - version 3.0.3
+* Fix Brevo connection status check
+
 2026-02-26 - version 3.0.2
 * Harden Brevo runtime error handling
 * Update distignore

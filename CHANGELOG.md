@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+#### [3.0.3](https://github.com/AlecRust/brevwoo/releases/tag/3.0.3)
+
+> 26 February 2026
+
+- Fix Brevo connection status check [`f99328a`](https://github.com/AlecRust/brevwoo/commit/f99328a6e4f585b4a3448bf20438940b50cc2237)
+
 #### [3.0.2](https://github.com/AlecRust/brevwoo/releases/tag/3.0.2)
 
 > 26 February 2026

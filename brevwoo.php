@@ -3,7 +3,7 @@
  * Plugin Name:       BrevWoo
  * Plugin URI:        https://github.com/AlecRust/brevwoo
  * Description:       Add WooCommerce customers to Brevo on product purchase.
- * Version:           3.0.2
+ * Version:           3.0.3
  * Requires at least: 6.4
  * Tested up to:      6.9
  * Requires PHP:      8.2
@@ -36,7 +36,7 @@ require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 /**
  * Plugin version.
  */
-define( 'BREVWOO_VERSION', '3.0.2' );
+define( 'BREVWOO_VERSION', '3.0.3' );
 
 /**
  * Load core plugin class defining all hooks.
