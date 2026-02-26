@@ -1,7 +1,7 @@
 {
 	"landingPage": "/wp-admin/options-general.php?page=brevwoo",
 	"preferredVersions": {
-		"php": "8.0",
+		"php": "8.1",
 		"wp": "latest"
 	},
 	"phpExtensionBundles": ["kitchen-sink"],
