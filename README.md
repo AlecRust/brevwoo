@@ -25,7 +25,7 @@ Once activated, add your [Brevo API key](https://developers.brevo.com/docs/getti
 ### Requirements
 
 - WordPress 6.4+
-- PHP 8.1+
+- PHP 8.2+
 - WooCommerce 5.5+
 
 ## Development
