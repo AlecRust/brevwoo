@@ -72,8 +72,17 @@ class BrevWoo_Admin {
 	private function initialize_api_client() {
 		$brevo_api_key = get_option( 'brevwoo_brevo_api_key', '' );
 		if ( ! empty( $brevo_api_key ) ) {
-			require_once plugin_dir_path( __FILE__ ) . 'class-brevwoo-apiclient.php';
-			$this->api_client = new \BrevWoo_ApiClient( $brevo_api_key );
+			try {
+				require_once plugin_dir_path( __FILE__ ) . 'class-brevwoo-apiclient.php';
+				$this->api_client = new \BrevWoo_ApiClient( $brevo_api_key );
+			} catch ( Throwable $e ) {
+				$this->api_client = null;
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+				error_log(
+					'BrevWoo: Failed to initialize Brevo API client: ' .
+					$e->getMessage()
+				);
+			}
 		}
 	}
 
@@ -372,7 +381,7 @@ class BrevWoo_Admin {
 				'<p class="description">%s</p>',
 				esc_html__( 'Could not load lists', 'brevwoo' )
 			);
-		} catch ( Exception $e ) {
+		} catch ( Throwable $e ) {
 			printf(
 				'<p class="description">%s</p>',
 				esc_html__( 'Could not load lists', 'brevwoo' )
@@ -615,7 +624,7 @@ class BrevWoo_Admin {
 					'additional_classes' => array( 'inline' ),
 				)
 			);
-		} catch ( Exception $e ) {
+		} catch ( Throwable $e ) {
 			$message =
 				'<p><strong>' .
 				esc_html__( 'Error fetching Brevo lists', 'brevwoo' ) .
@@ -726,7 +735,10 @@ class BrevWoo_Admin {
 	 * @return void
 	 */
 	public function process_wc_order( $order_id ) {
-		$order         = wc_get_order( $order_id );
+		$order = wc_get_order( $order_id );
+		if ( ! $order ) {
+			return;
+		}
 		$default_lists = array_map(
 			'intval',
 			get_option( 'brevwoo_default_lists', array() )
@@ -855,13 +867,14 @@ class BrevWoo_Admin {
 		}
 
 		// Collect order details.
-		$email        = $order->get_billing_email();
-		$first_name   = $order->get_billing_first_name();
-		$last_name    = $order->get_billing_last_name();
-		$order_id     = $order->get_id();
-		$order_total  = $order->get_total();
-		$order_date   = $order->get_date_created()->date( 'd-m-Y' );
-		$order_status = $order->get_status();
+		$email              = $order->get_billing_email();
+		$first_name         = $order->get_billing_first_name();
+		$last_name          = $order->get_billing_last_name();
+		$order_id           = $order->get_id();
+		$order_total        = $order->get_total();
+		$order_date_created = $order->get_date_created();
+		$order_date         = $order_date_created ? $order_date_created->date( 'd-m-Y' ) : gmdate( 'd-m-Y' );
+		$order_status       = $order->get_status();
 
 		try {
 			$this->api_client->create_contact(
@@ -908,7 +921,7 @@ class BrevWoo_Admin {
 			if ( $this->wc_logger ) {
 				$this->wc_logger->error( $error_message );
 			}
-		} catch ( Exception $e ) {
+		} catch ( Throwable $e ) {
 			$error_message =
 				'Error creating Brevo contact: ' . $e->getMessage();
 			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
@@ -971,7 +984,7 @@ class BrevWoo_Admin {
 					'paragraph_wrap' => false,
 				)
 			);
-		} catch ( Exception $e ) {
+		} catch ( Throwable $e ) {
 			$message =
 				'<p><strong>' .
 				esc_html__( 'Error connecting to Brevo', 'brevwoo' ) .
