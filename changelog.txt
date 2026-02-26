@@ -1,5 +1,15 @@
 == Changelog ==
 
+2026-02-26 - version 3.0.0
+* Refactor Brevo API integration
+* Bump Composer dependencies
+* Raise minimum PHP to 8.2 and align CI
+* Bump Composer dependencies
+* Bump npm dependencies
+* Raise minimum PHP to 8.1 and align CI
+* Improve plugin description
+* Fix release-it GitHub releases
+
 2025-12-14 - version 2.0.0
 * Fix admin PHP warning output
 * Add development login instructions to docs

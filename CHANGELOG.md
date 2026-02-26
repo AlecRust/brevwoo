@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+#### [3.0.0](https://github.com/AlecRust/brevwoo/releases/tag/3.0.0)
+
+> 26 February 2026
+
+- Refactor Brevo API integration [`25c2c32`](https://github.com/AlecRust/brevwoo/commit/25c2c323052e29c9b7e75b630bc708bcba8f89b2)
+- Bump Composer dependencies [`1b00ea0`](https://github.com/AlecRust/brevwoo/commit/1b00ea0c3dd7a3d46f93828a8e04c41412422bef)
+- Raise minimum PHP to 8.2 and align CI [`3326a24`](https://github.com/AlecRust/brevwoo/commit/3326a2483d73be480e602bbd20326161399d4609)
+- Bump Composer dependencies [`b763c66`](https://github.com/AlecRust/brevwoo/commit/b763c66b00369c7fc75476226f2da1e2f14a0345)
+- Bump npm dependencies [`1f4e142`](https://github.com/AlecRust/brevwoo/commit/1f4e14229d2fc6fb4cf37e2255194284e3bc9675)
+- Raise minimum PHP to 8.1 and align CI [`18254b5`](https://github.com/AlecRust/brevwoo/commit/18254b5ee9fc01d27252470bd8a839fbf7576717)
+- Improve plugin description [`822b3f7`](https://github.com/AlecRust/brevwoo/commit/822b3f71c97376861e13ef62ede4c8d36720f191)
+- Fix release-it GitHub releases [`eeb2222`](https://github.com/AlecRust/brevwoo/commit/eeb22221ecbe13c4dcb0d215b84a2f9d0f27c404)
+
 #### [2.0.0](https://github.com/AlecRust/brevwoo/releases/tag/2.0.0)
 
 > 14 December 2025
