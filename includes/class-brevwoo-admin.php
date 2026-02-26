@@ -943,8 +943,6 @@ class BrevWoo_Admin {
 		}
 
 		try {
-			// Use list fetch as the connection check because the account endpoint can
-			// fail deserialization for some Brevo account payloads in SDK v4.
 			$this->api_client->get_lists( 1, 0 );
 			$message =
 				'<p><strong>' .
