@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+#### [3.0.1](https://github.com/AlecRust/brevwoo/releases/tag/3.0.1)
+
+> 26 February 2026
+
+- Improve deploy reliability [`bd6f55e`](https://github.com/AlecRust/brevwoo/commit/bd6f55e4b2b0079fa5bc3fe42533d3476b4e51c2)
+
 #### [3.0.0](https://github.com/AlecRust/brevwoo/releases/tag/3.0.0)
 
 > 26 February 2026

@@ -1,5 +1,8 @@
 == Changelog ==
 
+2026-02-26 - version 3.0.1
+* Improve deploy reliability
+
 2026-02-26 - version 3.0.0
 * Refactor Brevo API integration
 * Bump Composer dependencies
