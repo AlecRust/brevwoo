@@ -11,7 +11,7 @@
 		}
 	],
 	"require": {
-		"php": ">=8.1",
+		"php": ">=8.2",
 		"getbrevo/brevo-php": "^2.0"
 	},
 	"require-dev": {
@@ -26,7 +26,7 @@
 	},
 	"config": {
 		"platform": {
-			"php": "8.1.0"
+			"php": "8.2.0"
 		},
 		"allow-plugins": {
 			"phpro/grumphp": true,
