@@ -7,7 +7,8 @@
  * @link       https://github.com/AlecRust/brevwoo
  */
 
-use Brevo\Client\Model\CreateContact;
+use Brevo\Exceptions\BrevoApiException;
+use Brevo\Exceptions\BrevoException;
 
 /**
  * The admin-specific functionality of the plugin.
@@ -41,6 +42,13 @@ class BrevWoo_Admin {
 	 * @var \WC_Logger|object|null
 	 */
 	protected $wc_logger;
+
+	/**
+	 * Max length for debug API error body snippet.
+	 *
+	 * @var int
+	 */
+	private const DEBUG_ERROR_BODY_MAX_LENGTH = 300;
 
 	/**
 	 * Initialize the class and set its properties.
@@ -327,13 +335,13 @@ class BrevWoo_Admin {
 		}
 
 		try {
-			$all_lists_result   = $this->api_client->get_lists();
-			$all_folders_result = $this->api_client->get_folders();
+			$all_lists   = $this->api_client->get_lists();
+			$all_folders = $this->api_client->get_folders();
 			$this->render_select_lists_input(
 				$field_id, // HTML ID and name attribute.
 				$default_brevo_lists, // Currently selected list IDs.
-				$all_lists_result->getLists(), // All Brevo lists from API.
-				$all_folders_result->getFolders(), // All Brevo folders from API.
+				$all_lists, // All Brevo lists from API.
+				$all_folders, // All Brevo folders from API.
 				__( 'Disabled (product-specific lists only)', 'brevwoo' ) // Disabled option label.
 			);
 			printf(
@@ -353,6 +361,16 @@ class BrevWoo_Admin {
 					'to select multiple lists or deselect lists',
 					'brevwoo'
 				)
+			);
+		} catch ( BrevoApiException $e ) {
+			printf(
+				'<p class="description">%s</p>',
+				esc_html__( 'Could not load lists', 'brevwoo' )
+			);
+		} catch ( BrevoException $e ) {
+			printf(
+				'<p class="description">%s</p>',
+				esc_html__( 'Could not load lists', 'brevwoo' )
 			);
 		} catch ( Exception $e ) {
 			printf(
@@ -525,8 +543,8 @@ class BrevWoo_Admin {
 		}
 
 		try {
-			$all_lists_result   = $this->api_client->get_lists();
-			$all_folders_result = $this->api_client->get_folders();
+			$all_lists   = $this->api_client->get_lists();
+			$all_folders = $this->api_client->get_folders();
 			wp_nonce_field(
 				'brevwoo_edit_product_nonce_action',
 				'brevwoo_edit_product_nonce'
@@ -548,13 +566,13 @@ class BrevWoo_Admin {
 				'<label for="brevwoo_product_lists" class="hidden">%s</label>',
 				esc_html__( 'Product Brevo Lists', 'brevwoo' )
 			);
-			$this->render_select_lists_input(
-				'brevwoo_product_lists', // HTML ID and name attribute.
-				$product_lists, // Currently selected list IDs.
-				$all_lists_result->getLists(), // All Brevo lists from API.
-				$all_folders_result->getFolders(), // All Brevo folders from API.
-				__( 'Disabled (default lists only)', 'brevwoo' ) // Disabled option label.
-			);
+				$this->render_select_lists_input(
+					'brevwoo_product_lists', // HTML ID and name attribute.
+					$product_lists, // Currently selected list IDs.
+					$all_lists, // All Brevo lists from API.
+					$all_folders, // All Brevo folders from API.
+					__( 'Disabled (default lists only)', 'brevwoo' ) // Disabled option label.
+				);
 			printf(
 				'<p class="howto">%s</p>',
 				sprintf(
@@ -565,6 +583,36 @@ class BrevWoo_Admin {
 						'">' .
 						esc_html__( 'BrevWoo settings', 'brevwoo' ) .
 						'</a>'
+				)
+			);
+		} catch ( BrevoApiException $e ) {
+			$message =
+				'<p><strong>' .
+				esc_html__( 'Error fetching Brevo lists', 'brevwoo' ) .
+				'</strong></p><p>' .
+				esc_html( $e->getMessage() ) .
+				'</p>';
+			wp_admin_notice(
+				$message,
+				array(
+					'type'               => 'error',
+					'paragraph_wrap'     => false,
+					'additional_classes' => array( 'inline' ),
+				)
+			);
+		} catch ( BrevoException $e ) {
+			$message =
+				'<p><strong>' .
+				esc_html__( 'Error fetching Brevo lists', 'brevwoo' ) .
+				'</strong></p><p>' .
+				esc_html( $e->getMessage() ) .
+				'</p>';
+			wp_admin_notice(
+				$message,
+				array(
+					'type'               => 'error',
+					'paragraph_wrap'     => false,
+					'additional_classes' => array( 'inline' ),
 				)
 			);
 		} catch ( Exception $e ) {
@@ -706,11 +754,11 @@ class BrevWoo_Admin {
 	/**
 	 * Render a multiple select dropdown for Brevo lists, grouped by folder.
 	 *
-	 * @param string        $field_id The HTML id and name attribute for the input.
-	 * @param array<int>    $selected_lists The list IDs to pre-select.
-	 * @param array<object> $all_lists Brevo API lists response.
-	 * @param array<object> $all_folders Brevo API folders response.
-	 * @param string        $disabled_label The label for the disabled (default) option.
+	 * @param string                                             $field_id The HTML id and name attribute for the input.
+	 * @param array<int>                                         $selected_lists The list IDs to pre-select.
+	 * @param array<int, array{id:int,name:string,folderId:int}> $all_lists Brevo API lists response.
+	 * @param array<int, array{id:int,name:string}>              $all_folders Brevo API folders response.
+	 * @param string                                             $disabled_label The label for the disabled (default) option.
 	 * @return void
 	 */
 	private function render_select_lists_input(
@@ -753,14 +801,14 @@ class BrevWoo_Admin {
 				: __( 'No folder', 'brevwoo' );
 			echo '<optgroup label="' . esc_attr( $folder_name ) . '">';
 			foreach ( $lists as $list ) {
-				$selected = in_array( $list['id'], $selected_lists, true )
-					? ' selected'
-					: '';
-				echo '<option value="' .
-					esc_attr( $list['id'] ) .
-					'"' .
-					esc_attr( $selected ) .
-					'>' .
+					$selected = in_array( $list['id'], $selected_lists, true )
+						? ' selected'
+						: '';
+					echo '<option value="' .
+						esc_attr( strval( $list['id'] ) ) .
+						'"' .
+						esc_attr( $selected ) .
+						'>' .
 					esc_html( '#' . $list['id'] . ' ' . $list['name'] ) .
 					'</option>';
 			}
@@ -815,24 +863,18 @@ class BrevWoo_Admin {
 		$order_date   = $order->get_date_created()->date( 'd-m-Y' );
 		$order_status = $order->get_status();
 
-		// Create the contact object.
-		$brevo_contact = new CreateContact(
-			array(
-				'email'         => $email,
-				'updateEnabled' => true,
-				'attributes'    => array(
+		try {
+			$this->api_client->create_contact(
+				$email,
+				array(
 					'FIRSTNAME'   => $first_name,
 					'LASTNAME'    => $last_name,
 					'ORDER_ID'    => strval( $order_id ),
 					'ORDER_PRICE' => $order_total,
 					'ORDER_DATE'  => $order_date,
 				),
-				'listIds'       => $list_ids,
-			)
-		);
-
-		try {
-			$this->api_client->create_contact( $brevo_contact );
+				$list_ids
+			);
 			if ( $debug_logging ) {
 				$this->log_contact_created(
 					$email,
@@ -840,6 +882,31 @@ class BrevWoo_Admin {
 					strval( $order_id ),
 					$order_status
 				);
+			}
+		} catch ( BrevoApiException $e ) {
+			$error_message = sprintf(
+				'Error creating Brevo contact (HTTP %d): %s',
+				intval( $e->getCode() ),
+				$e->getMessage()
+			);
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			error_log( 'BrevWoo: ' . $error_message );
+			if ( $this->wc_logger ) {
+				$this->wc_logger->error( $error_message );
+				if ( $debug_logging ) {
+					$this->wc_logger->debug(
+						'Brevo API error body: ' .
+						$this->format_debug_error_body( $e->getBody() )
+					);
+				}
+			}
+		} catch ( BrevoException $e ) {
+			$error_message =
+				'Error creating Brevo contact: ' . $e->getMessage();
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			error_log( 'BrevWoo: ' . $error_message );
+			if ( $this->wc_logger ) {
+				$this->wc_logger->error( $error_message );
 			}
 		} catch ( Exception $e ) {
 			$error_message =
@@ -876,6 +943,34 @@ class BrevWoo_Admin {
 					'additional_classes' => array( 'notice-alt' ),
 				)
 			);
+		} catch ( BrevoApiException $e ) {
+			$message =
+				'<p><strong>' .
+				esc_html__( 'Error connecting to Brevo', 'brevwoo' ) .
+				'</strong></p><p>' .
+				esc_html( $e->getMessage() ) .
+				'</p>';
+			wp_admin_notice(
+				$message,
+				array(
+					'type'           => 'error',
+					'paragraph_wrap' => false,
+				)
+			);
+		} catch ( BrevoException $e ) {
+			$message =
+				'<p><strong>' .
+				esc_html__( 'Error connecting to Brevo', 'brevwoo' ) .
+				'</strong></p><p>' .
+				esc_html( $e->getMessage() ) .
+				'</p>';
+			wp_admin_notice(
+				$message,
+				array(
+					'type'           => 'error',
+					'paragraph_wrap' => false,
+				)
+			);
 		} catch ( Exception $e ) {
 			$message =
 				'<p><strong>' .
@@ -891,6 +986,37 @@ class BrevWoo_Admin {
 				)
 			);
 		}
+	}
+
+	/**
+	 * Format an API error response body for concise debug logging.
+	 *
+	 * @param mixed $body Raw API response body from Brevo exception.
+	 * @return string
+	 */
+	private function format_debug_error_body( $body ) {
+		$body_string = '';
+
+		if ( is_string( $body ) ) {
+			$body_string = $body;
+		} elseif ( is_array( $body ) ) {
+			$encoded     = wp_json_encode( $body );
+			$body_string = is_string( $encoded ) ? $encoded : '';
+		} elseif ( is_object( $body ) ) {
+			$encoded     = wp_json_encode( $body );
+			$body_string = is_string( $encoded ) ? $encoded : '';
+		}
+
+		if ( '' === $body_string ) {
+			return 'No API response body';
+		}
+
+		$body_string = wp_strip_all_tags( $body_string );
+		if ( strlen( $body_string ) > self::DEBUG_ERROR_BODY_MAX_LENGTH ) {
+			return substr( $body_string, 0, self::DEBUG_ERROR_BODY_MAX_LENGTH ) . '...';
+		}
+
+		return $body_string;
 	}
 
 	/**
