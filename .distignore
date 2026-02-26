@@ -1,8 +1,10 @@
 /.cliff
+/.DS_Store
 /.git
 /.github
 /.husky
 /.wordpress-org
+/.vscode
 /node_modules
 
 .distignore
