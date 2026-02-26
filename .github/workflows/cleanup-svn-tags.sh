@@ -2,6 +2,11 @@
 
 SVN_REPO_URL="https://plugins.svn.wordpress.org/brevwoo/"
 
+if ! command -v svn >/dev/null 2>&1; then
+	echo "svn command not found, skipping old tag cleanup."
+	exit 0
+fi
+
 # Fetch all tags from SVN
 svn_tags=$(svn ls "$SVN_REPO_URL/tags" --username "$SVN_USERNAME" --password "$SVN_PASSWORD" --non-interactive --no-auth-cache)
 

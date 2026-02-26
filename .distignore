@@ -20,3 +20,17 @@ package-lock.json
 package.json
 phpstan.neon
 README.md
+
+# Exclude non-runtime vendor artifacts to keep SVN deploy payload small/stable.
+vendor/getbrevo/brevo-php/.fern
+vendor/getbrevo/brevo-php/.fernignore
+vendor/getbrevo/brevo-php/.github
+vendor/getbrevo/brevo-php/banner.png
+vendor/getbrevo/brevo-php/changelog.md
+vendor/getbrevo/brevo-php/phpstan.neon
+vendor/getbrevo/brevo-php/phpunit.xml
+vendor/getbrevo/brevo-php/reference.md
+vendor/getbrevo/brevo-php/README.md
+vendor/getbrevo/brevo-php/test
+vendor/getbrevo/brevo-php/tests
+vendor/getbrevo/brevo-php/wiremock
