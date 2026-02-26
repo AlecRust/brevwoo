@@ -943,7 +943,9 @@ class BrevWoo_Admin {
 		}
 
 		try {
-			$this->api_client->get_account();
+			// Use list fetch as the connection check because the account endpoint can
+			// fail deserialization for some Brevo account payloads in SDK v4.
+			$this->api_client->get_lists( 1, 0 );
 			$message =
 				'<p><strong>' .
 				esc_html__( 'Successfully connected to Brevo', 'brevwoo' ) .
@@ -985,11 +987,19 @@ class BrevWoo_Admin {
 				)
 			);
 		} catch ( Throwable $e ) {
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			error_log(
+				'BrevWoo: Unexpected SDK error during Brevo connection check: ' .
+				$e->getMessage()
+			);
 			$message =
 				'<p><strong>' .
 				esc_html__( 'Error connecting to Brevo', 'brevwoo' ) .
 				'</strong></p><p>' .
-				esc_html( $e->getMessage() ) .
+				esc_html__(
+					'Unexpected SDK error while checking the account. Please verify your API key and try again.',
+					'brevwoo'
+				) .
 				'</p>';
 			wp_admin_notice(
 				$message,
