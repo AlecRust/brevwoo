@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+#### [3.0.2](https://github.com/AlecRust/brevwoo/releases/tag/3.0.2)
+
+> 26 February 2026
+
+- Harden Brevo runtime error handling [`5af168c`](https://github.com/AlecRust/brevwoo/commit/5af168c42e1c375514e38bbc89a28f0ae1e2458a)
+- Update distignore [`102b11f`](https://github.com/AlecRust/brevwoo/commit/102b11fd4bc2078e11dc0b0111b4f58fb91fdd1f)
+
 #### [3.0.1](https://github.com/AlecRust/brevwoo/releases/tag/3.0.1)
 
 > 26 February 2026
