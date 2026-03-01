@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "getbrevo/brevo-php",
-            "version": "4.0.5",
+            "version": "4.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getbrevo/brevo-php.git",
-                "reference": "752634a448d95bc87b36b39e5ef74c53acf642e9"
+                "reference": "88896a4f5e2132877b802b531e180d9dda6a52c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getbrevo/brevo-php/zipball/752634a448d95bc87b36b39e5ef74c53acf642e9",
-                "reference": "752634a448d95bc87b36b39e5ef74c53acf642e9",
+                "url": "https://api.github.com/repos/getbrevo/brevo-php/zipball/88896a4f5e2132877b802b531e180d9dda6a52c0",
+                "reference": "88896a4f5e2132877b802b531e180d9dda6a52c0",
                 "shasum": ""
             },
             "require": {
@@ -44,7 +44,10 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "description": "Brevo PHP Library",
+            "license": [
+                "MIT"
+            ],
+            "description": "Official PHP SDK for the Brevo API.",
             "keywords": [
                 "api",
                 "brevo",
@@ -52,9 +55,9 @@
             ],
             "support": {
                 "issues": "https://github.com/getbrevo/brevo-php/issues",
-                "source": "https://github.com/getbrevo/brevo-php/tree/v4.0.5"
+                "source": "https://github.com/getbrevo/brevo-php/tree/v4.0.7"
             },
-            "time": "2026-02-23T15:42:46+00:00"
+            "time": "2026-03-01T19:40:48+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
